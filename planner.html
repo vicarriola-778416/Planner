@@ -141,6 +141,95 @@
     .chip.v { background: var(--v); }
     .chip.j { background: var(--j); }
     .chip.c { background: var(--c); }
+
+    /* =================================================================
+       ESTRATEGIA TAB (ex agenda-2026.html, scoped con .est-)
+       ================================================================= */
+    @keyframes estSlideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .est { padding: 24px 32px 48px; max-width: 760px; margin: 0 auto; transition: max-width .4s ease; }
+    .est.onepager { max-width: 1000px; }
+    .est-header { margin-bottom: 28px; padding-bottom: 20px; border-bottom: 1px solid #DDD; display: flex; justify-content: space-between; align-items: flex-start; }
+    .est-header-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 38px; font-weight: 400; color: #1a1a1a; line-height: 1.1; letter-spacing: -.02em; }
+    .est-header-sub { font-size: 14px; color: #777; margin-top: 4px; }
+    .est-subtabs { display: flex; gap: 3px; background: #E8E7E3; border-radius: 8px; padding: 3px; }
+    .est-subtab { font-family: 'DM Mono', monospace; font-size: 11px; padding: 7px 18px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: .02em; transition: all .2s; background: transparent; color: #999; font-weight: 400; }
+    .est-subtab.active { background: #FAFAF8; color: #333; box-shadow: 0 1px 3px rgba(0,0,0,.08); font-weight: 500; }
+
+    .est-btn { font-family: 'DM Mono', monospace; font-size: 11px; color: #999; background: none; border: 1px solid #DDD; border-radius: 20px; padding: 6px 16px; cursor: pointer; letter-spacing: .03em; transition: all .2s; }
+    .est-btn:hover { color: #555; border-color: #BBB; }
+
+    .est-card { background: #FAFAF8; border-radius: 2px 14px 14px 2px; overflow: hidden; transition: all .35s cubic-bezier(.25,.46,.45,.94); }
+    .est-card.exp { box-shadow: 0 8px 32px rgba(0,0,0,.08); transform: scale(1.003); }
+    .est-card:not(.exp) { box-shadow: 0 2px 8px rgba(0,0,0,.03); }
+    .est-hdr { padding: 22px 24px; cursor: pointer; display: flex; align-items: flex-start; gap: 16px; }
+    .est-num { font-family: 'DM Mono', monospace; font-size: 13px; font-weight: 500; opacity: .9; min-width: 32px; margin-top: 4px; }
+    .est-info { flex: 1; }
+    .est-card-title { font-family: 'Instrument Serif', Georgia, serif; font-size: 22px; font-weight: 400; letter-spacing: -.01em; line-height: 1.2; margin-bottom: 4px; }
+    .est-card-hl { font-size: 13px; color: #888; font-style: italic; line-height: 1.4; }
+    .est-arrow { font-size: 18px; color: #BBB; transition: transform .3s ease; user-select: none; }
+    .est-card.exp .est-arrow { transform: rotate(180deg); }
+    .est-body { max-height: 0; opacity: 0; transition: all .45s cubic-bezier(.25,.46,.45,.94); overflow: hidden; }
+    .est-card.exp .est-body { max-height: 2400px; opacity: 1; }
+    .est-inner { padding: 4px 28px 28px 76px; }
+
+    .est-sec-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; font-weight: 500; margin-bottom: 12px; }
+    .est-obj-row { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: 7px; margin-bottom: 4px; }
+    .est-obj-label { font-size: 14px; color: #fff; font-weight: 500; line-height: 1.4; }
+    .est-success { border-radius: 10px; padding: 18px 20px; margin: 16px 0; }
+    .est-success p { font-size: 13.5px; color: #666; line-height: 1.65; margin: 0; }
+
+    .est-coll-sec { border-top: 1px dashed #E0DFDC; padding-top: 12px; margin-top: 8px; }
+    .est-coll-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; padding: 6px 0; }
+    .est-coll-arrow { font-size: 14px; color: #BBB; transition: transform .3s ease; user-select: none; display: inline-block; }
+    .est-coll-arrow.open { transform: rotate(90deg); }
+    .est-coll-label { font-family: 'DM Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; font-weight: 500; }
+    .est-coll-body { transition: all .35s cubic-bezier(.25,.46,.45,.94); overflow: hidden; }
+    .est-coll-badge { font-family: 'DM Mono', monospace; font-size: 9px; padding: 2px 8px; border-radius: 10px; font-weight: 500; }
+
+    .est-q-cards { display: flex; gap: 10px; padding-top: 12px; }
+    .est-q-card { flex: 1; border-radius: 10px; padding: 16px 14px; display: flex; flex-direction: column; gap: 8px; }
+    .est-q-hdr { display: flex; align-items: center; gap: 6px; }
+    .est-q-icon { font-family: 'DM Mono', monospace; font-size: 12px; opacity: .7; }
+    .est-q-label { font-family: 'DM Mono', monospace; font-size: 9px; text-transform: uppercase; letter-spacing: .1em; font-weight: 500; }
+    .est-hito { padding: 5px 10px; border-radius: 5px; margin-bottom: 3px; }
+    .est-hito-row { display: flex; align-items: center; justify-content: space-between; }
+    .est-hito-label { font-size: 11px; color: #fff; font-weight: 500; line-height: 1.4; flex: 1; }
+    .est-q-tag { font-size: 8px; font-family: 'DM Mono', monospace; background: rgba(255,255,255,0.25); padding: 1px 5px; border-radius: 3px; margin-left: 6px; flex-shrink: 0; color: #fff; }
+    .est-subhito { padding: 3px 10px 3px 16px; border-radius: 3px; margin-bottom: 2px; display: flex; align-items: center; gap: 6px; }
+    .est-sub-q { font-size: 8px; font-family: 'DM Mono', monospace; background: rgba(255,255,255,0.2); padding: 1px 5px; border-radius: 2px; color: #fff; flex-shrink: 0; }
+    .est-sub-label { font-size: 10px; color: #fff; line-height: 1.4; }
+
+    .est-slider-row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+    .est-slider { -webkit-appearance: none; width: 80px; height: 3px; border-radius: 2px; outline: none; cursor: pointer; }
+    .est-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; border-radius: 50%; background: #fff; cursor: pointer; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    .est-slider::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; cursor: pointer; border: 0; box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+    .est-slider:disabled { cursor: not-allowed; opacity: .5; }
+    .est-slider-pill { font-family: 'DM Mono', monospace; font-size: 9px; color: #fff; padding: 1px 6px; border-radius: 8px; font-weight: 600; white-space: nowrap; }
+
+    .est-inter-row { display: flex; align-items: stretch; border-radius: 6px; overflow: hidden; border: 1.5px solid transparent; margin-bottom: 4px; }
+    .est-inter-area { min-width: 120px; max-width: 120px; padding: 10px 12px; display: flex; align-items: center; gap: 8px; }
+    .est-inter-dot { width: 6px; height: 6px; min-width: 6px; border-radius: 2px; }
+    .est-inter-name { font-size: 12px; font-weight: 500; }
+    .est-inter-val { flex: 1; padding: 10px 14px; display: flex; align-items: center; }
+
+    /* One Pager */
+    .est-onepager-card { background: #FAFAF8; border-radius: 2px 14px 14px 2px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.03); }
+    .est-onepager-card.exp { box-shadow: 0 8px 32px rgba(0,0,0,.08); }
+    .est-onepager-hdr { padding: 20px 24px; cursor: pointer; display: flex; align-items: center; gap: 14px; }
+    .est-tl-strip { border-top: 1px solid; }
+    .est-tl-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+    .est-tl-cell { padding: 10px 16px; }
+    .est-tl-cell-body { padding: 4px 16px 14px; }
+    .est-tl-hdr { display: flex; align-items: center; gap: 6px; margin-bottom: 6px; }
+    .est-tl-period { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; opacity: .7; }
+    .est-tl-period-sub { font-family: 'DM Mono', monospace; font-size: 9px; color: #BBB; }
+    .est-status-dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; flex-shrink: 0; }
+    .est-mini-chip { font-size: 9.5px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+    .est-legend { display: flex; gap: 20px; margin-bottom: 20px; }
+    .est-legend-item { display: flex; align-items: center; gap: 6px; }
+    .est-legend-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #999; letter-spacing: .03em; }
+
+    .est-readonly { padding: 12px 16px; border-radius: 8px; background: rgba(217,119,6,0.06); color: #92400e; font-size: 12px; font-family: 'DM Mono', monospace; margin-bottom: 16px; }
   </style>
 </head>
 <body>
@@ -177,12 +266,7 @@
 
     <!-- Tab: Estrategia (ex-agenda-2026.html) -->
     <section id="panel-estrategia" class="panel active">
-      <div class="placeholder">
-        <h2>Estrategia anual</h2>
-        <p>Contenido pendiente de migrar desde <code>agenda-2026.html</code>:</p>
-        <p style="font-size: 13px;">Vista <strong>Agenda</strong> (focos · objetivos · hitos · subhitos) + <strong>One Pager</strong> + sliders Q1.</p>
-        <p style="margin-top: 24px; font-size: 12px;">Estado actual: <span id="dbgShared">shared no cargado</span></p>
-      </div>
+      <div id="estrategia-root" class="est"></div>
     </section>
 
     <!-- Tab: Semanal (ex-calendario2026.html) -->
@@ -378,14 +462,14 @@
       dot.textContent = me.initial;
       dot.style.background = me.color;
 
-      // Debug placeholders
-      var sharedKeys = Object.keys(window.appState.shared || {});
-      document.getElementById('dbgShared').textContent =
-        sharedKeys.length ? sharedKeys.length + ' claves: ' + sharedKeys.join(', ') : 'vacío (esperando seed)';
-
-      var myWeeks = Object.keys((window.appState.users[me.user_id] || {state:{}}).state.weeks || {});
-      document.getElementById('dbgUser').textContent =
-        myWeeks.length ? myWeeks.length + ' semanas: ' + myWeeks.join(', ') : 'sin semanas todavía';
+      // Debug placeholders (si existen, p.ej. mientras la semanal está vacía)
+      var dbgUser = document.getElementById('dbgUser');
+      if (dbgUser) {
+        var myWeeks = Object.keys((window.appState.users[me.user_id] || {state:{}}).state.weeks || {});
+        dbgUser.textContent = myWeeks.length
+          ? myWeeks.length + ' semanas: ' + myWeeks.join(', ')
+          : 'sin semanas todavía';
+      }
     }
 
     // ----- Tabs --------------------------------------------------------
@@ -498,6 +582,436 @@
       if (saveTimers.shared) saveShared(true);
       if (saveTimers.user)   saveUser(true);
     });
+
+  })();
+  </script>
+
+  <!-- =================================================================
+       MÓDULO ESTRATEGIA (ex agenda-2026.html)
+       Lee de planner.getShared() → state.D + state.ceoVals
+       Escribe sliders Q1 vía planner.mutateShared()
+       UI state (expand/collapse, subtab) es local y no se persiste
+       ================================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    // ----- Constantes de dominio --------------------------------------
+    var areas = ["Marketing","Comercial","Finanzas","Operaciones","Sustentabilidad","Inmobiliaria","Exploraciones","Experiencia","Personas"];
+    var periods = ["Q1","Q2","H2"];
+    var periodLabels = { Q1:"Ene — Mar", Q2:"Abr — Jun", H2:"Jul — Dic" };
+    var statusMap = { q1:"on-track", q2:"upcoming", h2:"planned" };
+    var statusColors = { "on-track":"#22C55E", upcoming:"#94A3B8", planned:"#CBD5E1" };
+    var statusLabels = { "on-track":"En curso", upcoming:"Próximo", planned:"Planificado" };
+
+    // ----- SEED (estado inicial si planner_shared.D está vacío) --------
+    var SEED_D = [{"number":"01","title":"Financiamiento","short":"Financiamiento","color":"#1B3A4B","accent":"#4ECDC4","headline":"Asegurar capital para el crecimiento","objetivos":[{"label":"Refinanciar deuda LP","hitos":[{"q":"Q1","label":"Levantar alternativas de estructura y bancos"},{"q":"Q2","label":"Acordar plan de trabajo con BTG"},{"q":"Q2","label":"Buscar alternativas reales de refinanciamiento"}],"color":"#0E7C7B"},{"label":"Estructurar y colocar financiamiento para la expansión","hitos":[{"q":"Q1","label":"Mapeo inicial alternativas Islandia"},{"q":"Q2","label":"Diseñar y simular 3 caminos alternativos (Deuda Corp, Project Finance, Two Stage Asset Financing)"},{"q":"H2","label":"Concretar colocación específica","subhitos":[{"label":"Term sheet de refinanciamiento","q":"Q3"},{"label":"Iteración/negociación financiamiento Cerro Castillo","q":"Q3"},{"label":"Iteración/negociación financiamiento Islandia","q":"Q3"},{"label":"Cierre refinanciamiento","q":"Q4"},{"label":"Cierre financiamiento proyectos","q":"Q4"}]}],"color":"#1AB8B8"}],"success":"Extender plazo para la deuda, potencialmente aumentar el monto. Diseñar y colocar esquema de financiamiento a nivel activo o portafolio de activos para los 4 proyectos en el roadmap (CC, CB, Islandia y GC).","highlights":["Marketing","Finanzas"],"interactions":{"Marketing":"Desarrollo de materiales de pitch y presentaciones para inversionistas","Comercial":"Apoyo según requerimiento","Finanzas":"Coordinación de flujos de caja, levantamiento de necesidades y estructuración financiera","Operaciones":"Apoyo según requerimiento","Sustentabilidad":"Apoyo según requerimiento","Inmobiliaria":"Apoyo según requerimiento","Exploraciones":"Apoyo según requerimiento","Experiencia":"Apoyo según requerimiento","Personas":"Apoyo según requerimiento"},"q1":["Levantar alternativas de estructura y bancos","Mapeo inicial alternativas Islandia"],"q2":["Acordar plan de trabajo con BTG","Buscar alternativas reales de refinanciamiento","Diseñar y simular 3 caminos alternativos"],"h2":["Concretar colocación específica"]},{"number":"02","title":"Gestión del Roadmap","short":"Roadmap","color":"#2D5F3E","accent":"#A8E06C","headline":"Estructurar y madurar disciplinadamente los proyectos del roadmap","objetivos":[{"label":"Pasar el proyecto Cerro Castillo a implementación","hitos":[{"q":"Q1","label":"Cerrar estructura legal CC"},{"q":"Q2","label":"Completar y aprobar business case CC"},{"q":"Q4","label":"Iniciar kickoff Cerro Castillo"}],"color":"#1E7C3E"},{"label":"Lanzar etapa diseño de proyecto Islandia","hitos":[{"q":"Q1","label":"Completar business case Islandia"},{"q":"Q2","label":"Definir ajustes de producto y experiencia Islandia"},{"q":"Q4","label":"Lanzar arquitectura Islandia"}],"color":"#4CAF70"},{"label":"Definir y consensuar el Plan Ártico","hitos":[{"q":"Q2","label":"Diseñar plan (destinos y productos)"},{"q":"Q3","label":"Desarrollar Business Plan Ártico"}],"color":"#2D9E5C"}],"success":"Estructura legal de Cerro Castillo cerrada. Business cases de CC e Islandia completados. Arquitectura de Islandia lanzada. Plan Ártico definido y consensuado.","highlights":["Inmobiliaria"],"interactions":{"Marketing":"Soporte basado en business case; ownership de los entregables de marketing","Comercial":"Soporte basado en business case; ownership de las proyecciones y estrategia comercial","Finanzas":"Soporte basado en business case; ownership del modelo financiero y supuestos","Operaciones":"Gestión de relación con stakeholders clave (Cerro Castillo); ownership de los supuestos operativos","Sustentabilidad":"Soporte basado en business case","Inmobiliaria":"Rol crítico en costeo y planificación del proyecto; ownership de la estructura inmobiliaria","Exploraciones":"Definición de particularidades del producto y destino; scouting e insights para Plan Ártico","Experiencia":"Definición de particularidades del producto y experiencia del destino","Personas":"Soporte basado en business case; ownership de la dotación y estructura de equipo"},"q1":["Cerrar estructura legal CC","Completar business case Islandia"],"q2":["Completar y aprobar business case CC","Definir ajustes de producto y experiencia Islandia","Diseñar plan Ártico (destinos y productos)"],"h2":["Iniciar kickoff Cerro Castillo","Lanzar arquitectura Islandia","Desarrollar Business Plan Ártico"]},{"number":"03","title":"Procesos","short":"Procesos","color":"#5C3D2E","accent":"#F4A261","headline":"Institucionalizar los procesos de crecimiento","objetivos":[{"label":"Diseñar e implementar el Stage Gate de proyectos","hitos":[{"q":"Q1","label":"Diseñar framework Stage Gate"},{"q":"Q2","label":"Iterar e implementar proceso Stage Gate"}],"color":"#C05A1F"},{"label":"Documentar y consolidar definiciones y estándares","hitos":[{"q":"Q2","label":"Relevar, documentar y hacer benchmark de estándares"},{"q":"H2","label":"Consolidar estándares de inversión v1","subhitos":[{"label":"OPEX","q":"Q3"},{"label":"CAPEX","q":"Q4"}]}],"color":"#E8834A"}],"success":"Marco formal de aprobación de proyectos por etapas/hitos. Estándares de inversión y definiciones documentados y replicables.","highlights":["Finanzas","Operaciones","Inmobiliaria","Exploraciones","Experiencia"],"interactions":{"Marketing":"Apoyo según requerimiento","Comercial":"Apoyo según requerimiento","Finanzas":"Diseño coordinado del stage gate: identificación de cuellos de botella y prerequisitos, optimización de inversión comprometida por etapa","Operaciones":"Consolidación de estándares y definiciones para agilizar futuros business cases","Sustentabilidad":"Apoyo según requerimiento","Inmobiliaria":"Diseño coordinado del stage gate junto a Finanzas y Exploraciones; consolidación de estándares","Exploraciones":"Diseño coordinado del stage gate: continuidad entre etapas y optimización de inversión","Experiencia":"Consolidación de estándares y definiciones para agilizar futuros business cases","Personas":"Apoyo según requerimiento"},"q1":["Diseñar framework Stage Gate"],"q2":["Iterar e implementar proceso Stage Gate","Relevar, documentar y hacer benchmark de estándares"],"h2":["Consolidar estándares de inversión v1"]},{"number":"04","title":"Conservation Reserves","short":"Reserves","color":"#3B2D5C","accent":"#C4A1FF","headline":"Fortalecer la propuesta de valor y acelerar la tracción comercial","objetivos":[{"label":"Iterar y validar el producto Conservation Reserves","hitos":[{"q":"Q1","label":"Desarrollar producto Home"},{"q":"Q1","label":"Iterar producto actual"},{"q":"Q2","label":"Cerrar leads avanzados"}],"color":"#5B3FA0"},{"label":"Desplegar nueva estrategia comercial","hitos":[{"q":"Q1","label":"Hacer seguimiento a Destination Connection"},{"q":"Q1","label":"Desarrollar red de brokers"},{"q":"Q2","label":"Definir y ejecutar estrategia de marketing"}],"color":"#8B6FD4"}],"success":"Productos claros, simples y con market fit validado que generen convicción en el inversionista. Estrategia comercial desplegada: red de brokers activa, atracción vía marketing digital, destinos alineados en comunicación.","highlights":["Marketing","Sustentabilidad","Operaciones"],"interactions":{"Marketing":"Estrategia de contenido y marketing digital para posicionamiento de producto","Comercial":"Apoyo según requerimiento","Finanzas":"Apoyo según requerimiento","Operaciones":"Coordinación de comunicaciones con la reserva; diseño y ejecución de servicios a owners","Sustentabilidad":"Product ownership del componente de conservación; liderazgo de esfuerzos de conservación como diferenciador","Inmobiliaria":"Apoyo según requerimiento","Exploraciones":"Apoyo según requerimiento","Experiencia":"Apoyo según requerimiento","Personas":"Apoyo según requerimiento"},"q1":["Desarrollar producto Home","Iterar producto actual","Hacer seguimiento a Destination Connection","Desarrollar red de brokers"],"q2":["Cerrar leads avanzados","Definir y ejecutar estrategia de marketing"],"h2":[]},{"number":"4+1","title":"Performance LP","short":"Performance","color":"#5C1A1A","accent":"#FF6B6B","headline":"Monitorear y mejorar la rentabilidad del portafolio LP","objetivos":[{"label":"Diseñar e implementar reportería de performance LP","hitos":[{"q":"Q1","label":"Diseñar metodología de seguimiento"},{"q":"Q2","label":"Operar KPIs por destino"}],"color":"#8C1A1A"},{"label":"Actualizar plan de negocio LP 2026","hitos":[{"q":"H2","label":"Actualizar y aprobar plan de negocio LP 2026","subhitos":[{"label":"Revenue","q":"Q3"},{"label":"Costos y gasto","q":"Q4"}]}],"color":"#C44040"}],"success":"Reportería de performance LP operativa y con cadencia definida. KPIs por destino trackeados con ejes de mejora identificados. Plan de negocio LP actualizado y alineado con la estrategia de crecimiento.","highlights":["Finanzas","Operaciones","Comercial","Marketing"],"interactions":{"Marketing":"Seguimiento de KPIs y ejes de mejora; actualización de proyecciones","Comercial":"Seguimiento de KPIs y ejes de mejora; actualización de proyecciones","Finanzas":"Análisis y seguimiento de performance del portafolio; actualización de proyecciones","Operaciones":"Seguimiento de KPIs y ejes de mejora; actualización de proyecciones","Sustentabilidad":"Actualización de proyecciones","Inmobiliaria":"Actualización de proyecciones","Exploraciones":"Actualización de proyecciones","Experiencia":"Actualización de proyecciones","Personas":"Actualización de proyecciones"},"q1":["Diseñar metodología de seguimiento"],"q2":["Operar KPIs por destino"],"h2":["Actualizar y aprobar plan de negocio LP 2026"]}];
+    var SEED_CEOVALS = { "0_0_0":3, "0_1_0":3, "1_0_0":2, "1_1_0":3, "2_0_0":3, "3_0_0":2, "3_0_1":2, "3_1_0":3, "3_1_1":2, "4_0_0":3 };
+
+    // ----- Local UI state (no se persiste) ----------------------------
+    var estSt = {
+      subtab: 'agenda',
+      agExp:   new Set([0]),
+      agInter: new Set(),
+      agTime:  new Set(),
+      tlExp:   new Set([0])
+    };
+
+    // ----- Helpers ----------------------------------------------------
+    function rgba(h, a) {
+      h = h.replace("#","");
+      return "rgba(" + parseInt(h.slice(0,2),16) + "," + parseInt(h.slice(2,4),16) + "," + parseInt(h.slice(4,6),16) + "," + a + ")";
+    }
+    function sliderCol(v) { return v <= 1 ? "#e03050" : v <= 2 ? "#b08000" : "#1a9e50"; }
+    function sliderLbl(v) { return v <= 1 ? "🔴 No logrado" : v <= 2 ? "🟡 60-80%" : "🟢 +80%"; }
+    function sdot(status) { return '<span class="est-status-dot" style="background:' + statusColors[status] + '"></span>'; }
+    function tog(set, i) { if (set.has(i)) set.delete(i); else set.add(i); }
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
+    // ----- Data access (read from shared state) -----------------------
+    function getD() {
+      var s = window.planner ? window.planner.getShared() : {};
+      return s.D || [];
+    }
+    function getCeoVals() {
+      var s = window.planner ? window.planner.getShared() : {};
+      return s.ceoVals || {};
+    }
+
+    // ----- Auto-seed: si shared.D está vacío y el usuario puede editar,
+    //       inicializa con la estructura base ---------------------------
+    async function seedIfEmpty() {
+      if (!window.planner) return;
+      var shared = window.planner.getShared();
+      var needsSeed = !shared.D || !shared.D.length;
+      if (!needsSeed) return;
+      var me = window.planner.getMe();
+      if (!me.can_edit_shared) {
+        console.warn('[estrategia] shared está vacío y no tienes permiso para sembrarlo.');
+        return;
+      }
+      console.log('[estrategia] sembrando D + ceoVals iniciales…');
+      window.planner.mutateShared(function (s) {
+        if (!s.D)        s.D = SEED_D;
+        if (!s.ceoVals)  s.ceoVals = SEED_CEOVALS;
+      });
+      await window.planner.flush();
+    }
+
+    // ----- Mutations --------------------------------------------------
+    function setCeoVal(el) {
+      var k = el.dataset.key;
+      var v = parseInt(el.value, 10);
+      var ok = window.planner.mutateShared(function (s) {
+        if (!s.ceoVals) s.ceoVals = {};
+        s.ceoVals[k] = v;
+      });
+      if (!ok) {
+        // Si no puede escribir, revierte visualmente
+        var current = getCeoVals()[k] || 1;
+        el.value = current;
+        return;
+      }
+      // Update visual inmediato sin re-render completo
+      var c = sliderCol(v);
+      el.style.background = 'linear-gradient(to right,' + c + ' ' + ((v-1)/2*100) + '%, rgba(255,255,255,0.4) ' + ((v-1)/2*100) + '%)';
+      var sp = document.querySelector('span.est-slider-pill[data-key="' + k + '"]');
+      if (sp) { sp.style.background = c; sp.textContent = sliderLbl(v); }
+      if (estSt.subtab === 'onepager') renderEstrategia();
+    }
+
+    // ----- Toggles ----------------------------------------------------
+    function toggleAg(i)       { tog(estSt.agExp, i);  renderEstrategia(); }
+    function toggleAgInter(i)  { tog(estSt.agInter, i); renderEstrategia(); }
+    function toggleAgTime(i)   { tog(estSt.agTime, i);  renderEstrategia(); }
+    function toggleTl(i)       { tog(estSt.tlExp, i);   renderEstrategia(); }
+    function toggleAllAg() {
+      var D = getD();
+      if (estSt.agExp.size === D.length) { estSt.agExp.clear(); estSt.agInter.clear(); estSt.agTime.clear(); }
+      else D.forEach(function (_, i) { estSt.agExp.add(i); });
+      renderEstrategia();
+    }
+    function toggleAllTl() {
+      var D = getD();
+      if (estSt.tlExp.size === D.length) estSt.tlExp.clear();
+      else D.forEach(function (_, i) { estSt.tlExp.add(i); });
+      renderEstrategia();
+    }
+    function switchEstTab(t) { estSt.subtab = t; renderEstrategia(); }
+
+    // ----- Render -----------------------------------------------------
+    function renderEstrategia() {
+      var root = document.getElementById('estrategia-root');
+      if (!root) return;
+      root.className = 'est' + (estSt.subtab === 'onepager' ? ' onepager' : '');
+
+      var canEdit = window.planner.getMe().can_edit_shared;
+
+      var h = '<div class="est-header">';
+      h +=   '<div><div class="est-header-title">Agenda 2026</div>';
+      h +=   '<div class="est-header-sub">Desarrollo estratégico · vista del equipo</div></div>';
+      h +=   '<div class="est-subtabs">';
+      h +=     '<button class="est-subtab' + (estSt.subtab === 'agenda' ? ' active' : '') + '" data-est-tab="agenda">Agenda</button>';
+      h +=     '<button class="est-subtab' + (estSt.subtab === 'onepager' ? ' active' : '') + '" data-est-tab="onepager">One Pager</button>';
+      h +=   '</div>';
+      h += '</div>';
+
+      if (!canEdit) {
+        h += '<div class="est-readonly">Vista de solo lectura — los sliders Q1 los actualiza Víctor.</div>';
+      }
+
+      h += estSt.subtab === 'onepager' ? renderOnePagerView() : renderAgendaView();
+      root.innerHTML = h;
+
+      // Bind subtab handlers
+      root.querySelectorAll('[data-est-tab]').forEach(function (b) {
+        b.addEventListener('click', function () { switchEstTab(b.getAttribute('data-est-tab')); });
+      });
+      // Bind toggles
+      root.querySelectorAll('[data-est-action]').forEach(function (el) {
+        var action = el.getAttribute('data-est-action');
+        var idx = parseInt(el.getAttribute('data-est-idx'), 10);
+        el.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if      (action === 'toggleAg')      toggleAg(idx);
+          else if (action === 'toggleAgInter') toggleAgInter(idx);
+          else if (action === 'toggleAgTime')  toggleAgTime(idx);
+          else if (action === 'toggleTl')      toggleTl(idx);
+          else if (action === 'toggleAllAg')   toggleAllAg();
+          else if (action === 'toggleAllTl')   toggleAllTl();
+          else if (action === 'print')         window.print();
+        });
+      });
+      // Bind sliders
+      root.querySelectorAll('input.est-slider').forEach(function (slider) {
+        if (!canEdit) slider.disabled = true;
+        slider.addEventListener('input', function () { setCeoVal(slider); });
+      });
+    }
+
+    // ----- View: Agenda -----------------------------------------------
+    function renderAgendaView() {
+      var D = getD();
+      var ceoVals = getCeoVals();
+      if (!D.length) return '<p style="font-family:DM Mono,monospace;color:#999;text-align:center;padding:40px">Cargando estructura estratégica…</p>';
+
+      var h = '<div style="display:flex;justify-content:flex-end;margin-bottom:20px">';
+      h +=   '<button class="est-btn" data-est-action="toggleAllAg">' + (estSt.agExp.size === D.length ? 'Colapsar todo' : 'Expandir todo') + '</button>';
+      h += '</div>';
+      h += '<div style="display:flex;flex-direction:column;gap:12px">';
+
+      D.forEach(function (s, i) {
+        var isE = estSt.agExp.has(i);
+        var isI = estSt.agInter.has(i);
+        var isT = estSt.agTime.has(i);
+        var fc = 0; areas.forEach(function (a) { if (s.interactions && s.interactions[a]) fc++; });
+
+        h += '<div class="est-card' + (isE ? ' exp' : '') + '" style="border-left:4px solid ' + s.accent + ';animation:estSlideIn .5s ease ' + (i*0.08) + 's both">';
+        h +=   '<div class="est-hdr" data-est-action="toggleAg" data-est-idx="' + i + '">';
+        h +=     '<span class="est-num" style="color:' + s.accent + '">' + s.number + '</span>';
+        h +=     '<div class="est-info">';
+        h +=       '<div class="est-card-title" style="color:' + s.color + '">' + escapeHtml(s.title) + '</div>';
+        h +=       '<div class="est-card-hl">' + escapeHtml(s.headline) + '</div>';
+        h +=     '</div>';
+        h +=     '<span class="est-arrow">▾</span>';
+        h +=   '</div>';
+        h +=   '<div class="est-body"><div class="est-inner">';
+
+        // Objetivos
+        h +=     '<div style="margin-bottom:20px">';
+        h +=       '<div class="est-sec-label" style="color:' + s.accent + '">Objetivos</div>';
+        h +=       '<div style="display:flex;flex-direction:column;gap:6px">';
+        (s.objetivos || []).forEach(function (obj) {
+          var oc = obj.color || s.accent;
+          h += '<div class="est-obj-row" style="background:' + oc + '"><span class="est-obj-label">' + escapeHtml(obj.label) + '</span></div>';
+        });
+        h +=       '</div>';
+        h +=     '</div>';
+
+        // Success
+        h +=     '<div class="est-success" style="background:linear-gradient(135deg,' + rgba(s.color,0.03) + ',' + rgba(s.accent,0.06) + ')">';
+        h +=       '<div class="est-sec-label" style="color:' + s.color + ';opacity:.6">✦ Éxito Se Ve Así</div>';
+        h +=       '<p>' + escapeHtml(s.success || '') + '</p>';
+        h +=     '</div>';
+
+        // Seguimiento anual (Q1/Q2/H2)
+        var qItems = [
+          { label:'Avances Q1', icon:'①', objs: collectByQ(s, ['Q1']) },
+          { label:'Foco Q2',    icon:'②', objs: collectByQ(s, ['Q2']) },
+          { label:'Plan H2',    icon:'③', objs: collectByQ(s, ['H2','Q3','Q4']) }
+        ];
+        var qFilled = qItems.filter(function (x) { return x.objs.length; }).length;
+
+        h +=     '<div class="est-coll-sec">';
+        h +=       '<div class="est-coll-toggle" data-est-action="toggleAgTime" data-est-idx="' + i + '">';
+        h +=         '<span class="est-coll-arrow' + (isT ? ' open' : '') + '">▸</span>';
+        h +=         '<span class="est-coll-label" style="color:' + (isT ? s.color : '#AAA') + '">Seguimiento Anual</span>';
+        if (qFilled) {
+          h +=       '<span class="est-coll-badge" style="background:' + rgba(s.accent,0.12) + ';color:' + s.accent + '">' + qFilled + '/3</span>';
+        }
+        h +=       '</div>';
+        h +=       '<div class="est-coll-body" style="max-height:' + (isT ? '900px' : '0') + ';opacity:' + (isT ? 1 : 0) + '">';
+        h +=         '<div class="est-q-cards">';
+        qItems.forEach(function (q) {
+          var hv = q.objs.length > 0;
+          h += '<div class="est-q-card" style="background:' + (hv ? rgba(s.accent,0.03) : '#F8F7F5') + ';border:1px solid ' + (hv ? rgba(s.accent,0.12) : '#EEEDEB') + '">';
+          h +=   '<div class="est-q-hdr">';
+          h +=     '<span class="est-q-icon" style="color:' + s.accent + '">' + q.icon + '</span>';
+          h +=     '<span class="est-q-label" style="color:' + (hv ? s.color : '#BBB') + '">' + q.label + '</span>';
+          h +=   '</div>';
+          if (hv) {
+            h += '<div style="display:flex;flex-direction:column;gap:6px">';
+            q.objs.forEach(function (objG, oi) {
+              var oc = objG.objColor || s.accent;
+              objG.hitos.forEach(function (ht, hi) {
+                var isQ1 = ht.q === 'Q1';
+                var key = i + '_' + oi + '_' + hi;
+                var val = ceoVals[key] || 1;
+                var col = sliderCol(val);
+                var qTag = (ht.q && ht.q !== 'H2' && ht.q !== 'Q1' && ht.q !== 'Q2') ? '<span class="est-q-tag">' + ht.q + '</span>' : '';
+                h += '<div class="est-hito" style="background:' + oc + '">';
+                h +=   '<div class="est-hito-row">';
+                h +=     '<span class="est-hito-label">' + escapeHtml(ht.label) + '</span>' + qTag;
+                h +=   '</div>';
+                if (isQ1) {
+                  var pct = ((val-1)/2*100);
+                  h += '<div class="est-slider-row">';
+                  h +=   '<input type="range" min="1" max="3" step="1" value="' + val + '" data-key="' + key + '" class="est-slider" style="background:linear-gradient(to right,' + col + ' ' + pct + '%, rgba(255,255,255,0.4) ' + pct + '%)">';
+                  h +=   '<span class="est-slider-pill" data-key="' + key + '" style="background:' + col + '">' + sliderLbl(val) + '</span>';
+                  h += '</div>';
+                }
+                h += '</div>';
+                (ht.subhitos || []).forEach(function (sh) {
+                  h += '<div class="est-subhito" style="background:' + oc + '99">';
+                  h +=   '<span class="est-sub-q">' + sh.q + '</span>';
+                  h +=   '<span class="est-sub-label">' + escapeHtml(sh.label) + '</span>';
+                  h += '</div>';
+                });
+              });
+            });
+            h += '</div>';
+          } else {
+            h += '<p style="font-family:DM Mono,monospace;font-size:11px;color:#CCC;font-style:italic">Por completar…</p>';
+          }
+          h += '</div>';
+        });
+        h +=         '</div>';
+        h +=       '</div>';
+        h +=     '</div>';
+
+        // Interacciones por área
+        h +=     '<div class="est-coll-sec">';
+        h +=       '<div class="est-coll-toggle" data-est-action="toggleAgInter" data-est-idx="' + i + '">';
+        h +=         '<span class="est-coll-arrow' + (isI ? ' open' : '') + '">▸</span>';
+        h +=         '<span class="est-coll-label" style="color:' + (isI ? s.color : '#AAA') + '">Interacciones por Área</span>';
+        h +=         '<span class="est-coll-badge" style="background:' + rgba(s.accent,0.12) + ';color:' + s.accent + '">' + fc + '/' + areas.length + '</span>';
+        h +=       '</div>';
+        h +=       '<div class="est-coll-body" style="max-height:' + (isI ? '900px' : '0') + ';opacity:' + (isI ? 1 : 0) + '">';
+        h +=         '<div style="display:flex;flex-direction:column;gap:4px;padding-top:10px">';
+        areas.forEach(function (area) {
+          var v = (s.interactions || {})[area];
+          var empty = !v;
+          var hl = s.highlights && s.highlights.indexOf(area) >= 0;
+          h += '<div class="est-inter-row" style="background:' + (hl ? rgba(s.accent,0.09) : empty ? 'transparent' : rgba(s.accent,0.03)) + ';border-color:' + (hl ? rgba(s.accent,0.25) : 'transparent') + '">';
+          h +=   '<div class="est-inter-area">';
+          h +=     '<span class="est-inter-dot" style="background:' + (hl ? s.accent : empty ? '#DDD' : s.accent) + ';opacity:' + (hl ? 1 : empty ? 0.4 : 0.6) + '"></span>';
+          h +=     '<span class="est-inter-name" style="font-weight:' + (hl ? 600 : 500) + ';color:' + (hl ? s.color : empty ? '#BBB' : '#666') + '">' + escapeHtml(area) + '</span>';
+          h +=   '</div>';
+          h +=   '<div class="est-inter-val"><span style="font-family:' + (empty ? 'DM Mono,monospace' : 'DM Sans,sans-serif') + ';font-size:' + (empty ? '11px' : '12.5px') + ';color:' + (hl ? '#444' : empty ? '#CCC' : '#666') + ';font-style:' + (empty ? 'italic' : 'normal') + ';line-height:1.45;font-weight:' + (hl ? 500 : 400) + '">' + (empty ? 'Por definir…' : escapeHtml(v)) + '</span></div>';
+          h += '</div>';
+        });
+        h +=         '</div>';
+        h +=       '</div>';
+        h +=     '</div>';
+
+        h +=   '</div></div>'; // est-inner / est-body
+        h += '</div>'; // est-card
+      });
+
+      h += '</div>';
+      return h;
+    }
+
+    // Helper for renderAgendaView
+    function collectByQ(s, qs) {
+      var r = [];
+      (s.objetivos || []).forEach(function (obj) {
+        var hs = (obj.hitos || []).filter(function (x) { return qs.indexOf(x.q) >= 0; });
+        if (hs.length) r.push({ obj: obj.label, objColor: obj.color || s.accent, hitos: hs });
+      });
+      return r;
+    }
+
+    // ----- View: One Pager (timeline) ---------------------------------
+    function renderOnePagerView() {
+      var D = getD();
+      var ceoVals = getCeoVals();
+      var h = '<div style="display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px">';
+      h +=   '<button class="est-btn" data-est-action="print">🖨 Imprimir PDF</button>';
+      h += '</div>';
+      h += '<div class="est-legend">';
+      Object.keys(statusLabels).forEach(function (k) {
+        h += '<div class="est-legend-item">' + sdot(k) + '<span class="est-legend-text">' + statusLabels[k] + '</span></div>';
+      });
+      h += '</div>';
+      h += '<div style="display:flex;justify-content:flex-end;margin-bottom:16px"><button class="est-btn" data-est-action="toggleAllTl">' + (estSt.tlExp.size === D.length ? 'Colapsar todo' : 'Expandir todo') + '</button></div>';
+      h += '<div style="display:flex;flex-direction:column;gap:12px">';
+
+      D.forEach(function (s, fi) {
+        var i = fi;
+        var isO = estSt.tlExp.has(i);
+        var hl = areas.filter(function (a) { return s.highlights && s.highlights.indexOf(a) >= 0; });
+
+        h += '<div class="est-onepager-card' + (isO ? ' exp' : '') + '" style="border-left:4px solid ' + s.accent + ';animation:estSlideIn .4s ease ' + (i*0.07) + 's both">';
+        h +=   '<div class="est-onepager-hdr" data-est-action="toggleTl" data-est-idx="' + i + '">';
+        h +=     '<span class="est-num" style="color:' + s.accent + '">' + s.number + '</span>';
+        h +=     '<div class="est-info">';
+        h +=       '<div class="est-card-title" style="color:' + s.color + '">' + escapeHtml(s.title) + '</div>';
+        h +=       '<div class="est-card-hl">' + escapeHtml(s.headline) + '</div>';
+        h +=     '</div>';
+        if (!isO) {
+          h += '<div style="display:flex;gap:4px;flex-wrap:wrap;max-width:240px;justify-content:flex-end">';
+          hl.slice(0,3).forEach(function (a) {
+            h += '<span class="est-mini-chip" style="background:' + rgba(s.accent,0.07) + ';color:' + s.color + '">' + escapeHtml(a) + '</span>';
+          });
+          if (hl.length > 3) h += '<span style="font-family:DM Mono,monospace;font-size:9px;color:#BBB">+' + (hl.length-3) + '</span>';
+          h += '</div>';
+        }
+        h +=     '<span class="est-arrow">▾</span>';
+        h +=   '</div>';
+
+        if (isO) {
+          // Timeline strip
+          h += '<div class="est-tl-strip" style="background:linear-gradient(135deg,' + rgba(s.color,0.025) + ',' + rgba(s.accent,0.04) + ');border-top-color:' + rgba(s.accent,0.1) + '">';
+          h +=   '<div class="est-tl-grid">';
+          periods.forEach(function (p, pi) {
+            var pk = p === 'H2' ? 'h2' : p.toLowerCase();
+            h += '<div class="est-tl-cell" style="' + (pi<2 ? 'border-right:1px solid ' + rgba(s.accent,0.07) : '') + '">';
+            h +=   '<div class="est-tl-hdr">';
+            h +=     '<span class="est-tl-period" style="color:' + s.color + '">' + p + '</span>';
+            h +=     '<span class="est-tl-period-sub">' + periodLabels[p] + '</span>';
+            h +=     sdot(statusMap[pk]);
+            h +=   '</div>';
+            h += '</div>';
+          });
+          h +=   '</div>';
+          h +=   '<div class="est-tl-grid">';
+          periods.forEach(function (p, pi) {
+            var allHitos = [];
+            (s.objetivos || []).forEach(function (obj, oi) {
+              (obj.hitos || []).filter(function (x) {
+                return x.q === p || (p === 'H2' && (x.q === 'Q3' || x.q === 'Q4'));
+              }).forEach(function (x, hi) {
+                allHitos.push({ label:x.label, objColor:obj.color||s.accent, ceoKey:fi+'_'+oi+'_'+hi, subhitos:x.subhitos||[], q:x.q });
+              });
+            });
+            h += '<div class="est-tl-cell-body" style="' + (pi<2 ? 'border-right:1px solid ' + rgba(s.accent,0.07) : '') + '">';
+            if (allHitos.length) {
+              h += '<div style="display:flex;flex-direction:column;gap:3px;margin-bottom:6px">';
+              allHitos.forEach(function (x) {
+                var hc = x.objColor;
+                var isQ1 = p === 'Q1';
+                var val = isQ1 ? (ceoVals[x.ceoKey] || 1) : null;
+                var vc = val ? sliderCol(val) : null;
+                var qBadge = (x.q && x.q !== p) ? '<span class="est-q-tag">' + x.q + '</span>' : '';
+                h += '<div class="est-hito" style="background:' + hc + ';font-family:DM Mono,monospace;font-size:8.5px;padding:3px 8px;display:flex;align-items:center;justify-content:space-between">';
+                h +=   '<span style="color:#fff;font-weight:500">' + escapeHtml(x.label) + '</span>' + qBadge;
+                if (isQ1 && val) {
+                  h += '<span style="font-size:9px;background:' + vc + ';color:#fff;padding:1px 5px;border-radius:6px;margin-left:6px;flex-shrink:0">' + sliderLbl(val) + '</span>';
+                }
+                h += '</div>';
+                (x.subhitos || []).forEach(function (sh) {
+                  h += '<div class="est-subhito" style="background:' + hc + '99;font-family:DM Mono,monospace;font-size:7.5px"><span class="est-sub-q">' + sh.q + '</span><span class="est-sub-label">' + escapeHtml(sh.label) + '</span></div>';
+                });
+              });
+              h += '</div>';
+            }
+            h += '</div>';
+          });
+          h +=   '</div>';
+          h += '</div>';
+        }
+
+        h += '</div>'; // est-onepager-card
+      });
+      h += '</div>';
+      return h;
+    }
+
+    // ----- Boot --------------------------------------------------------
+    // Expone el render para que onAuthenticated lo invoque después de hydrate
+    window.renderEstrategia = async function () {
+      try {
+        await seedIfEmpty();
+      } catch (e) {
+        console.error('[estrategia] seed error:', e);
+      }
+      renderEstrategia();
+    };
 
   })();
   </script>
