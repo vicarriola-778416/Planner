@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planner 2026 · Contexto</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;700&family=Instrument+Serif:ital@0;1&family=Syne:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f2f1ee;
+      --paper: #ffffff;
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --line: #e0ddd6;
+      --accent: #2563eb;
+      --v: #2563eb;
+      --j: #dc2626;
+      --c: #16a34a;
+      --ok: #16a34a;
+      --warn: #d97706;
+      --err: #dc2626;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'DM Sans', system-ui, sans-serif; }
+    body { min-height: 100vh; }
+
+    /* === Login overlay === */
+    .auth-overlay {
+      position: fixed; inset: 0; background: var(--bg);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
+    }
+    .auth-card {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 36px 32px;
+      max-width: 420px; width: 90%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    }
+    .auth-card h1 {
+      font-family: 'Instrument Serif', serif;
+      font-weight: 400; font-size: 36px; margin: 0 0 8px;
+    }
+    .auth-card p { color: var(--muted); font-size: 14px; margin: 0 0 24px; }
+    .auth-input {
+      width: 100%; padding: 12px 14px;
+      border: 1px solid var(--line); border-radius: 8px;
+      font-family: 'DM Mono', monospace; font-size: 14px;
+      background: var(--bg);
+    }
+    .auth-input:focus { outline: 2px solid var(--accent); outline-offset: -1px; }
+    .auth-btn {
+      width: 100%; margin-top: 12px; padding: 12px;
+      background: var(--ink); color: white; border: 0; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 14px;
+      cursor: pointer;
+    }
+    .auth-btn:hover { background: #000; }
+    .auth-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .auth-msg { margin-top: 16px; font-size: 13px; }
+    .auth-msg.ok { color: var(--ok); }
+    .auth-msg.err { color: var(--err); }
+
+    /* === App shell === */
+    .app { display: none; }
+    .app.ready { display: block; }
+    .topbar {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 24px; border-bottom: 1px solid var(--line);
+      background: var(--paper);
+    }
+    .brand {
+      font-family: 'Instrument Serif', serif; font-size: 22px;
+      font-weight: 400; letter-spacing: -0.01em;
+    }
+    .brand small { font-family: 'DM Mono', monospace; color: var(--muted); font-size: 11px; margin-left: 6px; }
+    .tabs { display: flex; gap: 4px; margin-left: auto; }
+    .tab {
+      padding: 8px 16px; border: 1px solid var(--line);
+      background: transparent; cursor: pointer; border-radius: 6px;
+      font-family: 'DM Sans', sans-serif; font-size: 13px; color: var(--muted);
+    }
+    .tab.active { background: var(--ink); color: white; border-color: var(--ink); }
+    .me {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px;
+      font-size: 12px; font-family: 'DM Mono', monospace;
+    }
+    .me-dot {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: white; font-weight: 700; font-size: 11px;
+    }
+    .signout {
+      background: transparent; border: 0; color: var(--muted);
+      cursor: pointer; font-family: 'DM Mono', monospace; font-size: 11px;
+    }
+    .signout:hover { color: var(--err); }
+
+    /* === Sync indicator === */
+    .sync-indicator {
+      position: fixed; bottom: 16px; right: 16px;
+      padding: 6px 12px; border-radius: 999px;
+      font-family: 'DM Mono', monospace; font-size: 11px;
+      background: var(--paper); border: 1px solid var(--line);
+      color: var(--muted);
+      transition: opacity 0.3s;
+    }
+    .sync-indicator.saving { color: var(--warn); }
+    .sync-indicator.saved { color: var(--ok); }
+    .sync-indicator.error { color: var(--err); }
+
+    /* === Tab panels === */
+    .panel { display: none; padding: 24px; }
+    .panel.active { display: block; }
+    .placeholder {
+      max-width: 640px; margin: 60px auto;
+      background: var(--paper); border: 1px dashed var(--line);
+      border-radius: 12px; padding: 32px; text-align: center;
+    }
+    .placeholder h2 {
+      font-family: 'Instrument Serif', serif; font-weight: 400;
+      font-size: 28px; margin: 0 0 8px;
+    }
+    .placeholder p { color: var(--muted); margin: 8px 0; }
+    .placeholder code {
+      background: var(--bg); padding: 2px 6px; border-radius: 4px;
+      font-family: 'DM Mono', monospace; font-size: 12px;
+    }
+
+    /* === Equipo chips === */
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 8px; border-radius: 999px;
+      font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 500;
+      color: white;
+    }
+    .chip.v { background: var(--v); }
+    .chip.j { background: var(--j); }
+    .chip.c { background: var(--c); }
+  </style>
+</head>
+<body>
+
+  <!-- =================================================================
+       LOGIN OVERLAY (visible hasta que auth resuelva)
+       ================================================================= -->
+  <div id="authOverlay" class="auth-overlay">
+    <div class="auth-card">
+      <h1>Planner 2026</h1>
+      <p>Entra con tu email de Explora. Te llegará un link mágico para acceder.</p>
+      <input id="authEmail" class="auth-input" type="email" placeholder="tucorreo@explora.com" autocomplete="email">
+      <button id="authBtn" class="auth-btn">Enviar link mágico</button>
+      <div id="authMsg" class="auth-msg"></div>
+    </div>
+  </div>
+
+  <!-- =================================================================
+       APP SHELL (oculta hasta auth + hydrate)
+       ================================================================= -->
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="brand">Planner 2026 <small id="version">v2026-05-12 dev</small></div>
+      <nav class="tabs">
+        <button class="tab active" data-tab="estrategia">Estrategia</button>
+        <button class="tab" data-tab="semanal">Semanal</button>
+      </nav>
+      <div class="me">
+        <div id="meDot" class="me-dot">·</div>
+        <span id="meName">—</span>
+        <button id="signoutBtn" class="signout" title="Cerrar sesión">salir</button>
+      </div>
+    </header>
+
+    <!-- Tab: Estrategia (ex-agenda-2026.html) -->
+    <section id="panel-estrategia" class="panel active">
+      <div class="placeholder">
+        <h2>Estrategia anual</h2>
+        <p>Contenido pendiente de migrar desde <code>agenda-2026.html</code>:</p>
+        <p style="font-size: 13px;">Vista <strong>Agenda</strong> (focos · objetivos · hitos · subhitos) + <strong>One Pager</strong> + sliders Q1.</p>
+        <p style="margin-top: 24px; font-size: 12px;">Estado actual: <span id="dbgShared">shared no cargado</span></p>
+      </div>
+    </section>
+
+    <!-- Tab: Semanal (ex-calendario2026.html) -->
+    <section id="panel-semanal" class="panel">
+      <div class="placeholder">
+        <h2>Gestión semanal</h2>
+        <p>Contenido pendiente de migrar desde <code>calendario2026.html</code>:</p>
+        <p style="font-size: 13px;">Calendario · Planning (cierre+plan) · CEO Update · Bitácora · Reminders.</p>
+        <p style="margin-top: 16px; font-size: 13px;">
+          Vista activa:
+          <button class="chip v" data-persona="V">V</button>
+          <button class="chip j" data-persona="J">J</button>
+          <button class="chip c" data-persona="C">C</button>
+          <button style="background:#444" class="chip" data-persona="all">Equipo</button>
+        </p>
+        <p style="margin-top: 24px; font-size: 12px;">Estado actual: <span id="dbgUser">user no cargado</span></p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Sync indicator (esquina inferior derecha) -->
+  <div id="syncIndicator" class="sync-indicator">listo</div>
+
+  <!-- =================================================================
+       SUPABASE CLIENT + LÓGICA DE AUTH / HYDRATE / SAVE
+       ================================================================= -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script>
+  (function () {
+    'use strict';
+
+    // ----- Config -------------------------------------------------------
+    var SUPABASE_URL = 'https://abcurifmwsytheispmml.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable__bi7QePH2o46RR6V4e_NCQ_n82HrDFJ';
+    var DEBOUNCE_MS = 800;
+
+    var sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true }
+    });
+
+    // ----- State holders ------------------------------------------------
+    window.appState = {
+      shared: {},          // estado compartido (focos, agenda, etc.)
+      users:  {},          // mapa user_id -> {state, email, name, initial, color}
+      me:     null,        // {user_id, email, name, initial, color, can_edit_shared}
+      ready:  false
+    };
+
+    var saveTimers = { shared: null, user: null };
+    var syncEl = document.getElementById('syncIndicator');
+
+    function setSync(state, msg) {
+      syncEl.className = 'sync-indicator ' + state;
+      syncEl.textContent = msg || state;
+    }
+
+    // ----- Auth flow ---------------------------------------------------
+    var authOverlay = document.getElementById('authOverlay');
+    var authEmail   = document.getElementById('authEmail');
+    var authBtn     = document.getElementById('authBtn');
+    var authMsg     = document.getElementById('authMsg');
+
+    authBtn.addEventListener('click', sendMagicLink);
+    authEmail.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') sendMagicLink();
+    });
+
+    async function sendMagicLink() {
+      var email = (authEmail.value || '').trim().toLowerCase();
+      if (!email) { showAuthMsg('Escribe tu email.', 'err'); return; }
+      authBtn.disabled = true;
+      showAuthMsg('Enviando...', '');
+      try {
+        var redirect = window.location.origin + window.location.pathname;
+        var resp = await sb.auth.signInWithOtp({
+          email: email,
+          options: { emailRedirectTo: redirect }
+        });
+        if (resp.error) throw resp.error;
+        showAuthMsg('Listo. Revisa tu correo y abre el link.', 'ok');
+      } catch (err) {
+        console.error(err);
+        showAuthMsg('Error: ' + (err.message || err), 'err');
+      } finally {
+        authBtn.disabled = false;
+      }
+    }
+
+    function showAuthMsg(msg, cls) {
+      authMsg.textContent = msg;
+      authMsg.className = 'auth-msg ' + (cls || '');
+    }
+
+    // Listen to auth state changes (incluye el redirect del magic link)
+    sb.auth.onAuthStateChange(function (event, session) {
+      if (session && session.user) {
+        onAuthenticated(session.user);
+      } else if (event === 'SIGNED_OUT') {
+        location.reload();
+      }
+    });
+
+    // Check existing session on load
+    (async function checkSession() {
+      var resp = await sb.auth.getSession();
+      if (resp.data && resp.data.session && resp.data.session.user) {
+        onAuthenticated(resp.data.session.user);
+      }
+    })();
+
+    async function onAuthenticated(user) {
+      try {
+        // 1. Verificar allowlist
+        var ar = await sb.from('planner_allowlist').select('*').eq('email', user.email).maybeSingle();
+        if (ar.error) throw ar.error;
+        if (!ar.data) {
+          showAuthMsg('Tu email no está autorizado. Habla con Víctor.', 'err');
+          await sb.auth.signOut();
+          return;
+        }
+
+        var me = {
+          user_id: user.id,
+          email: user.email,
+          name: ar.data.display_name,
+          initial: ar.data.initial,
+          color: ar.data.color || '#888',
+          can_edit_shared: ar.data.can_edit_shared
+        };
+        window.appState.me = me;
+
+        // 2. Hydrate shared + users en paralelo
+        var [sharedR, usersR, allR] = await Promise.all([
+          sb.from('planner_shared').select('state').eq('id', 1).maybeSingle(),
+          sb.from('planner_user').select('user_id, state, updated_at'),
+          sb.from('planner_allowlist').select('email, display_name, initial, color')
+        ]);
+        if (sharedR.error) throw sharedR.error;
+        if (usersR.error)  throw usersR.error;
+
+        window.appState.shared = (sharedR.data && sharedR.data.state) || {};
+
+        // Map user_id -> profile (necesita join con auth.users para email, pero
+        // como solo podemos leer allowlist, mapeamos por user_id directamente).
+        // Para llegar de user_id a allowlist info, necesitamos email del auth.user.
+        // En v0.1 dejamos solo state por user_id; el join completo lo hacemos
+        // con un view en Supabase en la siguiente iteración.
+        window.appState.users = {};
+        (usersR.data || []).forEach(function (row) {
+          window.appState.users[row.user_id] = { state: row.state || {} };
+        });
+
+        // 3. Asegurar mi fila en planner_user
+        if (!window.appState.users[me.user_id]) {
+          var insR = await sb.from('planner_user').insert({
+            user_id: me.user_id,
+            state: { weeks: {} }
+          });
+          if (insR.error && insR.error.code !== '23505') throw insR.error;
+          window.appState.users[me.user_id] = { state: { weeks: {} } };
+        }
+
+        // 4. Mostrar app
+        renderShell();
+        window.appState.ready = true;
+        authOverlay.style.display = 'none';
+        document.getElementById('app').classList.add('ready');
+        setSync('saved', 'cargado');
+
+        // Hooks para extensión futura: cuando el contenido real se monte,
+        // ejecutará renderEstrategia() y renderSemanal() desde aquí.
+        if (typeof window.renderEstrategia === 'function') window.renderEstrategia();
+        if (typeof window.renderSemanal === 'function')    window.renderSemanal();
+
+      } catch (err) {
+        console.error('Hydrate error:', err);
+        showAuthMsg('Error al cargar datos: ' + (err.message || err), 'err');
+      }
+    }
+
+    function renderShell() {
+      var me = window.appState.me;
+      document.getElementById('meName').textContent = me.name;
+      var dot = document.getElementById('meDot');
+      dot.textContent = me.initial;
+      dot.style.background = me.color;
+
+      // Debug placeholders
+      var sharedKeys = Object.keys(window.appState.shared || {});
+      document.getElementById('dbgShared').textContent =
+        sharedKeys.length ? sharedKeys.length + ' claves: ' + sharedKeys.join(', ') : 'vacío (esperando seed)';
+
+      var myWeeks = Object.keys((window.appState.users[me.user_id] || {state:{}}).state.weeks || {});
+      document.getElementById('dbgUser').textContent =
+        myWeeks.length ? myWeeks.length + ' semanas: ' + myWeeks.join(', ') : 'sin semanas todavía';
+    }
+
+    // ----- Tabs --------------------------------------------------------
+    document.querySelectorAll('.tab').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tab = btn.getAttribute('data-tab');
+        document.querySelectorAll('.tab').forEach(function (b) { b.classList.toggle('active', b === btn); });
+        document.querySelectorAll('.panel').forEach(function (p) {
+          p.classList.toggle('active', p.id === 'panel-' + tab);
+        });
+      });
+    });
+
+    // ----- Sign out ----------------------------------------------------
+    document.getElementById('signoutBtn').addEventListener('click', async function () {
+      await sb.auth.signOut();
+    });
+
+    // ----- API expuesta para módulos futuros ---------------------------
+    // Cuando migremos contenido de agenda/calendario, los módulos
+    // llamarán a estas funciones en vez de tocar Supabase directo.
+    window.planner = {
+      sb: sb,
+
+      // ----- Lectura -----
+      getShared: function () { return window.appState.shared; },
+      getMyUserState: function () {
+        var me = window.appState.me;
+        return (window.appState.users[me.user_id] || { state: {} }).state;
+      },
+      getUserState: function (userId) {
+        return (window.appState.users[userId] || { state: {} }).state;
+      },
+      getAllUserStates: function () { return window.appState.users; },
+      getMe: function () { return window.appState.me; },
+
+      // ----- Escritura (con debounce) -----
+      // Modifica shared en memoria + agenda save
+      mutateShared: function (mutator) {
+        if (!window.appState.me.can_edit_shared) {
+          console.warn('No tienes permiso para editar el estado compartido.');
+          return false;
+        }
+        mutator(window.appState.shared);
+        scheduleSave('shared');
+        return true;
+      },
+      // Modifica mi user state en memoria + agenda save
+      mutateMyUser: function (mutator) {
+        var me = window.appState.me;
+        var slot = window.appState.users[me.user_id];
+        if (!slot) {
+          window.appState.users[me.user_id] = slot = { state: { weeks: {} } };
+        }
+        mutator(slot.state);
+        scheduleSave('user');
+      },
+
+      // Forzar save inmediato (sin debounce)
+      flush: async function () {
+        await Promise.all([saveShared(true), saveUser(true)]);
+      }
+    };
+
+    function scheduleSave(which) {
+      if (saveTimers[which]) clearTimeout(saveTimers[which]);
+      setSync('saving', 'guardando…');
+      saveTimers[which] = setTimeout(function () {
+        if (which === 'shared') saveShared();
+        else saveUser();
+      }, DEBOUNCE_MS);
+    }
+
+    async function saveShared(force) {
+      if (!window.appState.me) return;
+      if (!window.appState.me.can_edit_shared) return;
+      try {
+        var resp = await sb.from('planner_shared').update({
+          state: window.appState.shared,
+          updated_by: window.appState.me.user_id
+        }).eq('id', 1);
+        if (resp.error) throw resp.error;
+        setSync('saved', 'guardado');
+      } catch (err) {
+        console.error('saveShared error:', err);
+        setSync('error', 'error guardando');
+      }
+    }
+
+    async function saveUser(force) {
+      if (!window.appState.me) return;
+      var me = window.appState.me;
+      var slot = window.appState.users[me.user_id];
+      if (!slot) return;
+      try {
+        var resp = await sb.from('planner_user').upsert({
+          user_id: me.user_id,
+          state: slot.state
+        });
+        if (resp.error) throw resp.error;
+        setSync('saved', 'guardado');
+      } catch (err) {
+        console.error('saveUser error:', err);
+        setSync('error', 'error guardando');
+      }
+    }
+
+    // Flush antes de cerrar
+    window.addEventListener('beforeunload', function () {
+      if (saveTimers.shared) saveShared(true);
+      if (saveTimers.user)   saveUser(true);
+    });
+
+  })();
+  </script>
+
+</body>
+</html>
