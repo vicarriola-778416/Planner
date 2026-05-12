@@ -230,6 +230,68 @@
     .est-legend-text { font-family: 'DM Mono', monospace; font-size: 10px; color: #999; letter-spacing: .03em; }
 
     .est-readonly { padding: 12px 16px; border-radius: 8px; background: rgba(217,119,6,0.06); color: #92400e; font-size: 12px; font-family: 'DM Mono', monospace; margin-bottom: 16px; }
+
+    /* =================================================================
+       SEMANAL TAB (ex calendario2026.html → Planning subtab)
+       Scoped con .sem-
+       ================================================================= */
+    .sem { padding: 20px 28px 48px; max-width: 1100px; margin: 0 auto; }
+    .sem-header { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding-bottom: 14px; border-bottom: 1px solid var(--line); margin-bottom: 20px; }
+    .sem-week-nav { display: flex; align-items: center; gap: 8px; }
+    .sem-week-btn { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 14px; color: var(--muted); transition: all .15s; }
+    .sem-week-btn:hover { color: var(--ink); border-color: var(--ink); }
+    .sem-week-info { min-width: 160px; }
+    .sem-week-label { font-family: 'Instrument Serif', serif; font-size: 22px; line-height: 1; }
+    .sem-week-dates { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .sem-week-active-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--ok); margin-left: 6px; vertical-align: middle; }
+    .sem-week-cierre-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--warn); margin-left: 6px; vertical-align: middle; }
+
+    .sem-persona-tabs { display: flex; gap: 3px; background: #ECEAE4; border-radius: 8px; padding: 3px; }
+    .sem-persona-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: var(--muted); }
+    .sem-persona-btn.active { background: var(--paper); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.06); font-weight: 500; }
+    .sem-persona-btn .sem-persona-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 5px; vertical-align: middle; }
+
+    .sem-mode-tabs { display: flex; gap: 3px; margin-left: auto; background: #ECEAE4; border-radius: 8px; padding: 3px; }
+    .sem-mode-btn { font-family: 'DM Mono', monospace; font-size: 11px; padding: 6px 14px; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: var(--muted); }
+    .sem-mode-btn.active { background: var(--paper); color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.06); font-weight: 500; }
+    .sem-mode-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .sem-banner { padding: 10px 14px; border-radius: 8px; font-size: 12px; font-family: 'DM Mono', monospace; margin-bottom: 16px; }
+    .sem-banner-info { background: rgba(37,99,235,0.06); color: #1d4ed8; }
+    .sem-banner-warn { background: rgba(217,119,6,0.06); color: #92400e; }
+    .sem-banner-muted { background: var(--paper); color: var(--muted); border: 1px dashed var(--line); }
+
+    .sem-stats { display: flex; gap: 16px; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 16px; }
+    .sem-stats b { color: var(--ink); font-weight: 600; }
+
+    .sem-empty { padding: 60px 20px; text-align: center; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; background: var(--paper); border: 1px dashed var(--line); border-radius: 12px; }
+    .sem-empty .sem-empty-big { font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--ink); margin-bottom: 8px; font-style: italic; }
+
+    .sem-foco-card { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 12px; overflow: hidden; }
+    .sem-foco-hdr { display: flex; align-items: center; gap: 10px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+    .sem-foco-tag { font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 999px; color: white; font-weight: 600; letter-spacing: .04em; }
+    .sem-foco-title { font-family: 'Instrument Serif', serif; font-size: 17px; }
+    .sem-foco-body { padding: 6px 18px 14px; }
+
+    .sem-obj-block { margin-top: 10px; }
+    .sem-obj-label { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 6px; font-family: 'DM Mono', monospace; letter-spacing: .02em; }
+    .sem-obj-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    .sem-hito-block { margin: 6px 0 8px 16px; padding-left: 12px; border-left: 2px solid var(--line); }
+    .sem-hito-label { font-size: 12.5px; font-weight: 500; color: var(--ink); margin: 6px 0 4px; }
+    .sem-hito-due { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); margin-left: 6px; font-weight: 400; }
+
+    .sem-accion-row { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-top: 1px dashed var(--line); font-size: 13px; line-height: 1.4; }
+    .sem-accion-row:first-of-type { border-top: 0; }
+    .sem-accion-chip { flex-shrink: 0; width: 20px; height: 20px; border-radius: 50%; color: white; font-weight: 700; font-size: 10px; font-family: 'DM Mono', monospace; display: flex; align-items: center; justify-content: center; margin-top: 1px; }
+    .sem-accion-text { flex: 1; }
+    .sem-accion-comment { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; font-style: italic; }
+    .sem-accion-pill { font-family: 'DM Mono', monospace; font-size: 9px; padding: 2px 7px; border-radius: 999px; flex-shrink: 0; align-self: center; font-weight: 600; letter-spacing: .04em; }
+    .sem-pill-hecha   { background: rgba(22,163,74,0.12);  color: var(--ok); }
+    .sem-pill-mas     { background: rgba(217,119,6,0.12);  color: var(--warn); }
+    .sem-pill-cancel  { background: rgba(220,38,38,0.10);  color: var(--err); }
+    .sem-pill-carry   { background: rgba(37,99,235,0.10);  color: var(--accent); }
+    .sem-pill-pending { background: var(--bg);             color: var(--muted); }
   </style>
 </head>
 <body>
@@ -252,7 +314,7 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-12.2 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-12.3 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
@@ -271,19 +333,7 @@
 
     <!-- Tab: Semanal (ex-calendario2026.html) -->
     <section id="panel-semanal" class="panel">
-      <div class="placeholder">
-        <h2>Gestión semanal</h2>
-        <p>Contenido pendiente de migrar desde <code>calendario2026.html</code>:</p>
-        <p style="font-size: 13px;">Calendario · Planning (cierre+plan) · CEO Update · Bitácora · Reminders.</p>
-        <p style="margin-top: 16px; font-size: 13px;">
-          Vista activa:
-          <button class="chip v" data-persona="V">V</button>
-          <button class="chip j" data-persona="J">J</button>
-          <button class="chip c" data-persona="C">C</button>
-          <button style="background:#444" class="chip" data-persona="all">Equipo</button>
-        </p>
-        <p style="margin-top: 24px; font-size: 12px;">Estado actual: <span id="dbgUser">user no cargado</span></p>
-      </div>
+      <div id="semanal-root" class="sem"></div>
     </section>
   </div>
 
@@ -1011,6 +1061,359 @@
         console.error('[estrategia] seed error:', e);
       }
       renderEstrategia();
+    };
+
+  })();
+  </script>
+
+  <!-- =================================================================
+       MÓDULO SEMANAL (ex calendario2026.html → Planning subtab)
+       Round 1: shell + week nav + persona selector + Plan mode read-only
+       Lee shared.objs (estructura) y planner_user.state.weeks (acciones)
+       ================================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    // ----- Constantes -------------------------------------------------
+    var PERSONAS = ['all', 'Víctor', 'Jaime', 'Colomba'];
+    var PERSONA_LABELS = { 'all': '👥 Equipo', 'Víctor': 'V', 'Jaime': 'J', 'Colomba': 'C' };
+    var PERSONA_COLORS = { 'Víctor': 'var(--v)', 'Jaime': 'var(--j)', 'Colomba': 'var(--c)' };
+    var MODES = [
+      { id: 'plan',    label: '📋 Plan',     enabled: true  },
+      { id: 'cierre',  label: '✓ Cierre',    enabled: false },
+      { id: 'output',  label: '📄 Output',   enabled: false },
+      { id: 'history', label: '🗂 Historial', enabled: false }
+    ];
+
+    // ----- Estado local UI (no se persiste) ---------------------------
+    var semSt = {
+      weekKey: null,    // "2026_W20"
+      persona: null,    // "all" | "Víctor" | "Jaime" | "Colomba"
+      mode:    'plan'
+    };
+
+    // ----- Helpers ----------------------------------------------------
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
+    // ----- ISO week math ----------------------------------------------
+    function getISOWeek(date) {
+      var d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+      var dayNum = d.getUTCDay() || 7;
+      d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+      var yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+      var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+      return { year: d.getUTCFullYear(), week: weekNo };
+    }
+    function weekToKey(year, week) {
+      return year + '_W' + (week < 10 ? '0' + week : '' + week);
+    }
+    function parseKey(k) {
+      var m = k && k.match(/^(\d{4})_W(\d+)$/);
+      return m ? { year: +m[1], week: +m[2] } : null;
+    }
+    function weekKeyToDates(k) {
+      var p = parseKey(k);
+      if (!p) return '—';
+      var jan4 = new Date(Date.UTC(p.year, 0, 4));
+      var jan4dow = jan4.getUTCDay() || 7;
+      var monday = new Date(jan4);
+      monday.setUTCDate(jan4.getUTCDate() - (jan4dow - 1) + (p.week - 1) * 7);
+      var sunday = new Date(monday); sunday.setUTCDate(monday.getUTCDate() + 6);
+      var mes = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      return monday.getUTCDate() + ' ' + mes[monday.getUTCMonth()] + ' – ' +
+             sunday.getUTCDate() + ' ' + mes[sunday.getUTCMonth()];
+    }
+    function weekKeyLabel(k) {
+      var p = parseKey(k);
+      return p ? ('W' + p.week + ' · ' + p.year) : (k || '—');
+    }
+    function isoWeeksInYear(year) {
+      var d = new Date(year, 0, 1).getDay() || 7;
+      var leap = (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
+      return (d === 4 || (leap && d === 3)) ? 53 : 52;
+    }
+    function shiftWeek(delta) {
+      var p = parseKey(semSt.weekKey);
+      if (!p) return;
+      var newWeek = p.week + delta;
+      var newYear = p.year;
+      if (newWeek < 1) { newYear--; newWeek = isoWeeksInYear(newYear); }
+      if (newWeek > isoWeeksInYear(newYear)) { newYear++; newWeek = 1; }
+      semSt.weekKey = weekToKey(newYear, newWeek);
+      render();
+    }
+    function pickInitialWeek() {
+      var u = window.planner.getMyUserState();
+      var weeks = (u && u.weeks) ? Object.keys(u.weeks).filter(function (k) { return parseKey(k); }) : [];
+      if (weeks.length) {
+        weeks.sort();
+        return weeks[weeks.length - 1];
+      }
+      var iso = getISOWeek(new Date());
+      return weekToKey(iso.year, iso.week);
+    }
+
+    // ----- Acciones del estado per-user (merge según persona) ---------
+    function getAccionesForView() {
+      var users = window.planner.getAllUserStates();
+      var wk = semSt.weekKey;
+      var pers = semSt.persona;
+      var out = [];
+      Object.keys(users).forEach(function (uid) {
+        var w = ((users[uid].state || {}).weeks || {})[wk];
+        if (!w || !w.acciones) return;
+        w.acciones.forEach(function (a) {
+          if (pers !== 'all' && a.owner !== pers) return;
+          var copy = {}; for (var k in a) if (a.hasOwnProperty(k)) copy[k] = a[k];
+          copy._ownerId = uid;
+          out.push(copy);
+        });
+      });
+      return out;
+    }
+
+    function myWeekState() {
+      var u = window.planner.getMyUserState();
+      return ((u && u.weeks) || {})[semSt.weekKey] || null;
+    }
+    function teamCierreCount() {
+      var users = window.planner.getAllUserStates();
+      var wk = semSt.weekKey;
+      var n = 0;
+      Object.keys(users).forEach(function (uid) {
+        var w = ((users[uid].state || {}).weeks || {})[wk];
+        if (w && w.cierreSaved) n++;
+      });
+      return n;
+    }
+
+    // ----- Render: Plan mode ------------------------------------------
+    function renderPlanMode() {
+      var acciones = getAccionesForView();
+      var objs = (window.planner.getShared().objs || []);
+
+      if (!acciones.length) {
+        var msg = (objs.length === 0)
+          ? 'El estado compartido aún no tiene focos cargados. Necesitas seedearlo (te paso snippet aparte).'
+          : 'No hay acciones para esta vista en ' + weekKeyLabel(semSt.weekKey) + '.';
+        return '<div class="sem-empty"><div class="sem-empty-big">Sin acciones</div><p>' + escapeHtml(msg) + '</p></div>';
+      }
+
+      var byHito = {};
+      acciones.forEach(function (a) {
+        var hid = a.hitoId || '_orphan';
+        if (!byHito[hid]) byHito[hid] = [];
+        byHito[hid].push(a);
+      });
+
+      var counts = { hecha: 0, mas: 0, cancel: 0, pending: 0, carried: 0 };
+      acciones.forEach(function (a) {
+        if (a.carried) counts.carried++;
+        if (a.cierreState === 'hecha') counts.hecha++;
+        else if (a.cierreState === 'mas-tiempo') counts.mas++;
+        else if (a.cierreState === 'cancelada') counts.cancel++;
+        else counts.pending++;
+      });
+
+      var h = '';
+      h += '<div class="sem-stats">';
+      h += '<span>Total <b>' + acciones.length + '</b></span>';
+      h += '<span>Hechas <b>' + counts.hecha + '</b></span>';
+      h += '<span>Más tiempo <b>' + counts.mas + '</b></span>';
+      h += '<span>Pendientes <b>' + counts.pending + '</b></span>';
+      if (counts.cancel)  h += '<span>Canceladas <b>' + counts.cancel + '</b></span>';
+      if (counts.carried) h += '<span>Carry-over <b>' + counts.carried + '</b></span>';
+      h += '</div>';
+
+      var orphans = [];
+      var focoIdx = 0;
+      objs.forEach(function (foco) {
+        focoIdx++;
+        var focoTag  = focoTagLabel(foco);
+        var focoCol  = focoHeaderColor(focoIdx, foco);
+        var focoBody = '';
+
+        (foco.objetivos || foco.hitos ? (foco.objetivos || [{ hitos: foco.hitos, color: '#888', text: '' }]) : []).forEach(function (ob) {
+          var oc = ob.color || '#888';
+          var objBlock = '';
+          (ob.hitos || []).forEach(function (hi) {
+            var arr = byHito[hi.id];
+            if (!arr || !arr.length) return;
+            objBlock += '<div class="sem-hito-block">';
+            objBlock += '<div class="sem-hito-label">' + escapeHtml(hi.text || '');
+            if (hi.due) objBlock += '<span class="sem-hito-due">' + escapeHtml(hi.due) + '</span>';
+            objBlock += '</div>';
+            arr.forEach(function (a) { objBlock += accionRowHtml(a); a._rendered = true; });
+            objBlock += '</div>';
+          });
+          if (objBlock) {
+            focoBody += '<div class="sem-obj-block">';
+            if (ob.text) {
+              focoBody += '<div class="sem-obj-label"><span class="sem-obj-dot" style="background:' + oc + '"></span>' + escapeHtml(ob.text) + '</div>';
+            }
+            focoBody += objBlock;
+            focoBody += '</div>';
+          }
+        });
+
+        if (focoBody) {
+          h += '<div class="sem-foco-card">';
+          h += '<div class="sem-foco-hdr">';
+          h += '<span class="sem-foco-tag" style="background:' + focoCol + '">' + escapeHtml(focoTag) + '</span>';
+          h += '<span class="sem-foco-title">' + escapeHtml(focoTitleClean(foco.text)) + '</span>';
+          h += '</div>';
+          h += '<div class="sem-foco-body">' + focoBody + '</div>';
+          h += '</div>';
+        }
+      });
+
+      acciones.forEach(function (a) { if (!a._rendered) orphans.push(a); });
+      if (orphans.length) {
+        h += '<div class="sem-foco-card">';
+        h += '<div class="sem-foco-hdr"><span class="sem-foco-tag" style="background:#888">?</span><span class="sem-foco-title">Sin foco asociado</span></div>';
+        h += '<div class="sem-foco-body">';
+        orphans.forEach(function (a) { h += accionRowHtml(a); });
+        h += '</div></div>';
+      }
+
+      return h;
+    }
+
+    function accionRowHtml(a) {
+      var p = (a.owner || '').trim();
+      var letter = (p[0] || '?').toUpperCase();
+      var col = PERSONA_COLORS[p] || '#888';
+      var pillCls = pillClassFor(a.cierreState);
+      var pillLbl = pillLabelFor(a.cierreState);
+      var h = '<div class="sem-accion-row">';
+      h += '<span class="sem-accion-chip" style="background:' + col + '">' + escapeHtml(letter) + '</span>';
+      h += '<div class="sem-accion-text">' + escapeHtml(a.text || '');
+      if (a.comment) h += '<div class="sem-accion-comment">↳ ' + escapeHtml(a.comment) + '</div>';
+      h += '</div>';
+      if (a.carried) h += '<span class="sem-accion-pill sem-pill-carry">CARRY</span>';
+      if (pillLbl)   h += '<span class="sem-accion-pill ' + pillCls + '">' + pillLbl + '</span>';
+      h += '</div>';
+      return h;
+    }
+
+    function focoHeaderColor(idx, foco) {
+      if (foco.tag === 'personal') return '#6b7280';
+      var pal = ['#1B3A4B', '#2D5F3E', '#5C3D2E', '#3B2D5C', '#5C1A1A'];
+      return pal[(idx - 1) % pal.length];
+    }
+    function focoTagLabel(foco) {
+      if (foco.tag === 'personal') return 'PERSONAL';
+      var m = (foco.text || '').match(/^(\d{2}|4\+1)/);
+      return m ? m[0] : 'WORK';
+    }
+    function focoTitleClean(t) {
+      return (t || '').replace(/^(\d{2}|4\+1)\s*·\s*/, '');
+    }
+    function pillClassFor(c) {
+      if (c === 'hecha')      return 'sem-pill-hecha';
+      if (c === 'mas-tiempo') return 'sem-pill-mas';
+      if (c === 'cancelada')  return 'sem-pill-cancel';
+      return 'sem-pill-pending';
+    }
+    function pillLabelFor(c) {
+      if (c === 'hecha')      return 'HECHA';
+      if (c === 'mas-tiempo') return 'MÁS TIEMPO';
+      if (c === 'cancelada')  return 'CANCEL.';
+      return '';
+    }
+
+    // ----- Render principal -------------------------------------------
+    function render() {
+      var root = document.getElementById('semanal-root');
+      if (!root) return;
+      var me = window.planner.getMe();
+      if (!me) return;
+
+      if (!semSt.weekKey) semSt.weekKey = pickInitialWeek();
+      if (!semSt.persona) semSt.persona = 'all';
+
+      var myW = myWeekState();
+      var cierreSaved = !!(myW && myW.cierreSaved);
+      var planSaved   = !!(myW && myW.planSaved);
+      var teamCount   = teamCierreCount();
+
+      var h = '<div class="sem-header">';
+      h += '<div class="sem-week-nav">';
+      h += '<button class="sem-week-btn" id="semPrev" title="semana anterior">←</button>';
+      h += '<div class="sem-week-info">';
+      h += '<div class="sem-week-label">' + escapeHtml(weekKeyLabel(semSt.weekKey));
+      if (cierreSaved) h += '<span class="sem-week-active-dot" title="tu cierre guardado"></span>';
+      else if (planSaved) h += '<span class="sem-week-cierre-dot" title="plan guardado"></span>';
+      h += '</div>';
+      h += '<div class="sem-week-dates">' + escapeHtml(weekKeyToDates(semSt.weekKey)) + ' · cierre equipo ' + teamCount + '/3</div>';
+      h += '</div>';
+      h += '<button class="sem-week-btn" id="semNext" title="semana siguiente">→</button>';
+      h += '</div>';
+
+      h += '<div class="sem-persona-tabs">';
+      PERSONAS.forEach(function (p) {
+        var col = PERSONA_COLORS[p] || '#444';
+        var dot = (p !== 'all') ? '<span class="sem-persona-dot" style="background:' + col + '"></span>' : '';
+        h += '<button class="sem-persona-btn' + (semSt.persona === p ? ' active' : '') + '" data-sem-persona="' + p + '">' + dot + PERSONA_LABELS[p] + '</button>';
+      });
+      h += '</div>';
+
+      h += '<div class="sem-mode-tabs">';
+      MODES.forEach(function (m) {
+        h += '<button class="sem-mode-btn' + (semSt.mode === m.id ? ' active' : '') + '" data-sem-mode="' + m.id + '"' + (m.enabled ? '' : ' disabled') + '>' + m.label + '</button>';
+      });
+      h += '</div>';
+      h += '</div>'; // end .sem-header
+
+      // Banner contextual
+      if (semSt.persona === 'all') {
+        h += '<div class="sem-banner sem-banner-info">Vista Equipo · merge de los 3 (lectura). Cambia a tu inicial para edición (Ronda 2).</div>';
+      } else if (semSt.persona !== me.name) {
+        h += '<div class="sem-banner sem-banner-warn">Viendo a ' + escapeHtml(semSt.persona) + ' — solo lectura.</div>';
+      } else {
+        h += '<div class="sem-banner sem-banner-muted">Tu vista · edición se habilita en la próxima ronda.</div>';
+      }
+
+      // Body
+      if (semSt.mode === 'plan') {
+        h += renderPlanMode();
+      } else {
+        h += '<div class="sem-empty"><div class="sem-empty-big">Próximamente</div><p>Modo <code>' + semSt.mode + '</code> llega en la siguiente ronda.</p></div>';
+      }
+
+      root.innerHTML = h;
+
+      // Bind handlers
+      var prev = document.getElementById('semPrev');
+      var next = document.getElementById('semNext');
+      if (prev) prev.addEventListener('click', function () { shiftWeek(-1); });
+      if (next) next.addEventListener('click', function () { shiftWeek(1); });
+      root.querySelectorAll('[data-sem-persona]').forEach(function (b) {
+        b.addEventListener('click', function () { semSt.persona = b.getAttribute('data-sem-persona'); render(); });
+      });
+      root.querySelectorAll('[data-sem-mode]').forEach(function (b) {
+        b.addEventListener('click', function () {
+          if (b.disabled) return;
+          semSt.mode = b.getAttribute('data-sem-mode');
+          render();
+        });
+      });
+    }
+
+    // ----- Boot -------------------------------------------------------
+    window.renderSemanal = function () {
+      try {
+        render();
+      } catch (e) {
+        console.error('[semanal] render error:', e);
+        var root = document.getElementById('semanal-root');
+        if (root) root.innerHTML = '<div class="sem-empty"><div class="sem-empty-big">Error</div><p>' + escapeHtml(e.message || e) + '</p></div>';
+      }
     };
 
   })();
