@@ -292,6 +292,34 @@
     .sem-pill-cancel  { background: rgba(220,38,38,0.10);  color: var(--err); }
     .sem-pill-carry   { background: rgba(37,99,235,0.10);  color: var(--accent); }
     .sem-pill-pending { background: var(--bg);             color: var(--muted); }
+    /* === Edit UI (Ronda 2A) === */
+    .sem-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+    .sem-btn-primary { background: var(--ink); color: var(--paper); border: none; border-radius: 8px; padding: 8px 14px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; }
+    .sem-btn-primary:hover { opacity: 0.85; }
+    .sem-btn-ghost { background: var(--paper); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-family: 'DM Mono', monospace; font-size: 12px; cursor: pointer; }
+    .sem-btn-ghost:hover { background: #F5F2EA; }
+    .sem-btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
+    .sem-add-form { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 16px; margin-bottom: 14px; }
+    .sem-add-form h4 { margin: 0 0 14px; font-family: 'DM Mono', monospace; font-size: 12px; color: var(--muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+    .sem-add-form label { display: block; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 5px; margin-top: 12px; }
+    .sem-add-form label:first-of-type { margin-top: 0; }
+    .sem-add-form input[type=text], .sem-add-form textarea, .sem-add-form select { width: 100%; box-sizing: border-box; padding: 8px 10px; border: 1px solid var(--line); border-radius: 6px; font-family: inherit; font-size: 13px; background: #fff; color: var(--ink); }
+    .sem-add-form textarea { min-height: 56px; resize: vertical; font-family: inherit; }
+    .sem-add-form-row { display: flex; gap: 12px; align-items: flex-start; }
+    .sem-add-form-row > div { flex: 1; min-width: 0; }
+    .sem-add-form-actions { display: flex; gap: 8px; margin-top: 16px; justify-content: flex-end; }
+    .sem-owner-pick { display: flex; gap: 4px; }
+    .sem-owner-btn { flex: 1; padding: 8px 4px; border: 1px solid var(--line); border-radius: 6px; background: #fff; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; color: var(--ink); }
+    .sem-owner-btn:hover { background: #F5F2EA; }
+    .sem-owner-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    .sem-row-actions { display: inline-flex; gap: 2px; margin-left: 6px; opacity: 0; transition: opacity 0.12s; }
+    .sem-accion-row:hover .sem-row-actions { opacity: 1; }
+    .sem-row-btn { background: transparent; border: none; cursor: pointer; padding: 4px 6px; border-radius: 4px; font-size: 12px; color: var(--muted); line-height: 1; }
+    .sem-row-btn:hover { background: rgba(0,0,0,0.05); color: var(--ink); }
+    .sem-row-btn.danger:hover { background: rgba(217,69,57,0.1); color: #c0392b; }
+    .sem-inline-edit { background: #fff; border: 1px solid var(--ink); border-radius: 8px; padding: 10px; margin: 6px 0; }
+    .sem-inline-edit textarea { width: 100%; box-sizing: border-box; min-height: 44px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-family: inherit; font-size: 13px; resize: vertical; color: var(--ink); }
+    .sem-inline-edit-actions { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; }
   </style>
 </head>
 <body>
@@ -314,7 +342,7 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-12.4 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-13.1 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
@@ -1111,7 +1139,10 @@
     var semSt = {
       weekKey: null,    // "2026_W20"
       persona: null,    // "all" | "Víctor" | "Jaime" | "Colomba"
-      mode:    'plan'
+      mode:    'plan',
+      adding:  false,   // Si está abierto el form de Nueva acción
+      addDraft: null,   // { text, owner, hitoId } draft del form
+      editing: null     // _idx de la acción en edición inline (o null)
     };
 
     // ----- Helpers ----------------------------------------------------
@@ -1209,14 +1240,16 @@
     }
 
     // ----- Render: Plan mode ------------------------------------------
-    function renderPlanMode() {
+    function renderPlanMode(editable) {
       var acciones = getAccionesForView();
       var objs = (window.planner.getShared().objs || []);
 
       if (!acciones.length) {
         var msg = (objs.length === 0)
-          ? 'El estado compartido aún no tiene focos cargados. Necesitas seedearlo (te paso snippet aparte).'
-          : 'No hay acciones para esta vista en ' + weekKeyLabel(semSt.weekKey) + '.';
+          ? 'El estado compartido aún no tiene focos cargados.'
+          : (editable
+              ? 'No hay acciones todavía. Tocá "+ Nueva acción" arriba para arrancar, o "↻ Traer pendientes" para barrer la semana anterior.'
+              : 'No hay acciones para esta vista en ' + weekKeyLabel(semSt.weekKey) + '.');
         return '<div class="sem-empty"><div class="sem-empty-big">Sin acciones</div><p>' + escapeHtml(msg) + '</p></div>';
       }
 
@@ -1264,7 +1297,7 @@
             objBlock += '<div class="sem-hito-label">' + escapeHtml(hi.text || '');
             if (hi.due) objBlock += '<span class="sem-hito-due">' + escapeHtml(hi.due) + '</span>';
             objBlock += '</div>';
-            arr.forEach(function (a) { objBlock += accionRowHtml(a); a._rendered = true; });
+            arr.forEach(function (a) { objBlock += accionRowHtml(a, editable); a._rendered = true; });
             objBlock += '</div>';
           });
           if (objBlock) {
@@ -1293,14 +1326,172 @@
         h += '<div class="sem-foco-card">';
         h += '<div class="sem-foco-hdr"><span class="sem-foco-tag" style="background:#888">?</span><span class="sem-foco-title">Sin foco asociado</span></div>';
         h += '<div class="sem-foco-body">';
-        orphans.forEach(function (a) { h += accionRowHtml(a); });
+        orphans.forEach(function (a) { h += accionRowHtml(a, editable); });
         h += '</div></div>';
       }
 
       return h;
     }
 
-    function accionRowHtml(a) {
+    // ----- Permisos / helpers de edición ------------------------------
+    function canEdit() {
+      var me = window.planner.getMe();
+      if (!me || !me.can_edit_shared) return false;
+      // Editás en tu vista personal o en Equipo (queda con dueño "yo" por default)
+      return semSt.persona === me.name || semSt.persona === 'all';
+    }
+    function prevWeekKey(k) {
+      var p = parseKey(k);
+      if (!p) return null;
+      var w = p.week - 1, y = p.year;
+      if (w < 1) { y--; w = isoWeeksInYear(y); }
+      return weekToKey(y, w);
+    }
+    function nextAccionId() {
+      return 'a_' + Date.now().toString(36) + '_' + Math.floor(Math.random() * 9999).toString(36);
+    }
+    function allHitosFlat() {
+      var objs = (window.planner.getShared().objs) || [];
+      var out = [];
+      objs.forEach(function (foco) {
+        var subs = foco.objetivos || (foco.hitos ? [{ hitos: foco.hitos, text: '' }] : []);
+        subs.forEach(function (ob) {
+          (ob.hitos || []).forEach(function (hi) {
+            out.push({
+              focoId: foco.id, focoText: foco.text || '',
+              objId: ob.id || '', objText: ob.text || '',
+              hitoId: hi.id, hitoText: hi.text || '', hitoDue: hi.due || ''
+            });
+          });
+        });
+      });
+      return out;
+    }
+
+    // ----- Mutadores -------------------------------------------------
+    function addAccion(data) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.acciones) w.acciones = [];
+        w.acciones.push({
+          id: nextAccionId(),
+          text: data.text,
+          owner: data.owner,
+          objId: data.objId || '',
+          hitoId: data.hitoId,
+          done: false,
+          week: wk,
+          cierreState: '',
+          carried: false,
+          comment: ''
+        });
+      });
+    }
+    function updateAccion(idx, patch) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.acciones || !w.acciones[idx]) return;
+        Object.keys(patch).forEach(function (k) { w.acciones[idx][k] = patch[k]; });
+      });
+    }
+    function deleteAccion(idx) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.acciones) return;
+        w.acciones.splice(idx, 1);
+      });
+    }
+    function carryFromPrev() {
+      var wk = semSt.weekKey;
+      var prevK = prevWeekKey(wk);
+      if (!prevK) return { added: 0, skipped: 0, prev: null };
+      var prev = window.planner.getSharedWeek(prevK);
+      if (!prev || !prev.acciones || !prev.acciones.length) return { added: 0, skipped: 0, prev: prevK };
+      var counts = { added: 0, skipped: 0, prev: prevK };
+      window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.acciones) w.acciones = [];
+        prev.acciones.forEach(function (a) {
+          if (a.cierreState === 'hecha' || a.cierreState === 'cancelada') { counts.skipped++; return; }
+          var dup = w.acciones.find(function (x) { return x.text === a.text && x.hitoId === a.hitoId; });
+          if (dup) { counts.skipped++; return; }
+          w.acciones.push({
+            id: nextAccionId(),
+            text: a.text,
+            owner: a.owner || 'Víctor',
+            objId: a.objId || '',
+            hitoId: a.hitoId,
+            done: false,
+            week: wk,
+            cierreState: 'mas-tiempo',
+            carried: true,
+            comment: ''
+          });
+          counts.added++;
+        });
+      });
+      return counts;
+    }
+
+    // ----- Render form Nueva acción ----------------------------------
+    function renderAddForm() {
+      var me = window.planner.getMe();
+      var draft = semSt.addDraft || { text: '', owner: me.name, hitoId: '' };
+      var hitos = allHitosFlat();
+      // Agrupar hitos por foco para optgroups
+      var byFoco = {};
+      hitos.forEach(function (h) {
+        if (!byFoco[h.focoId]) byFoco[h.focoId] = { focoText: h.focoText, items: [] };
+        byFoco[h.focoId].items.push(h);
+      });
+      var h = '<div class="sem-add-form">';
+      h += '<h4>+ Nueva acción</h4>';
+      h += '<label>Texto</label>';
+      h += '<textarea id="semAddText" placeholder="¿Qué acción concreta vas a hacer esta semana?">' + escapeHtml(draft.text) + '</textarea>';
+      h += '<div class="sem-add-form-row" style="margin-top:12px;">';
+      h += '<div><label>Dueño</label><div class="sem-owner-pick">';
+      ['Víctor', 'Jaime', 'Colomba'].forEach(function (name) {
+        var col = PERSONA_COLORS[name];
+        h += '<button type="button" class="sem-owner-btn' + (draft.owner === name ? ' active' : '') +
+             '" data-sem-owner="' + name + '"><span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:' +
+             col + ';margin-right:5px;vertical-align:middle;"></span>' + name + '</button>';
+      });
+      h += '</div></div>';
+      h += '<div><label>Hito asociado</label><select id="semAddHito"><option value="">— elegir hito —</option>';
+      Object.keys(byFoco).forEach(function (fid) {
+        var grp = byFoco[fid];
+        h += '<optgroup label="' + escapeHtml(grp.focoText) + '">';
+        grp.items.forEach(function (hi) {
+          var lbl = hi.hitoText + (hi.hitoDue ? '  ·  ' + hi.hitoDue : '');
+          h += '<option value="' + escapeHtml(hi.hitoId) + '" data-objid="' + escapeHtml(hi.objId) + '"' +
+               (draft.hitoId === hi.hitoId ? ' selected' : '') + '>' + escapeHtml(lbl) + '</option>';
+        });
+        h += '</optgroup>';
+      });
+      h += '</select></div>';
+      h += '</div>'; // form-row
+      h += '<div class="sem-add-form-actions">';
+      h += '<button class="sem-btn-ghost" data-sem-action="cancel-add">Cancelar</button>';
+      h += '<button class="sem-btn-primary" data-sem-action="confirm-add">Crear acción</button>';
+      h += '</div>';
+      h += '</div>';
+      return h;
+    }
+
+    // ----- Render row (con/sin edit controls) ------------------------
+    function accionRowHtml(a, editable) {
+      // Si esta row está en edición inline, devolvemos el editor
+      if (editable && semSt.editing === a._idx) {
+        var eh = '<div class="sem-inline-edit">';
+        eh += '<textarea id="semEditTxt">' + escapeHtml(a.text || '') + '</textarea>';
+        eh += '<label style="font-family:\'DM Mono\',monospace;font-size:11px;color:var(--muted);margin-top:8px;display:block;">Comentario (opcional)</label>';
+        eh += '<textarea id="semEditCmt" style="min-height:34px;">' + escapeHtml(a.comment || '') + '</textarea>';
+        eh += '<div class="sem-inline-edit-actions">';
+        eh += '<button class="sem-btn-ghost" data-sem-action="cancel-edit">Cancelar</button>';
+        eh += '<button class="sem-btn-primary" data-sem-action="save-edit" data-idx="' + a._idx + '">Guardar</button>';
+        eh += '</div></div>';
+        return eh;
+      }
+
       var p = (a.owner || '').trim();
       var letter = (p[0] || '?').toUpperCase();
       var col = PERSONA_COLORS[p] || '#888';
@@ -1313,6 +1504,12 @@
       h += '</div>';
       if (a.carried) h += '<span class="sem-accion-pill sem-pill-carry">CARRY</span>';
       if (pillLbl)   h += '<span class="sem-accion-pill ' + pillCls + '">' + pillLbl + '</span>';
+      if (editable) {
+        h += '<span class="sem-row-actions">';
+        h += '<button class="sem-row-btn" title="Editar" data-sem-action="start-edit" data-idx="' + a._idx + '">✎</button>';
+        h += '<button class="sem-row-btn danger" title="Eliminar" data-sem-action="delete" data-idx="' + a._idx + '">×</button>';
+        h += '</span>';
+      }
       h += '</div>';
       return h;
     }
@@ -1354,16 +1551,18 @@
       if (!semSt.persona) semSt.persona = 'all';
 
       var myW = myWeekState();
-      var cierreSaved = !!(myW && myW.cierreSaved);
+      var cierreSavedMine = !!(myW && myW['cierreSaved_' + me.name]);
       var planSaved   = !!(myW && myW.planSaved);
       var teamCount   = teamCierreCount();
+      var editable    = canEdit();
+      var prevK       = prevWeekKey(semSt.weekKey);
 
       var h = '<div class="sem-header">';
       h += '<div class="sem-week-nav">';
       h += '<button class="sem-week-btn" id="semPrev" title="semana anterior">←</button>';
       h += '<div class="sem-week-info">';
       h += '<div class="sem-week-label">' + escapeHtml(weekKeyLabel(semSt.weekKey));
-      if (cierreSaved) h += '<span class="sem-week-active-dot" title="tu cierre guardado"></span>';
+      if (cierreSavedMine) h += '<span class="sem-week-active-dot" title="tu cierre guardado"></span>';
       else if (planSaved) h += '<span class="sem-week-cierre-dot" title="plan guardado"></span>';
       h += '</div>';
       h += '<div class="sem-week-dates">' + escapeHtml(weekKeyToDates(semSt.weekKey)) + ' · cierre equipo ' + teamCount + '/3</div>';
@@ -1388,35 +1587,116 @@
 
       // Banner contextual
       if (semSt.persona === 'all') {
-        h += '<div class="sem-banner sem-banner-info">Vista Equipo · merge de los 3 (lectura). Cambia a tu inicial para edición (Ronda 2).</div>';
+        h += '<div class="sem-banner sem-banner-info">Vista Equipo · merge de los 3. Lo que crees acá queda asignado a vos por default — podés cambiarle el dueño.</div>';
       } else if (semSt.persona !== me.name) {
         h += '<div class="sem-banner sem-banner-warn">Viendo a ' + escapeHtml(semSt.persona) + ' — solo lectura.</div>';
       } else {
-        h += '<div class="sem-banner sem-banner-muted">Tu vista · edición se habilita en la próxima ronda.</div>';
+        h += '<div class="sem-banner sem-banner-muted">Tu vista — podés editar.</div>';
       }
 
       // Body
       if (semSt.mode === 'plan') {
-        h += renderPlanMode();
+        // Toolbar edición
+        if (editable) {
+          h += '<div class="sem-toolbar">';
+          h += '<button class="sem-btn-primary" data-sem-action="open-add">+ Nueva acción</button>';
+          var prevExists = prevK && window.planner.getSharedWeek(prevK);
+          h += '<button class="sem-btn-ghost" data-sem-action="carry-prev"' +
+               (prevExists ? '' : ' disabled') + '>↻ Traer pendientes de ' + escapeHtml(weekKeyLabel(prevK || '—')) + '</button>';
+          h += '</div>';
+          if (semSt.adding) h += renderAddForm();
+        }
+        h += renderPlanMode(editable);
       } else {
         h += '<div class="sem-empty"><div class="sem-empty-big">Próximamente</div><p>Modo <code>' + semSt.mode + '</code> llega en la siguiente ronda.</p></div>';
       }
 
       root.innerHTML = h;
 
-      // Bind handlers
+      // ---- Bind handlers ----
       var prev = document.getElementById('semPrev');
       var next = document.getElementById('semNext');
       if (prev) prev.addEventListener('click', function () { shiftWeek(-1); });
       if (next) next.addEventListener('click', function () { shiftWeek(1); });
       root.querySelectorAll('[data-sem-persona]').forEach(function (b) {
-        b.addEventListener('click', function () { semSt.persona = b.getAttribute('data-sem-persona'); render(); });
+        b.addEventListener('click', function () {
+          semSt.persona = b.getAttribute('data-sem-persona');
+          semSt.adding = false; semSt.editing = null;
+          render();
+        });
       });
       root.querySelectorAll('[data-sem-mode]').forEach(function (b) {
         b.addEventListener('click', function () {
           if (b.disabled) return;
           semSt.mode = b.getAttribute('data-sem-mode');
+          semSt.adding = false; semSt.editing = null;
           render();
+        });
+      });
+
+      // Botones del form/toolbar/rows
+      root.querySelectorAll('[data-sem-action]').forEach(function (b) {
+        b.addEventListener('click', function (ev) {
+          var action = b.getAttribute('data-sem-action');
+          if (action === 'open-add') {
+            semSt.adding = true;
+            semSt.addDraft = null;
+            semSt.editing = null;
+            render();
+            setTimeout(function () { var t = document.getElementById('semAddText'); if (t) t.focus(); }, 30);
+          } else if (action === 'cancel-add') {
+            semSt.adding = false; semSt.addDraft = null; render();
+          } else if (action === 'confirm-add') {
+            var txtEl  = document.getElementById('semAddText');
+            var selEl  = document.getElementById('semAddHito');
+            var ownerBtn = root.querySelector('.sem-owner-btn.active');
+            var text  = (txtEl && txtEl.value || '').trim();
+            var hitoId = selEl ? selEl.value : '';
+            var owner = ownerBtn ? ownerBtn.getAttribute('data-sem-owner') : me.name;
+            if (!text)  { alert('Escribí el texto de la acción.'); return; }
+            if (!hitoId) { alert('Elegí un hito asociado.'); return; }
+            var opt = selEl.selectedOptions[0];
+            var objId = opt ? opt.getAttribute('data-objid') : '';
+            addAccion({ text: text, owner: owner, hitoId: hitoId, objId: objId });
+            semSt.adding = false; semSt.addDraft = null;
+            render();
+          } else if (action === 'carry-prev') {
+            var res = carryFromPrev();
+            console.log('[carry] +' + res.added + ' agregadas · ' + res.skipped + ' saltadas (origen: ' + res.prev + ')');
+            render();
+          } else if (action === 'start-edit') {
+            semSt.editing = parseInt(b.getAttribute('data-idx'), 10);
+            semSt.adding = false;
+            render();
+            setTimeout(function () { var t = document.getElementById('semEditTxt'); if (t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); } }, 30);
+          } else if (action === 'cancel-edit') {
+            semSt.editing = null; render();
+          } else if (action === 'save-edit') {
+            var idx = parseInt(b.getAttribute('data-idx'), 10);
+            var newTxt = (document.getElementById('semEditTxt') || {}).value || '';
+            var newCmt = (document.getElementById('semEditCmt') || {}).value || '';
+            newTxt = newTxt.trim(); newCmt = newCmt.trim();
+            if (!newTxt) { alert('El texto no puede estar vacío.'); return; }
+            updateAccion(idx, { text: newTxt, comment: newCmt });
+            semSt.editing = null; render();
+          } else if (action === 'delete') {
+            var di = parseInt(b.getAttribute('data-idx'), 10);
+            var acc = (myWeekState() || { acciones: [] }).acciones[di];
+            var snippet = acc ? (acc.text || '').slice(0, 60) : '';
+            if (confirm('¿Eliminar esta acción?\n\n"' + snippet + '"')) {
+              deleteAccion(di);
+              render();
+            }
+          }
+        });
+      });
+
+      // Owner picker en el form: marcar active al click
+      root.querySelectorAll('.sem-owner-btn').forEach(function (b) {
+        b.addEventListener('click', function (ev) {
+          ev.preventDefault();
+          root.querySelectorAll('.sem-owner-btn').forEach(function (x) { x.classList.remove('active'); });
+          b.classList.add('active');
         });
       });
     }
