@@ -385,7 +385,7 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-13.2 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-13.3 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
@@ -1266,6 +1266,9 @@
       '12-21':[{cat:'oo', t:'One on one'}]
     };
     var OWNERS_ALL = ['Víctor', 'Jaime', 'Colomba', 'Full Team'];
+    // Categorías "trabajo" — el sidebar Calendario solo muestra estas.
+    // (Personales como Mall Sport, Baguales, Liga Gravity, Carreras, Pesca quedan fuera)
+    var WORK_CATS = { 'vt':1,'di':1,'oo':1,'rt':1,'cr':1,'pe':1,'de':1,'cd':1,'qb':1,'fe':1 };
     var MODES = [
       { id: 'plan',    label: '📋 Plan',     enabled: true  },
       { id: 'cierre',  label: '✓ Cierre',    enabled: false },
@@ -1699,6 +1702,7 @@
       return new Date(monUtc.getUTCFullYear(), monUtc.getUTCMonth(), monUtc.getUTCDate());
     }
     // Lista de eventos en una semana (lun→vie) como [{evKey, evIdx, ev, day}]
+    // Solo trae eventos de categorías de trabajo (WORK_CATS).
     function eventsInWeek(monday) {
       var out = [];
       for (var i = 0; i < 5; i++) {
@@ -1706,6 +1710,7 @@
         var key = (day.getMonth() + 1) + '-' + day.getDate();
         if (EV[key]) {
           EV[key].forEach(function (ev, idx) {
+            if (!WORK_CATS[ev.cat]) return; // saltar personales
             out.push({ evKey: key, evIdx: idx, ev: ev, day: day, evUniqueKey: key + '_' + idx });
           });
         }
