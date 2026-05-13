@@ -320,6 +320,49 @@
     .sem-inline-edit { background: #fff; border: 1px solid var(--ink); border-radius: 8px; padding: 10px; margin: 6px 0; }
     .sem-inline-edit textarea { width: 100%; box-sizing: border-box; min-height: 44px; padding: 6px 8px; border: 1px solid var(--line); border-radius: 4px; font-family: inherit; font-size: 13px; resize: vertical; color: var(--ink); }
     .sem-inline-edit-actions { display: flex; gap: 6px; margin-top: 8px; justify-content: flex-end; }
+
+    /* === Plan layout 2-col + sidebar (Ronda 2B) === */
+    .sem-plan-grid { display: grid; grid-template-columns: 1fr 340px; gap: 16px; align-items: start; }
+    @media (max-width: 980px) { .sem-plan-grid { grid-template-columns: 1fr; } }
+    .sem-plan-main { min-width: 0; }
+    .sem-plan-side { display: flex; flex-direction: column; gap: 12px; position: sticky; top: 12px; }
+    .sem-side-block { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+    .sem-side-hdr { display: flex; align-items: center; gap: 6px; padding: 10px 14px; border-bottom: 1px solid var(--line); font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+    .sem-side-hdr .ico { font-size: 13px; }
+    .sem-side-body { padding: 10px 14px; max-height: 380px; overflow-y: auto; }
+    /* Admin */
+    .sem-admin-list { display: flex; flex-direction: column; gap: 2px; }
+    .sem-admin-item { display: flex; gap: 6px; align-items: flex-start; padding: 4px 0; font-size: 12px; }
+    .sem-admin-item .txt { flex: 1; word-break: break-word; cursor: pointer; padding-top: 1px; }
+    .sem-admin-item .txt.done { text-decoration: line-through; color: var(--muted); }
+    .sem-admin-chip { width: 16px; height: 16px; border-radius: 50%; color: white; font-size: 9px; font-weight: 600; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; flex-shrink: 0; margin-top: 1px; }
+    .sem-admin-del { background: transparent; border: none; cursor: pointer; padding: 0 4px; color: var(--muted); opacity: 0; transition: opacity 0.12s; font-size: 13px; line-height: 1; }
+    .sem-admin-item:hover .sem-admin-del { opacity: 1; }
+    .sem-admin-del:hover { color: #c0392b; }
+    .sem-admin-input-row { display: flex; gap: 4px; margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--line); }
+    .sem-admin-input-row input { flex: 1; min-width: 0; border: 1px solid var(--line); border-radius: 5px; padding: 5px 7px; font-family: inherit; font-size: 12px; background: #fff; }
+    .sem-admin-input-row select { border: 1px solid var(--line); border-radius: 5px; font-size: 10px; font-family: 'DM Mono', monospace; padding: 0 4px; background: #fff; }
+    .sem-admin-input-row button { border: 1px solid var(--ink); background: var(--ink); color: var(--paper); border-radius: 5px; padding: 4px 10px; font-size: 13px; cursor: pointer; line-height: 1; }
+    /* Calendario */
+    .sem-cal-weeklabel { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; margin: 10px 0 4px; }
+    .sem-cal-weeklabel:first-child { margin-top: 0; }
+    .sem-cal-empty { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); font-style: italic; padding: 4px 0; }
+    .sem-cal-event { display: flex; gap: 8px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+    .sem-cal-event:last-child { border-bottom: none; }
+    .sem-cal-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .sem-cal-body { flex: 1; min-width: 0; }
+    .sem-cal-head { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .sem-cal-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); white-space: nowrap; }
+    .sem-cal-text { flex: 1; color: var(--ink); font-weight: 500; min-width: 0; }
+    .sem-cal-prep-row { display: flex; gap: 4px; margin-top: 4px; align-items: flex-start; }
+    .sem-cal-prep { flex: 1; border: 1px solid var(--line); border-radius: 4px; padding: 4px 6px; font-size: 11px; font-family: inherit; resize: vertical; min-height: 24px; background: #fff; color: var(--ink); }
+    .sem-cal-add-btn { border: 1px solid var(--line); background: #fff; color: var(--muted); border-radius: 4px; padding: 4px 7px; font-size: 9px; cursor: pointer; font-family: 'DM Mono', monospace; white-space: nowrap; }
+    .sem-cal-add-btn.synced { color: #1a9e50; border-color: #1a9e50; background: rgba(26,158,80,0.08); }
+    .sem-cal-add-btn:hover { background: #F5F2EA; }
+    .sem-cal-add-btn.synced:hover { background: rgba(26,158,80,0.14); }
+    .sem-cal-owner-sel { font-size: 9px; font-family: 'DM Mono', monospace; padding: 1px 4px; border-radius: 3px; border: 1px solid var(--line); background: #fff; color: var(--ink); }
+    /* Notas */
+    .sem-notes-area { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 6px; padding: 10px; font-family: inherit; font-size: 13px; min-height: 140px; resize: vertical; color: var(--ink); background: #fff; }
   </style>
 </head>
 <body>
@@ -342,7 +385,7 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-13.1 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-13.2 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
@@ -1128,6 +1171,101 @@
     var PERSONAS = ['all', 'Víctor', 'Jaime', 'Colomba'];
     var PERSONA_LABELS = { 'all': '👥 Equipo', 'Víctor': 'V', 'Jaime': 'J', 'Colomba': 'C' };
     var PERSONA_COLORS = { 'Víctor': 'var(--v)', 'Jaime': 'var(--j)', 'Colomba': 'var(--c)' };
+
+    // ----- Calendario de eventos del año (heredado del legacy) --------
+    var CAT_COLORS = {
+      // Personal
+      'vp': '#f97316', 'es': '#7c3aed', 'co': '#eab308', 'ru': '#10b981',
+      // Trabajo
+      'vt': '#dc2626', 'di': '#06b6d4', 'oo': '#06b6d4', 'rt': '#2563eb',
+      // Comp subs
+      'ms': '#7c3aed', 'bg': '#2563eb', 'na': '#dc2626', 'lg': '#06b6d4',
+      // Comité subs
+      'cr': '#10b981', 'pe': '#7c3aed', 'de': '#f97316', 'cd': '#2563eb', 'qb': '#dc2626',
+      // Feriados
+      'fe': '#eab308'
+    };
+    var EV = {
+      // Febrero
+      '2-26': [{cat:'oo', t:'One on one'}],
+      // Marzo
+      '3-3':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '3-6':  [{cat:'di', t:'Directorio'}],
+      '3-20': [{cat:'ms', t:'Mall Sport'}],
+      '3-26': [{cat:'pe', t:'Planif. Estratégica'}],
+      '3-29': [{cat:'ru', t:'Carrera 🏃'}],
+      '3-30': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '3-31': [{cat:'cd', t:'Comité de Desarrollo'}],
+      // Abril
+      '4-2':  [{cat:'oo', t:'One on one'}],
+      '4-3':  [{cat:'fe', t:'Feriado'}],
+      '4-7':  [{cat:'qb', t:'QBR'}],
+      '4-10': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '4-24': [{cat:'ms', t:'Mall Sport'}],
+      '4-25': [{cat:'bg', t:'Baguales'}],
+      '4-26': [{cat:'ru', t:'Carrera 🏃'}],
+      '4-27': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      // Mayo
+      '5-1':  [{cat:'fe', t:'Feriado'}],
+      '5-4':  [{cat:'oo', t:'One on one'}],
+      '5-5':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '5-8':  [{cat:'di', t:'Directorio'}],
+      '5-15': [{cat:'ms', t:'Mall Sport'}],
+      '5-16': [{cat:'bg', t:'Baguales'}],
+      '5-21': [{cat:'fe', t:'Feriado'}],
+      '5-22': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '5-25': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      // Junio
+      '6-1':  [{cat:'oo', t:'One on one'}],
+      '6-3':  [{cat:'cd', t:'Comité de Desarrollo'}],
+      '6-4':  [{cat:'pe', t:'Planif. Estratégica'}],
+      '6-5':  [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '6-12': [{cat:'ms', t:'Mall Sport'}],
+      '6-13': [{cat:'bg', t:'Baguales'}],
+      '6-19': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '6-22': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '6-26': [{cat:'di', t:'Directorio'}],
+      '6-29': [{cat:'fe', t:'Feriado'}],
+      // Julio
+      '7-7':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '7-9':  [{cat:'oo', t:'One on one'}, {cat:'qb', t:'QBR'}],
+      '7-16': [{cat:'fe', t:'Feriado'}],
+      '7-27': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      // Agosto
+      '8-2':  [{cat:'ru', t:'Carrera 🏃'}],
+      '8-3':  [{cat:'oo', t:'One on one'}],
+      '8-5':  [{cat:'cd', t:'Comité de Desarrollo'}],
+      '8-7':  [{cat:'ms', t:'Mall Sport'}],
+      '8-24': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '8-28': [{cat:'di', t:'Directorio'}, {cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '8-30': [{cat:'ru', t:'Carrera 🏃'}],
+      // Septiembre
+      '9-1':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '9-2':  [{cat:'oo', t:'One on one'}],
+      '9-4':  [{cat:'ms', t:'Mall Sport'}],
+      '9-8':  [{cat:'pe', t:'Planif. Estratégica'}],
+      '9-28': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      // Octubre
+      '10-2': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '10-7': [{cat:'cd', t:'Comité de Desarrollo'}],
+      '10-9': [{cat:'ms', t:'Mall Sport'}],
+      '10-12':[{cat:'fe', t:'Feriado'}],
+      '10-15':[{cat:'qb', t:'QBR'}],
+      '10-30':[{cat:'di', t:'Directorio'}],
+      // Noviembre
+      '11-3': [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '11-6': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '11-13':[{cat:'ms', t:'Mall Sport'}],
+      '11-23':[{cat:'oo', t:'One on one'}],
+      '11-30':[{cat:'de', t:'Desarrollo Ejecutivo'}, {cat:'vp', t:'Pesca 🎣'}],
+      // Diciembre
+      '12-4': [{cat:'di', t:'Directorio'}, {cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '12-8': [{cat:'fe', t:'Feriado'}],
+      '12-9': [{cat:'cd', t:'Comité de Desarrollo'}],
+      '12-10':[{cat:'pe', t:'Planif. Estratégica'}],
+      '12-21':[{cat:'oo', t:'One on one'}]
+    };
+    var OWNERS_ALL = ['Víctor', 'Jaime', 'Colomba', 'Full Team'];
     var MODES = [
       { id: 'plan',    label: '📋 Plan',     enabled: true  },
       { id: 'cierre',  label: '✓ Cierre',    enabled: false },
@@ -1540,6 +1678,228 @@
       return '';
     }
 
+    // ----- Sidebar: helpers de fecha y eventos -----------------------
+    function addDaysDate(d, n) {
+      var x = new Date(d); x.setDate(x.getDate() + n); return x;
+    }
+    function fmtShortDate(d) {
+      var mes = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+      return d.getDate() + ' ' + mes[d.getMonth()];
+    }
+    function dayLabel(d) { return ['Do','Lu','Ma','Mi','Ju','Vi','Sá'][d.getDay()]; }
+    // Lunes de la semana en local time (no UTC, porque EV es por fecha calendar local)
+    function mondayOfWeekKey(k) {
+      var p = parseKey(k);
+      if (!p) return null;
+      var jan4 = new Date(Date.UTC(p.year, 0, 4));
+      var jan4dow = jan4.getUTCDay() || 7;
+      var monUtc = new Date(jan4);
+      monUtc.setUTCDate(jan4.getUTCDate() - (jan4dow - 1) + (p.week - 1) * 7);
+      // Convertir a local-naive (mismo year/month/date)
+      return new Date(monUtc.getUTCFullYear(), monUtc.getUTCMonth(), monUtc.getUTCDate());
+    }
+    // Lista de eventos en una semana (lun→vie) como [{evKey, evIdx, ev, day}]
+    function eventsInWeek(monday) {
+      var out = [];
+      for (var i = 0; i < 5; i++) {
+        var day = addDaysDate(monday, i);
+        var key = (day.getMonth() + 1) + '-' + day.getDate();
+        if (EV[key]) {
+          EV[key].forEach(function (ev, idx) {
+            out.push({ evKey: key, evIdx: idx, ev: ev, day: day, evUniqueKey: key + '_' + idx });
+          });
+        }
+      }
+      return out;
+    }
+
+    // ----- Mutadores del sidebar -------------------------------------
+    function addAdminItem(text, owner) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.admin) w.admin = [];
+        w.admin.push({ id: nextAccionId(), text: text, owner: owner, done: false });
+      });
+    }
+    function deleteAdminItem(idx) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.admin) return;
+        w.admin.splice(idx, 1);
+      });
+    }
+    function toggleAdminDone(idx) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.admin || !w.admin[idx]) return;
+        w.admin[idx].done = !w.admin[idx].done;
+      });
+    }
+    function setNotes(text) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        w.notes = text;
+      });
+    }
+    function setCalPrep(prepKey, text) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.calPrep) w.calPrep = {};
+        if (text) w.calPrep[prepKey] = text;
+        else delete w.calPrep[prepKey];
+      });
+    }
+    function setCalOwner(ownerKey, owner) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.calPrep) w.calPrep = {};
+        w.calPrep[ownerKey] = owner;
+        // Si ya está sincronizado a cal[], update owner ahí también
+        if (w.cal) {
+          var ci = w.cal.findIndex(function (c) { return c._evKey === ownerKey.replace(/^owner_/, ''); });
+          if (ci >= 0) w.cal[ci].owner = owner;
+        }
+      });
+    }
+    function syncCalItem(evUniqueKey, text, owner) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.cal) w.cal = [];
+        var idx = w.cal.findIndex(function (c) { return c._evKey === evUniqueKey; });
+        if (text && text.trim()) {
+          if (idx >= 0) {
+            w.cal[idx].text = text.trim();
+            w.cal[idx].owner = owner;
+          } else {
+            w.cal.push({ id: nextAccionId(), text: text.trim(), owner: owner, done: false, _evKey: evUniqueKey });
+          }
+        } else if (idx >= 0) {
+          w.cal.splice(idx, 1);
+        }
+      });
+    }
+
+    // ----- Render: bloque Admin --------------------------------------
+    function renderAdminBlock(editable) {
+      var w = myWeekState();
+      var items = (w && w.admin) || [];
+      var h = '<div class="sem-side-block">';
+      h += '<div class="sem-side-hdr"><span class="ico">📋</span> Pendientes Admin</div>';
+      h += '<div class="sem-side-body">';
+      h += '<div class="sem-admin-list">';
+      if (!items.length) {
+        h += '<div class="sem-cal-empty">Sin pendientes admin esta semana.</div>';
+      } else {
+        items.forEach(function (it, i) {
+          var owner = (it.owner || '').trim();
+          var letter = (owner[0] || '?').toUpperCase();
+          var col = PERSONA_COLORS[owner] || '#888';
+          h += '<div class="sem-admin-item">';
+          h += '<span class="sem-admin-chip" style="background:' + col + '">' + escapeHtml(letter) + '</span>';
+          h += '<span class="txt' + (it.done ? ' done' : '') + '"' +
+               (editable ? ' data-sem-action="toggle-admin" data-idx="' + i + '"' : '') + '>' +
+               escapeHtml(it.text || '') + '</span>';
+          if (editable) {
+            h += '<button class="sem-admin-del" data-sem-action="del-admin" data-idx="' + i + '" title="eliminar">×</button>';
+          }
+          h += '</div>';
+        });
+      }
+      h += '</div>'; // admin-list
+      if (editable) {
+        h += '<div class="sem-admin-input-row">';
+        h += '<input id="semAdminInput" type="text" placeholder="Agregar pendiente admin..." />';
+        h += '<select id="semAdminOwner">';
+        OWNERS_ALL.forEach(function (o) { h += '<option>' + escapeHtml(o) + '</option>'; });
+        h += '</select>';
+        h += '<button data-sem-action="add-admin" title="agregar">+</button>';
+        h += '</div>';
+      }
+      h += '</div></div>';
+      return h;
+    }
+
+    // ----- Render: bloque Calendario próximas 3 semanas --------------
+    function renderCalBlock(editable) {
+      var monday = mondayOfWeekKey(semSt.weekKey);
+      if (!monday) return '';
+      var w = myWeekState() || {};
+      var calPrep = w.calPrep || {};
+      var calSynced = w.cal || [];
+      var labels = ['Esta semana', 'Próxima semana', 'En 2 semanas'];
+
+      var h = '<div class="sem-side-block">';
+      h += '<div class="sem-side-hdr"><span class="ico">🗓</span> Próximas semanas</div>';
+      h += '<div class="sem-side-body">';
+      for (var wi = 0; wi < 3; wi++) {
+        var mon = addDaysDate(monday, wi * 7);
+        var fri = addDaysDate(mon, 4);
+        h += '<div class="sem-cal-weeklabel">' + labels[wi] + ' · ' +
+             escapeHtml(fmtShortDate(mon)) + ' – ' + escapeHtml(fmtShortDate(fri)) + '</div>';
+        var evs = eventsInWeek(mon);
+        if (!evs.length) {
+          h += '<div class="sem-cal-empty">Sin eventos esta semana</div>';
+          continue;
+        }
+        evs.forEach(function (e) {
+          var ev = e.ev;
+          var col = CAT_COLORS[ev.cat] || '#8e97b0';
+          var uniqKey = e.evUniqueKey;
+          var prepKey = 'prep_' + uniqKey;
+          var ownerKey = 'owner_' + uniqKey;
+          var curPrep = calPrep[prepKey] || '';
+          var curOwner = calPrep[ownerKey] || 'Víctor';
+          var isSynced = calSynced.some(function (c) { return c._evKey === uniqKey; });
+
+          h += '<div class="sem-cal-event">';
+          h += '<div class="sem-cal-dot" style="background:' + col + '"></div>';
+          h += '<div class="sem-cal-body">';
+          h += '<div class="sem-cal-head">';
+          h += '<span class="sem-cal-date">' + dayLabel(e.day) + ' ' + escapeHtml(fmtShortDate(e.day)) + '</span>';
+          h += '<span class="sem-cal-text">' + escapeHtml(ev.t || '') + '</span>';
+          if (editable) {
+            h += '<select class="sem-cal-owner-sel" data-sem-action="set-cal-owner" data-ownerkey="' + escapeHtml(ownerKey) + '" data-evkey="' + escapeHtml(uniqKey) + '">';
+            OWNERS_ALL.forEach(function (o) {
+              h += '<option' + (o === curOwner ? ' selected' : '') + '>' + escapeHtml(o) + '</option>';
+            });
+            h += '</select>';
+          } else {
+            h += '<span class="sem-cal-owner-sel">' + escapeHtml(curOwner) + '</span>';
+          }
+          h += '</div>';
+          if (editable) {
+            h += '<div class="sem-cal-prep-row">';
+            h += '<textarea class="sem-cal-prep" rows="1" placeholder="Tarea / qué preparar..." data-sem-action="set-cal-prep" data-prepkey="' + escapeHtml(prepKey) + '">' + escapeHtml(curPrep) + '</textarea>';
+            h += '<button class="sem-cal-add-btn' + (isSynced ? ' synced' : '') + '" data-sem-action="sync-cal" data-evkey="' + escapeHtml(uniqKey) + '" data-evtext="' + escapeHtml(ev.t || '') + '" data-prepkey="' + escapeHtml(prepKey) + '" data-ownerkey="' + escapeHtml(ownerKey) + '">' + (isSynced ? '✓ En plan' : '+ Plan') + '</button>';
+            h += '</div>';
+          } else if (curPrep) {
+            h += '<div style="font-size:11px;color:var(--muted);margin-top:3px;">↳ ' + escapeHtml(curPrep) + '</div>';
+          }
+          h += '</div></div>';
+        });
+      }
+      h += '</div></div>';
+      return h;
+    }
+
+    // ----- Render: bloque Notas --------------------------------------
+    function renderNotasBlock(editable) {
+      var w = myWeekState() || {};
+      var notes = w.notes || '';
+      var h = '<div class="sem-side-block">';
+      h += '<div class="sem-side-hdr"><span class="ico">📝</span> Notas del plan</div>';
+      h += '<div class="sem-side-body">';
+      if (editable) {
+        h += '<textarea class="sem-notes-area" id="semNotesArea" placeholder="Foco de la semana, contexto, intenciones...">' + escapeHtml(notes) + '</textarea>';
+      } else {
+        h += notes
+          ? '<div style="font-size:13px;white-space:pre-wrap;color:var(--ink);">' + escapeHtml(notes) + '</div>'
+          : '<div class="sem-cal-empty">Sin notas para esta semana.</div>';
+      }
+      h += '</div></div>';
+      return h;
+    }
+
     // ----- Render principal -------------------------------------------
     function render() {
       var root = document.getElementById('semanal-root');
@@ -1596,6 +1956,8 @@
 
       // Body
       if (semSt.mode === 'plan') {
+        h += '<div class="sem-plan-grid">';
+        h += '<div class="sem-plan-main">';
         // Toolbar edición
         if (editable) {
           h += '<div class="sem-toolbar">';
@@ -1607,6 +1969,13 @@
           if (semSt.adding) h += renderAddForm();
         }
         h += renderPlanMode(editable);
+        h += '</div>'; // .sem-plan-main
+        h += '<aside class="sem-plan-side">';
+        h += renderAdminBlock(editable);
+        h += renderCalBlock(editable);
+        h += renderNotasBlock(editable);
+        h += '</aside>';
+        h += '</div>'; // .sem-plan-grid
       } else {
         h += '<div class="sem-empty"><div class="sem-empty-big">Próximamente</div><p>Modo <code>' + semSt.mode + '</code> llega en la siguiente ronda.</p></div>';
       }
@@ -1687,9 +2056,88 @@
               deleteAccion(di);
               render();
             }
+          } else if (action === 'add-admin') {
+            var inp = document.getElementById('semAdminInput');
+            var own = document.getElementById('semAdminOwner');
+            var txt = (inp && inp.value || '').trim();
+            if (!txt) return;
+            addAdminItem(txt, own ? own.value : 'Víctor');
+            render();
+            setTimeout(function () { var i = document.getElementById('semAdminInput'); if (i) i.focus(); }, 30);
+          } else if (action === 'del-admin') {
+            deleteAdminItem(parseInt(b.getAttribute('data-idx'), 10));
+            render();
+          } else if (action === 'toggle-admin') {
+            toggleAdminDone(parseInt(b.getAttribute('data-idx'), 10));
+            render();
+          } else if (action === 'sync-cal') {
+            var evK = b.getAttribute('data-evkey');
+            var evT = b.getAttribute('data-evtext');
+            var pK  = b.getAttribute('data-prepkey');
+            var oK  = b.getAttribute('data-ownerkey');
+            var prepArea = root.querySelector('[data-prepkey="' + pK + '"]');
+            var prepTxt  = prepArea ? prepArea.value.trim() : '';
+            var w = myWeekState() || {};
+            var owner = (w.calPrep || {})[oK] || 'Víctor';
+            // Si ya está sincronizado, des-sincronizar; si no, sincronizar
+            var alreadySynced = (w.cal || []).some(function (c) { return c._evKey === evK; });
+            if (alreadySynced) {
+              syncCalItem(evK, '', owner); // text vacío → borra
+            } else {
+              syncCalItem(evK, prepTxt || evT, owner);
+            }
+            render();
           }
         });
       });
+
+      // Calendar prep textareas — guardar al perder foco
+      root.querySelectorAll('[data-sem-action="set-cal-prep"]').forEach(function (ta) {
+        ta.addEventListener('change', function () {
+          setCalPrep(ta.getAttribute('data-prepkey'), ta.value);
+        });
+      });
+      // Calendar owner selects — guardar on change
+      root.querySelectorAll('[data-sem-action="set-cal-owner"]').forEach(function (sel) {
+        sel.addEventListener('change', function () {
+          setCalOwner(sel.getAttribute('data-ownerkey'), sel.value);
+          var evK = sel.getAttribute('data-evkey');
+          // Si ya está sincronizado, propagar dueño nuevo al cal[]
+          var w = myWeekState();
+          if (w && w.cal) {
+            var idx = w.cal.findIndex(function (c) { return c._evKey === evK; });
+            if (idx >= 0) {
+              window.planner.mutateSharedWeek(semSt.weekKey, function (ww) {
+                if (ww.cal && ww.cal[idx]) ww.cal[idx].owner = sel.value;
+              });
+            }
+          }
+        });
+      });
+      // Admin input — Enter para agregar
+      var adminInp = document.getElementById('semAdminInput');
+      if (adminInp) {
+        adminInp.addEventListener('keydown', function (ev) {
+          if (ev.key === 'Enter') {
+            ev.preventDefault();
+            var btn = root.querySelector('[data-sem-action="add-admin"]');
+            if (btn) btn.click();
+          }
+        });
+      }
+      // Notas — debounced save
+      var notesEl = document.getElementById('semNotesArea');
+      if (notesEl) {
+        var notesTimer = null;
+        notesEl.addEventListener('input', function () {
+          if (notesTimer) clearTimeout(notesTimer);
+          notesTimer = setTimeout(function () { setNotes(notesEl.value); }, 600);
+        });
+        notesEl.addEventListener('blur', function () {
+          if (notesTimer) { clearTimeout(notesTimer); notesTimer = null; }
+          setNotes(notesEl.value);
+        });
+      }
 
       // Owner picker en el form: marcar active al click
       root.querySelectorAll('.sem-owner-btn').forEach(function (b) {
