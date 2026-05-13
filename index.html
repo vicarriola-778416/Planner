@@ -363,6 +363,21 @@
     .sem-cal-owner-sel { font-size: 9px; font-family: 'DM Mono', monospace; padding: 1px 4px; border-radius: 3px; border: 1px solid var(--line); background: #fff; color: var(--ink); }
     /* Notas */
     .sem-notes-area { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 6px; padding: 10px; font-family: inherit; font-size: 13px; min-height: 140px; resize: vertical; color: var(--ink); background: #fff; }
+
+    /* === Modo Cierre (Ronda 2C) === */
+    .sem-cierre-toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+    .sem-cierre-progress { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+    .sem-cierre-progress b { color: var(--ink); }
+    .sem-cierre-feedback { padding: 10px 14px; background: rgba(26,158,80,0.08); border: 1px solid rgba(26,158,80,0.3); color: #1a7a3e; border-radius: 8px; font-size: 12px; font-family: 'DM Mono', monospace; margin-bottom: 12px; }
+    .sem-cierre-row { padding: 4px 0; }
+    .sem-cierre-actions { display: inline-flex; gap: 3px; margin-left: 6px; flex-shrink: 0; }
+    .sem-cierre-btn { width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--line); background: #fff; cursor: pointer; font-size: 13px; line-height: 1; padding: 0; color: var(--muted); transition: all 0.12s; display: inline-flex; align-items: center; justify-content: center; }
+    .sem-cierre-btn:hover { background: #F5F2EA; color: var(--ink); }
+    .sem-cierre-btn.hecha.active { background: #1a9e50; color: white; border-color: #1a9e50; }
+    .sem-cierre-btn.mas.active { background: #f97316; color: white; border-color: #f97316; }
+    .sem-cierre-btn.cancel.active { background: #c0392b; color: white; border-color: #c0392b; }
+    .sem-cierre-comment { width: calc(100% - 30px); box-sizing: border-box; margin: 6px 0 0 30px; padding: 5px 8px; border: 1px dashed var(--line); border-radius: 4px; font-family: inherit; font-size: 11px; resize: vertical; min-height: 24px; background: #fff; color: var(--ink); }
+    .sem-cierre-comment:focus { border-style: solid; border-color: var(--ink); outline: none; }
   </style>
 </head>
 <body>
@@ -385,7 +400,7 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-13.3 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-13.4 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
@@ -1271,7 +1286,7 @@
     var WORK_CATS = { 'vt':1,'di':1,'oo':1,'rt':1,'cr':1,'pe':1,'de':1,'cd':1,'qb':1,'fe':1 };
     var MODES = [
       { id: 'plan',    label: '📋 Plan',     enabled: true  },
-      { id: 'cierre',  label: '✓ Cierre',    enabled: false },
+      { id: 'cierre',  label: '✓ Cierre',    enabled: true  },
       { id: 'output',  label: '📄 Output',   enabled: false },
       { id: 'history', label: '🗂 Historial', enabled: false }
     ];
@@ -1283,7 +1298,8 @@
       mode:    'plan',
       adding:  false,   // Si está abierto el form de Nueva acción
       addDraft: null,   // { text, owner, hitoId } draft del form
-      editing: null     // _idx de la acción en edición inline (o null)
+      editing: null,    // _idx de la acción en edición inline (o null)
+      cierreFeedback: null   // string que se muestra arriba del modo Cierre tras guardar
     };
 
     // ----- Helpers ----------------------------------------------------
@@ -1887,21 +1903,212 @@
       return h;
     }
 
-    // ----- Render: bloque Notas --------------------------------------
-    function renderNotasBlock(editable) {
+    // ----- Render: bloque Notas (mode=plan o cierre) -----------------
+    function renderNotasBlock(editable, mode) {
       var w = myWeekState() || {};
-      var notes = w.notes || '';
+      var isCierre = (mode === 'cierre');
+      var notes = isCierre ? (w.cierreNotes || '') : (w.notes || '');
+      var hdrLabel = isCierre ? 'Notas del cierre' : 'Notas del plan';
+      var placeholder = isCierre
+        ? 'Reflexiones de la semana, qué funcionó, qué no, aprendizajes...'
+        : 'Foco de la semana, contexto, intenciones...';
       var h = '<div class="sem-side-block">';
-      h += '<div class="sem-side-hdr"><span class="ico">📝</span> Notas del plan</div>';
+      h += '<div class="sem-side-hdr"><span class="ico">📝</span> ' + hdrLabel + '</div>';
       h += '<div class="sem-side-body">';
       if (editable) {
-        h += '<textarea class="sem-notes-area" id="semNotesArea" placeholder="Foco de la semana, contexto, intenciones...">' + escapeHtml(notes) + '</textarea>';
+        h += '<textarea class="sem-notes-area" id="semNotesArea" data-notes-field="' + (isCierre ? 'cierreNotes' : 'notes') + '" placeholder="' + placeholder + '">' + escapeHtml(notes) + '</textarea>';
       } else {
         h += notes
           ? '<div style="font-size:13px;white-space:pre-wrap;color:var(--ink);">' + escapeHtml(notes) + '</div>'
           : '<div class="sem-cal-empty">Sin notas para esta semana.</div>';
       }
       h += '</div></div>';
+      return h;
+    }
+
+    // ----- Modo Cierre: helpers + mutators ---------------------------
+    function nextWeekKey(k) {
+      var p = parseKey(k);
+      if (!p) return null;
+      var w = p.week + 1, y = p.year;
+      if (w > isoWeeksInYear(y)) { y++; w = 1; }
+      return weekToKey(y, w);
+    }
+    function setCierreState(idx, state) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.acciones || !w.acciones[idx]) return;
+        var cur = w.acciones[idx].cierreState || '';
+        // Toggle: si ya tiene este estado, lo limpio. Si no, lo seteo.
+        w.acciones[idx].cierreState = (cur === state) ? '' : state;
+      });
+    }
+    function setAccionComment(idx, text) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.acciones || !w.acciones[idx]) return;
+        w.acciones[idx].comment = text;
+      });
+    }
+    function setCierreNotes(text) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        w.cierreNotes = text;
+      });
+    }
+    function saveCierre() {
+      var me = window.planner.getMe();
+      var wk = semSt.weekKey;
+      var nxt = nextWeekKey(wk);
+      var counts = { carried: 0, skipped: 0, prev: wk, nextWk: nxt };
+
+      window.planner.mutateSharedWeek(wk, function (w) {
+        w['cierreSaved_' + me.name] = true;
+        var all3 = ['Víctor', 'Jaime', 'Colomba'].every(function (n) { return w['cierreSaved_' + n]; });
+        if (all3) w.cierreSaved = true;
+      });
+
+      if (!nxt) return counts;
+
+      var curW = window.planner.getSharedWeek(wk);
+      var carries = (curW.acciones || []).filter(function (a) { return a.cierreState === 'mas-tiempo'; });
+      if (!carries.length) return counts;
+
+      window.planner.mutateSharedWeek(nxt, function (nw) {
+        if (!nw.acciones) nw.acciones = [];
+        carries.forEach(function (a) {
+          var dup = nw.acciones.find(function (x) { return x.text === a.text && x.hitoId === a.hitoId; });
+          if (dup) { counts.skipped++; return; }
+          nw.acciones.push({
+            id: nextAccionId(),
+            text: a.text,
+            owner: a.owner || 'Víctor',
+            objId: a.objId || '',
+            hitoId: a.hitoId,
+            done: false,
+            week: nxt,
+            cierreState: 'mas-tiempo',
+            carried: true,
+            comment: ''
+          });
+          counts.carried++;
+        });
+      });
+      return counts;
+    }
+
+    // ----- Render: row en modo Cierre -------------------------------
+    function cierreAccionRowHtml(a, editable) {
+      var p = (a.owner || '').trim();
+      var letter = (p[0] || '?').toUpperCase();
+      var col = PERSONA_COLORS[p] || '#888';
+      var st = a.cierreState || '';
+
+      var h = '<div class="sem-cierre-row">';
+      h += '<div class="sem-accion-row" style="margin:0;">';
+      h += '<span class="sem-accion-chip" style="background:' + col + '">' + escapeHtml(letter) + '</span>';
+      h += '<div class="sem-accion-text">' + escapeHtml(a.text || '') + '</div>';
+      if (a.carried) h += '<span class="sem-accion-pill sem-pill-carry">CARRY</span>';
+      if (editable) {
+        h += '<span class="sem-cierre-actions">';
+        h += '<button class="sem-cierre-btn hecha' + (st === 'hecha' ? ' active' : '') + '" data-sem-action="cierre-state" data-state="hecha" data-idx="' + a._idx + '" title="Hecha">✓</button>';
+        h += '<button class="sem-cierre-btn mas' + (st === 'mas-tiempo' ? ' active' : '') + '" data-sem-action="cierre-state" data-state="mas-tiempo" data-idx="' + a._idx + '" title="Más tiempo">⌛</button>';
+        h += '<button class="sem-cierre-btn cancel' + (st === 'cancelada' ? ' active' : '') + '" data-sem-action="cierre-state" data-state="cancelada" data-idx="' + a._idx + '" title="Cancelada">✕</button>';
+        h += '</span>';
+      } else {
+        if (st === 'hecha')        h += '<span class="sem-accion-pill sem-pill-hecha">HECHA</span>';
+        else if (st === 'mas-tiempo') h += '<span class="sem-accion-pill sem-pill-mas">MÁS T.</span>';
+        else if (st === 'cancelada')  h += '<span class="sem-accion-pill sem-pill-cancel">CANCEL.</span>';
+      }
+      h += '</div>';
+      if (editable) {
+        h += '<textarea class="sem-cierre-comment" rows="1" placeholder="Comentario del cierre (opcional)" data-sem-action="cierre-comment" data-idx="' + a._idx + '">' + escapeHtml(a.comment || '') + '</textarea>';
+      } else if (a.comment) {
+        h += '<div class="sem-accion-comment" style="margin-left:30px;">↳ ' + escapeHtml(a.comment) + '</div>';
+      }
+      h += '</div>';
+      return h;
+    }
+
+    // ----- Render: Cierre mode (lista de acciones con marcadores) ---
+    function renderCierreMode(editable) {
+      var acciones = getAccionesForView();
+      var objs = (window.planner.getShared().objs || []);
+
+      if (!acciones.length) {
+        return '<div class="sem-empty"><div class="sem-empty-big">Sin acciones</div><p>No hay nada que cerrar en ' + escapeHtml(weekKeyLabel(semSt.weekKey)) + '. Volvé al Plan para cargar acciones.</p></div>';
+      }
+
+      // Group by hito
+      var byHito = {};
+      acciones.forEach(function (a) {
+        var hid = a.hitoId || '_orphan';
+        if (!byHito[hid]) byHito[hid] = [];
+        byHito[hid].push(a);
+      });
+
+      // Counters: cuántas marcadas
+      var marked = 0;
+      acciones.forEach(function (a) {
+        if (a.cierreState === 'hecha' || a.cierreState === 'mas-tiempo' || a.cierreState === 'cancelada') marked++;
+      });
+
+      var h = '';
+      h += '<div class="sem-stats">';
+      h += '<span><b>' + marked + '</b> de <b>' + acciones.length + '</b> marcadas</span>';
+      h += '</div>';
+
+      // Foco grouping (igual que Plan)
+      var orphans = [];
+      var focoIdx = 0;
+      objs.forEach(function (foco) {
+        focoIdx++;
+        var focoTag  = focoTagLabel(foco);
+        var focoCol  = focoHeaderColor(focoIdx, foco);
+        var focoBody = '';
+
+        (foco.objetivos || foco.hitos ? (foco.objetivos || [{ hitos: foco.hitos, color: '#888', text: '' }]) : []).forEach(function (ob) {
+          var oc = ob.color || '#888';
+          var objBlock = '';
+          (ob.hitos || []).forEach(function (hi) {
+            var arr = byHito[hi.id];
+            if (!arr || !arr.length) return;
+            objBlock += '<div class="sem-hito-block">';
+            objBlock += '<div class="sem-hito-label">' + escapeHtml(hi.text || '');
+            if (hi.due) objBlock += '<span class="sem-hito-due">' + escapeHtml(hi.due) + '</span>';
+            objBlock += '</div>';
+            arr.forEach(function (a) { objBlock += cierreAccionRowHtml(a, editable); a._rendered = true; });
+            objBlock += '</div>';
+          });
+          if (objBlock) {
+            focoBody += '<div class="sem-obj-block">';
+            if (ob.text) {
+              focoBody += '<div class="sem-obj-label"><span class="sem-obj-dot" style="background:' + oc + '"></span>' + escapeHtml(ob.text) + '</div>';
+            }
+            focoBody += objBlock;
+            focoBody += '</div>';
+          }
+        });
+
+        if (focoBody) {
+          h += '<div class="sem-foco-card">';
+          h += '<div class="sem-foco-hdr">';
+          h += '<span class="sem-foco-tag" style="background:' + focoCol + '">' + escapeHtml(focoTag) + '</span>';
+          h += '<span class="sem-foco-title">' + escapeHtml(focoTitleClean(foco.text)) + '</span>';
+          h += '</div>';
+          h += '<div class="sem-foco-body">' + focoBody + '</div>';
+          h += '</div>';
+        }
+      });
+
+      acciones.forEach(function (a) { if (!a._rendered) orphans.push(a); });
+      if (orphans.length) {
+        h += '<div class="sem-foco-card">';
+        h += '<div class="sem-foco-hdr"><span class="sem-foco-tag" style="background:#888">?</span><span class="sem-foco-title">Sin foco asociado</span></div>';
+        h += '<div class="sem-foco-body">';
+        orphans.forEach(function (a) { h += cierreAccionRowHtml(a, editable); });
+        h += '</div></div>';
+      }
       return h;
     }
 
@@ -1978,9 +2185,35 @@
         h += '<aside class="sem-plan-side">';
         h += renderAdminBlock(editable);
         h += renderCalBlock(editable);
-        h += renderNotasBlock(editable);
+        h += renderNotasBlock(editable, 'plan');
         h += '</aside>';
         h += '</div>'; // .sem-plan-grid
+      } else if (semSt.mode === 'cierre') {
+        var savedMine = !!(myW && myW['cierreSaved_' + me.name]);
+        var nxtK = nextWeekKey(semSt.weekKey);
+        h += '<div class="sem-plan-grid">';
+        h += '<div class="sem-plan-main">';
+        if (editable) {
+          h += '<div class="sem-cierre-toolbar">';
+          h += '<button class="sem-btn-primary" data-sem-action="save-cierre">' + (savedMine ? '↻ Re-guardar cierre' : '✓ Guardar cierre') + '</button>';
+          if (savedMine) {
+            h += '<span class="sem-cierre-progress">tu cierre <b>guardado</b> · cierre equipo <b>' + teamCount + '/3</b> · próx. ' + escapeHtml(weekKeyLabel(nxtK || '—')) + '</span>';
+          } else {
+            h += '<span class="sem-cierre-progress">al guardar, las "más tiempo" saltan a <b>' + escapeHtml(weekKeyLabel(nxtK || '—')) + '</b></span>';
+          }
+          h += '</div>';
+        }
+        if (semSt.cierreFeedback) {
+          h += '<div class="sem-cierre-feedback">' + escapeHtml(semSt.cierreFeedback) + '</div>';
+        }
+        h += renderCierreMode(editable);
+        h += '</div>'; // main
+        h += '<aside class="sem-plan-side">';
+        h += renderAdminBlock(editable);
+        h += renderCalBlock(editable);
+        h += renderNotasBlock(editable, 'cierre');
+        h += '</aside>';
+        h += '</div>';
       } else {
         h += '<div class="sem-empty"><div class="sem-empty-big">Próximamente</div><p>Modo <code>' + semSt.mode + '</code> llega en la siguiente ronda.</p></div>';
       }
@@ -2075,6 +2308,21 @@
           } else if (action === 'toggle-admin') {
             toggleAdminDone(parseInt(b.getAttribute('data-idx'), 10));
             render();
+          } else if (action === 'cierre-state') {
+            var idxCs = parseInt(b.getAttribute('data-idx'), 10);
+            var newState = b.getAttribute('data-state');
+            setCierreState(idxCs, newState);
+            render();
+          } else if (action === 'save-cierre') {
+            var res = saveCierre();
+            if (res.nextWk) {
+              semSt.cierreFeedback = '✓ Cierre guardado. ' + res.carried + ' acción(es) carry-over a ' + weekKeyLabel(res.nextWk) +
+                                     (res.skipped ? ' (' + res.skipped + ' ya estaban ahí)' : '') + '.';
+            } else {
+              semSt.cierreFeedback = '✓ Cierre guardado. Sin carry-over.';
+            }
+            render();
+            setTimeout(function () { semSt.cierreFeedback = null; render(); }, 4500);
           } else if (action === 'sync-cal') {
             var evK = b.getAttribute('data-evkey');
             var evT = b.getAttribute('data-evtext');
@@ -2130,19 +2378,38 @@
           }
         });
       }
-      // Notas — debounced save
+      // Notas (plan o cierre, según data-notes-field) — debounced save
       var notesEl = document.getElementById('semNotesArea');
       if (notesEl) {
+        var notesField = notesEl.getAttribute('data-notes-field') || 'notes';
         var notesTimer = null;
+        var commitNotes = function () {
+          if (notesField === 'cierreNotes') setCierreNotes(notesEl.value);
+          else setNotes(notesEl.value);
+        };
         notesEl.addEventListener('input', function () {
           if (notesTimer) clearTimeout(notesTimer);
-          notesTimer = setTimeout(function () { setNotes(notesEl.value); }, 600);
+          notesTimer = setTimeout(commitNotes, 600);
         });
         notesEl.addEventListener('blur', function () {
           if (notesTimer) { clearTimeout(notesTimer); notesTimer = null; }
-          setNotes(notesEl.value);
+          commitNotes();
         });
       }
+
+      // Cierre comments — debounced save por textarea
+      root.querySelectorAll('[data-sem-action="cierre-comment"]').forEach(function (ta) {
+        var t = null;
+        var commit = function () { setAccionComment(parseInt(ta.getAttribute('data-idx'), 10), ta.value); };
+        ta.addEventListener('input', function () {
+          if (t) clearTimeout(t);
+          t = setTimeout(commit, 500);
+        });
+        ta.addEventListener('blur', function () {
+          if (t) { clearTimeout(t); t = null; }
+          commit();
+        });
+      });
 
       // Owner picker en el form: marcar active al click
       root.querySelectorAll('.sem-owner-btn').forEach(function (b) {
