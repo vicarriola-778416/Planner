@@ -400,7 +400,7 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-13.4 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-13.5 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
@@ -1800,10 +1800,11 @@
       });
     }
 
-    // ----- Render: bloque Admin --------------------------------------
-    function renderAdminBlock(editable) {
+    // ----- Render: bloque Admin (mode=plan o cierre) -----------------
+    function renderAdminBlock(editable, mode) {
       var w = myWeekState();
       var items = (w && w.admin) || [];
+      var isCierre = (mode === 'cierre');
       var h = '<div class="sem-side-block">';
       h += '<div class="sem-side-hdr"><span class="ico">📋</span> Pendientes Admin</div>';
       h += '<div class="sem-side-body">';
@@ -1815,25 +1816,78 @@
           var owner = (it.owner || '').trim();
           var letter = (owner[0] || '?').toUpperCase();
           var col = PERSONA_COLORS[owner] || '#888';
+          var st = it.cierreState || '';
           h += '<div class="sem-admin-item">';
           h += '<span class="sem-admin-chip" style="background:' + col + '">' + escapeHtml(letter) + '</span>';
-          h += '<span class="txt' + (it.done ? ' done' : '') + '"' +
-               (editable ? ' data-sem-action="toggle-admin" data-idx="' + i + '"' : '') + '>' +
-               escapeHtml(it.text || '') + '</span>';
-          if (editable) {
+          if (isCierre && editable) {
+            // Modo cierre: texto + 3-state buttons
+            h += '<span class="txt">' + escapeHtml(it.text || '') + '</span>';
+            h += '<span class="sem-cierre-actions">';
+            h += '<button class="sem-cierre-btn hecha' + (st === 'hecha' ? ' active' : '') + '" data-sem-action="admin-cierre-state" data-state="hecha" data-idx="' + i + '" title="Hecha">✓</button>';
+            h += '<button class="sem-cierre-btn mas' + (st === 'mas-tiempo' ? ' active' : '') + '" data-sem-action="admin-cierre-state" data-state="mas-tiempo" data-idx="' + i + '" title="Más tiempo">⌛</button>';
+            h += '<button class="sem-cierre-btn cancel' + (st === 'cancelada' ? ' active' : '') + '" data-sem-action="admin-cierre-state" data-state="cancelada" data-idx="' + i + '" title="Cancelada">✕</button>';
+            h += '</span>';
+          } else if (editable) {
+            // Modo plan: toggle-done + delete
+            h += '<span class="txt' + (it.done ? ' done' : '') + '" data-sem-action="toggle-admin" data-idx="' + i + '">' + escapeHtml(it.text || '') + '</span>';
             h += '<button class="sem-admin-del" data-sem-action="del-admin" data-idx="' + i + '" title="eliminar">×</button>';
+          } else {
+            // Read-only
+            h += '<span class="txt' + (it.done ? ' done' : '') + '">' + escapeHtml(it.text || '') + '</span>';
+            if (st === 'hecha')        h += '<span class="sem-accion-pill sem-pill-hecha">HECHA</span>';
+            else if (st === 'mas-tiempo') h += '<span class="sem-accion-pill sem-pill-mas">MÁS T.</span>';
+            else if (st === 'cancelada')  h += '<span class="sem-accion-pill sem-pill-cancel">CANCEL.</span>';
           }
           h += '</div>';
         });
       }
       h += '</div>'; // admin-list
-      if (editable) {
+      // Input row solo en modo plan editable
+      if (editable && !isCierre) {
         h += '<div class="sem-admin-input-row">';
         h += '<input id="semAdminInput" type="text" placeholder="Agregar pendiente admin..." />';
         h += '<select id="semAdminOwner">';
         OWNERS_ALL.forEach(function (o) { h += '<option>' + escapeHtml(o) + '</option>'; });
         h += '</select>';
         h += '<button data-sem-action="add-admin" title="agregar">+</button>';
+        h += '</div>';
+      }
+      h += '</div></div>';
+      return h;
+    }
+
+    // ----- Render: bloque Calendario en modo Cierre ------------------
+    function renderCalBlockCierre(editable) {
+      var w = myWeekState() || {};
+      var items = w.cal || [];
+      var h = '<div class="sem-side-block">';
+      h += '<div class="sem-side-hdr"><span class="ico">🗓</span> Eventos del plan</div>';
+      h += '<div class="sem-side-body">';
+      if (!items.length) {
+        h += '<div class="sem-cal-empty">Sin eventos sincronizados al plan esta semana. (Los items se agregan desde Plan → 🗓 → + Plan)</div>';
+      } else {
+        h += '<div class="sem-admin-list">';
+        items.forEach(function (it, i) {
+          var owner = (it.owner || '').trim();
+          var letter = (owner[0] || '?').toUpperCase();
+          var col = PERSONA_COLORS[owner] || '#888';
+          var st = it.cierreState || '';
+          h += '<div class="sem-admin-item">';
+          h += '<span class="sem-admin-chip" style="background:' + col + '">' + escapeHtml(letter) + '</span>';
+          h += '<span class="txt">' + escapeHtml(it.text || '') + '</span>';
+          if (editable) {
+            h += '<span class="sem-cierre-actions">';
+            h += '<button class="sem-cierre-btn hecha' + (st === 'hecha' ? ' active' : '') + '" data-sem-action="cal-cierre-state" data-state="hecha" data-idx="' + i + '" title="Hecha">✓</button>';
+            h += '<button class="sem-cierre-btn mas' + (st === 'mas-tiempo' ? ' active' : '') + '" data-sem-action="cal-cierre-state" data-state="mas-tiempo" data-idx="' + i + '" title="Más tiempo">⌛</button>';
+            h += '<button class="sem-cierre-btn cancel' + (st === 'cancelada' ? ' active' : '') + '" data-sem-action="cal-cierre-state" data-state="cancelada" data-idx="' + i + '" title="Cancelada">✕</button>';
+            h += '</span>';
+          } else {
+            if (st === 'hecha')        h += '<span class="sem-accion-pill sem-pill-hecha">HECHA</span>';
+            else if (st === 'mas-tiempo') h += '<span class="sem-accion-pill sem-pill-mas">MÁS T.</span>';
+            else if (st === 'cancelada')  h += '<span class="sem-accion-pill sem-pill-cancel">CANCEL.</span>';
+          }
+          h += '</div>';
+        });
         h += '</div>';
       }
       h += '</div></div>';
@@ -1956,11 +2010,32 @@
         w.cierreNotes = text;
       });
     }
+    function setAdminCierreState(idx, state) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.admin || !w.admin[idx]) return;
+        var cur = w.admin[idx].cierreState || '';
+        w.admin[idx].cierreState = (cur === state) ? '' : state;
+        // Sincronizar done con hecha (compat con código legacy que lee .done)
+        if (w.admin[idx].cierreState === 'hecha') w.admin[idx].done = true;
+        else if (!w.admin[idx].cierreState) w.admin[idx].done = false;
+      });
+    }
+    function setCalCierreState(idx, state) {
+      var wk = semSt.weekKey;
+      return window.planner.mutateSharedWeek(wk, function (w) {
+        if (!w.cal || !w.cal[idx]) return;
+        var cur = w.cal[idx].cierreState || '';
+        w.cal[idx].cierreState = (cur === state) ? '' : state;
+        if (w.cal[idx].cierreState === 'hecha') w.cal[idx].done = true;
+        else if (!w.cal[idx].cierreState) w.cal[idx].done = false;
+      });
+    }
     function saveCierre() {
       var me = window.planner.getMe();
       var wk = semSt.weekKey;
       var nxt = nextWeekKey(wk);
-      var counts = { carried: 0, skipped: 0, prev: wk, nextWk: nxt };
+      var counts = { carried: 0, skipped: 0, carriedAdmin: 0, skippedAdmin: 0, prev: wk, nextWk: nxt };
 
       window.planner.mutateSharedWeek(wk, function (w) {
         w['cierreSaved_' + me.name] = true;
@@ -1971,29 +2046,54 @@
       if (!nxt) return counts;
 
       var curW = window.planner.getSharedWeek(wk);
-      var carries = (curW.acciones || []).filter(function (a) { return a.cierreState === 'mas-tiempo'; });
-      if (!carries.length) return counts;
 
-      window.planner.mutateSharedWeek(nxt, function (nw) {
-        if (!nw.acciones) nw.acciones = [];
-        carries.forEach(function (a) {
-          var dup = nw.acciones.find(function (x) { return x.text === a.text && x.hitoId === a.hitoId; });
-          if (dup) { counts.skipped++; return; }
-          nw.acciones.push({
-            id: nextAccionId(),
-            text: a.text,
-            owner: a.owner || 'Víctor',
-            objId: a.objId || '',
-            hitoId: a.hitoId,
-            done: false,
-            week: nxt,
-            cierreState: 'mas-tiempo',
-            carried: true,
-            comment: ''
+      // Carry de ACCIONES mas-tiempo
+      var carries = (curW.acciones || []).filter(function (a) { return a.cierreState === 'mas-tiempo'; });
+      if (carries.length) {
+        window.planner.mutateSharedWeek(nxt, function (nw) {
+          if (!nw.acciones) nw.acciones = [];
+          carries.forEach(function (a) {
+            var dup = nw.acciones.find(function (x) { return x.text === a.text && x.hitoId === a.hitoId; });
+            if (dup) { counts.skipped++; return; }
+            nw.acciones.push({
+              id: nextAccionId(),
+              text: a.text,
+              owner: a.owner || 'Víctor',
+              objId: a.objId || '',
+              hitoId: a.hitoId,
+              done: false,
+              week: nxt,
+              cierreState: 'mas-tiempo',
+              carried: true,
+              comment: ''
+            });
+            counts.carried++;
           });
-          counts.carried++;
         });
-      });
+      }
+
+      // Carry de ADMIN mas-tiempo
+      var adminCarries = (curW.admin || []).filter(function (a) { return a.cierreState === 'mas-tiempo'; });
+      if (adminCarries.length) {
+        window.planner.mutateSharedWeek(nxt, function (nw) {
+          if (!nw.admin) nw.admin = [];
+          adminCarries.forEach(function (a) {
+            var dup = nw.admin.find(function (x) { return x.text === a.text; });
+            if (dup) { counts.skippedAdmin++; return; }
+            nw.admin.push({
+              id: nextAccionId(),
+              text: a.text,
+              owner: a.owner || 'Víctor',
+              done: false,
+              cierreState: 'mas-tiempo',
+              carried: true
+            });
+            counts.carriedAdmin++;
+          });
+        });
+      }
+
+      // Cal items NO se cargan: están atados a eventos del calendario en esa fecha.
       return counts;
     }
 
@@ -2183,7 +2283,7 @@
         h += renderPlanMode(editable);
         h += '</div>'; // .sem-plan-main
         h += '<aside class="sem-plan-side">';
-        h += renderAdminBlock(editable);
+        h += renderAdminBlock(editable, 'plan');
         h += renderCalBlock(editable);
         h += renderNotasBlock(editable, 'plan');
         h += '</aside>';
@@ -2209,8 +2309,8 @@
         h += renderCierreMode(editable);
         h += '</div>'; // main
         h += '<aside class="sem-plan-side">';
-        h += renderAdminBlock(editable);
-        h += renderCalBlock(editable);
+        h += renderAdminBlock(editable, 'cierre');
+        h += renderCalBlockCierre(editable);
         h += renderNotasBlock(editable, 'cierre');
         h += '</aside>';
         h += '</div>';
@@ -2313,14 +2413,27 @@
             var newState = b.getAttribute('data-state');
             setCierreState(idxCs, newState);
             render();
+          } else if (action === 'admin-cierre-state') {
+            setAdminCierreState(parseInt(b.getAttribute('data-idx'), 10), b.getAttribute('data-state'));
+            render();
+          } else if (action === 'cal-cierre-state') {
+            setCalCierreState(parseInt(b.getAttribute('data-idx'), 10), b.getAttribute('data-state'));
+            render();
           } else if (action === 'save-cierre') {
             var res = saveCierre();
+            var fb = '✓ Cierre guardado.';
             if (res.nextWk) {
-              semSt.cierreFeedback = '✓ Cierre guardado. ' + res.carried + ' acción(es) carry-over a ' + weekKeyLabel(res.nextWk) +
-                                     (res.skipped ? ' (' + res.skipped + ' ya estaban ahí)' : '') + '.';
-            } else {
-              semSt.cierreFeedback = '✓ Cierre guardado. Sin carry-over.';
+              var parts = [];
+              if (res.carried)      parts.push(res.carried + ' acción(es)');
+              if (res.carriedAdmin) parts.push(res.carriedAdmin + ' admin');
+              if (parts.length) fb += ' Carry-over a ' + weekKeyLabel(res.nextWk) + ': ' + parts.join(' + ');
+              if (res.skipped || res.skippedAdmin) {
+                fb += ' (' + (res.skipped + res.skippedAdmin) + ' ya estaban ahí)';
+              }
+              if (!parts.length) fb += ' Sin carry-over.';
+              fb += '.';
             }
+            semSt.cierreFeedback = fb;
             render();
             setTimeout(function () { semSt.cierreFeedback = null; render(); }, 4500);
           } else if (action === 'sync-cal') {
