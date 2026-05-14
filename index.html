@@ -446,6 +446,58 @@
     .ceo-savemark { font-family: 'DM Mono', monospace; font-size: 10px; color: #1a7a3e; margin-left: 6px; opacity: 0; transition: opacity 0.2s; }
     .ceo-savemark.show { opacity: 1; }
     .ceo-empty { text-align: center; padding: 60px 20px; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; }
+
+    /* === Tab Calendario (solo Víctor) === */
+    .cal { padding: 20px 28px; }
+    .cal-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; align-items: start; }
+    @media (max-width: 1000px) { .cal-layout { grid-template-columns: 1fr; } }
+    .cal-year-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 760px) { .cal-year-grid { grid-template-columns: repeat(2, 1fr); } }
+    .cal-mc { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 10px; cursor: pointer; transition: border-color 0.12s; }
+    .cal-mc:hover { border-color: var(--ink); }
+    .cal-mc.selected { border-color: var(--ink); box-shadow: 0 0 0 2px rgba(0,0,0,0.04); }
+    .cal-mc-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; padding-bottom: 5px; border-bottom: 1px dashed var(--line); }
+    .cal-mc-name { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 12px; color: var(--ink); }
+    .cal-mc-num { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); }
+    .cal-cg { display: grid; grid-template-columns: repeat(7, 1fr); gap: 1px; }
+    .cal-dlbl { font-family: 'DM Mono', monospace; font-size: 7px; color: var(--muted); text-align: center; padding: 2px 0; text-transform: uppercase; }
+    .cal-dc { aspect-ratio: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; font-family: 'DM Mono', monospace; font-size: 8.5px; color: var(--ink); padding: 2px 0 1px; position: relative; }
+    .cal-dc.wk { color: var(--muted); }
+    .cal-dc.today { background: var(--ink); color: var(--paper); border-radius: 50%; font-weight: 700; }
+    .cal-dc-dots { display: flex; gap: 2px; margin-top: 1px; }
+    .cal-dc-dot { width: 4px; height: 4px; border-radius: 50%; }
+    .cal-dc.has-range-mid { background: rgba(0,0,0,0.04); }
+    .cal-dc.has-range-start { background: rgba(0,0,0,0.04); border-top-left-radius: 50%; border-bottom-left-radius: 50%; }
+    .cal-dc.has-range-end   { background: rgba(0,0,0,0.04); border-top-right-radius: 50%; border-bottom-right-radius: 50%; }
+
+    .cal-cats { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; position: sticky; top: 14px; max-height: calc(100vh - 100px); overflow-y: auto; }
+    .cal-cats-h { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 13px; margin: 0 0 10px; color: var(--ink); }
+    .cal-cat-group { margin-bottom: 12px; }
+    .cal-cat-group-label { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+    .cal-sub-card, .cal-cat-card { border: 1px solid var(--line); border-radius: 6px; margin-bottom: 4px; overflow: hidden; }
+    .cal-sub-head, .cal-cat-head { display: flex; align-items: center; gap: 6px; padding: 5px 8px; cursor: pointer; font-size: 11px; }
+    .cal-sub-bar, .cal-cat-bar { width: 3px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+    .cal-sub-title, .cal-cat-title { flex: 1; font-weight: 500; }
+    .cal-sub-count, .cal-cat-count { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--muted); padding: 1px 5px; background: rgba(0,0,0,0.05); border-radius: 8px; }
+    .cal-sub-chevron, .cal-cat-chevron { font-size: 9px; color: var(--muted); transition: transform 0.12s; }
+    .cal-sub-card.open .cal-sub-chevron, .cal-cat-card.open .cal-cat-chevron { transform: rotate(180deg); }
+    .cal-sub-body, .cal-cat-body { display: none; padding: 4px 8px 6px 18px; border-top: 1px dashed var(--line); }
+    .cal-sub-card.open .cal-sub-body, .cal-cat-card.open .cal-cat-body { display: block; }
+    .cal-row { font-size: 10px; padding: 3px 0; border-bottom: 1px dotted var(--line); display: flex; gap: 6px; cursor: pointer; }
+    .cal-row:last-child { border-bottom: none; }
+    .cal-row:hover { background: rgba(0,0,0,0.03); }
+    .cal-row-date { font-family: 'DM Mono', monospace; color: var(--muted); white-space: nowrap; min-width: 42px; }
+    .cal-row-text { flex: 1; }
+
+    .cal-detail { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 18px; margin-top: 18px; }
+    .cal-detail-h { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; margin: 0 0 10px; }
+    .cal-detail-list { display: flex; flex-direction: column; gap: 4px; }
+    .cal-detail-row { display: flex; gap: 10px; padding: 6px 0; border-bottom: 1px dashed var(--line); font-size: 12px; align-items: baseline; }
+    .cal-detail-row:last-child { border-bottom: none; }
+    .cal-detail-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); white-space: nowrap; min-width: 60px; }
+    .cal-detail-text { flex: 1; }
+    .cal-detail-cat { font-family: 'DM Mono', monospace; font-size: 9px; padding: 1px 6px; border-radius: 8px; color: white; }
+    .cal-empty { text-align: center; color: var(--muted); padding: 30px 10px; font-family: 'DM Mono', monospace; font-size: 11px; }
   </style>
 </head>
 <body>
@@ -468,11 +520,12 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-13.8 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-14.3 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
-        <button class="tab" data-tab="ceo" title="Notas privadas — solo las ves vos">🤐 CEO</button>
+        <button class="tab owner-only" data-tab="ceo" title="Notas privadas — solo Víctor" style="display:none;">🤐 CEO</button>
+        <button class="tab owner-only" data-tab="calendario" title="Calendario anual — solo Víctor" style="display:none;">📆 Calendario</button>
       </nav>
       <div class="me">
         <div id="meDot" class="me-dot">·</div>
@@ -494,6 +547,11 @@
     <!-- Tab: CEO Update (notas privadas por hito) -->
     <section id="panel-ceo" class="panel">
       <div id="ceo-root" class="ceo"></div>
+    </section>
+
+    <!-- Tab: Calendario anual (solo Víctor) -->
+    <section id="panel-calendario" class="panel">
+      <div id="cal-root" class="cal"></div>
     </section>
   </div>
 
@@ -655,6 +713,11 @@
         if (typeof window.renderEstrategia === 'function') window.renderEstrategia();
         if (typeof window.renderSemanal === 'function')    window.renderSemanal();
         if (typeof window.renderCEO === 'function')        window.renderCEO();
+        // Tab Calendario visible solo para Víctor (owner)
+        if (window.appState.me && window.appState.me.email === 'varriola@explora.com') {
+          document.querySelectorAll('.tab.owner-only').forEach(function (t) { t.style.display = ''; });
+          if (typeof window.renderCalendario === 'function') window.renderCalendario();
+        }
 
         _hydratedUserId = user.id;
 
@@ -693,6 +756,7 @@
         });
         // Re-render del módulo correspondiente al activar el tab
         if (tab === 'ceo' && typeof window.renderCEO === 'function') window.renderCEO();
+        if (tab === 'calendario' && typeof window.renderCalendario === 'function') window.renderCalendario();
       });
     });
 
@@ -955,7 +1019,7 @@
       h += '</div>';
 
       if (!canEdit) {
-        h += '<div class="est-readonly">Vista de solo lectura — los sliders Q1 los actualiza Víctor.</div>';
+        h += '<div class="est-readonly">Vista de solo lectura — los sliders los actualiza Víctor.</div>';
       }
 
       h += estSt.subtab === 'onepager' ? renderOnePagerView() : renderAgendaView();
@@ -1059,11 +1123,12 @@
           h +=   '</div>';
           if (hv) {
             h += '<div style="display:flex;flex-direction:column;gap:6px">';
-            q.objs.forEach(function (objG, oi) {
+            q.objs.forEach(function (objG) {
+              var oi = (objG._origOi !== undefined) ? objG._origOi : 0;
               var oc = objG.objColor || s.accent;
-              objG.hitos.forEach(function (ht, hi) {
-                var isQ1 = ht.q === 'Q1';
-                var key = i + '_' + oi + '_' + hi;
+              objG.hitos.forEach(function (ht) {
+                var hi = (ht._origHi !== undefined) ? ht._origHi : 0;
+                var key = ceoKeyFor(i, oi, hi, ht.q);
                 var val = ceoVals[key] || 1;
                 var col = sliderCol(val);
                 var qTag = (ht.q && ht.q !== 'H2' && ht.q !== 'Q1' && ht.q !== 'Q2') ? '<span class="est-q-tag">' + ht.q + '</span>' : '';
@@ -1071,13 +1136,12 @@
                 h +=   '<div class="est-hito-row">';
                 h +=     '<span class="est-hito-label">' + escapeHtml(ht.label) + '</span>' + qTag;
                 h +=   '</div>';
-                if (isQ1) {
-                  var pct = ((val-1)/2*100);
-                  h += '<div class="est-slider-row">';
-                  h +=   '<input type="range" min="1" max="3" step="1" value="' + val + '" data-key="' + key + '" class="est-slider" style="background:linear-gradient(to right,' + col + ' ' + pct + '%, rgba(255,255,255,0.4) ' + pct + '%)">';
-                  h +=   '<span class="est-slider-pill" data-key="' + key + '" style="background:' + col + '">' + sliderLbl(val) + '</span>';
-                  h += '</div>';
-                }
+                // Slider habilitado para todos los hitos (Q1, Q2, H2)
+                var pct = ((val-1)/2*100);
+                h += '<div class="est-slider-row">';
+                h +=   '<input type="range" min="1" max="3" step="1" value="' + val + '" data-key="' + key + '" class="est-slider" style="background:linear-gradient(to right,' + col + ' ' + pct + '%, rgba(255,255,255,0.4) ' + pct + '%)">';
+                h +=   '<span class="est-slider-pill" data-key="' + key + '" style="background:' + col + '">' + sliderLbl(val) + '</span>';
+                h += '</div>';
                 h += '</div>';
                 (ht.subhitos || []).forEach(function (sh) {
                   h += '<div class="est-subhito" style="background:' + oc + '99">';
@@ -1130,14 +1194,28 @@
       return h;
     }
 
-    // Helper for renderAgendaView
+    // Helper for renderAgendaView — preserva oi y hi originales en _origOi/_origHi
     function collectByQ(s, qs) {
       var r = [];
-      (s.objetivos || []).forEach(function (obj) {
-        var hs = (obj.hitos || []).filter(function (x) { return qs.indexOf(x.q) >= 0; });
-        if (hs.length) r.push({ obj: obj.label, objColor: obj.color || s.accent, hitos: hs });
+      (s.objetivos || []).forEach(function (obj, oi) {
+        var hs = [];
+        (obj.hitos || []).forEach(function (h, hi) {
+          if (qs.indexOf(h.q) < 0) return;
+          var copy = {};
+          for (var k in h) if (h.hasOwnProperty(k)) copy[k] = h[k];
+          copy._origHi = hi;
+          hs.push(copy);
+        });
+        if (hs.length) r.push({ obj: obj.label, objColor: obj.color || s.accent, hitos: hs, _origOi: oi });
       });
       return r;
+    }
+
+    // Genera la key de ceoVals. Q1 sin prefijo (compat con datos viejos),
+    // Q2/Q3/Q4/H2 con prefijo del período.
+    function ceoKeyFor(focoI, objOi, hitoHi, hitoQ) {
+      if (!hitoQ || hitoQ === 'Q1') return focoI + '_' + objOi + '_' + hitoHi;
+      return hitoQ + '_' + focoI + '_' + objOi + '_' + hitoHi;
     }
 
     // ----- View: One Pager (timeline) ---------------------------------
@@ -1197,10 +1275,9 @@
           periods.forEach(function (p, pi) {
             var allHitos = [];
             (s.objetivos || []).forEach(function (obj, oi) {
-              (obj.hitos || []).filter(function (x) {
-                return x.q === p || (p === 'H2' && (x.q === 'Q3' || x.q === 'Q4'));
-              }).forEach(function (x, hi) {
-                allHitos.push({ label:x.label, objColor:obj.color||s.accent, ceoKey:fi+'_'+oi+'_'+hi, subhitos:x.subhitos||[], q:x.q });
+              (obj.hitos || []).forEach(function (x, origHi) {
+                if (!(x.q === p || (p === 'H2' && (x.q === 'Q3' || x.q === 'Q4')))) return;
+                allHitos.push({ label:x.label, objColor:obj.color||s.accent, ceoKey: ceoKeyFor(fi, oi, origHi, x.q), subhitos:x.subhitos||[], q:x.q });
               });
             });
             h += '<div class="est-tl-cell-body" style="' + (pi<2 ? 'border-right:1px solid ' + rgba(s.accent,0.07) : '') + '">';
@@ -1208,15 +1285,12 @@
               h += '<div style="display:flex;flex-direction:column;gap:3px;margin-bottom:6px">';
               allHitos.forEach(function (x) {
                 var hc = x.objColor;
-                var isQ1 = p === 'Q1';
-                var val = isQ1 ? (ceoVals[x.ceoKey] || 1) : null;
-                var vc = val ? sliderCol(val) : null;
+                var val = ceoVals[x.ceoKey] || 1;
+                var vc = sliderCol(val);
                 var qBadge = (x.q && x.q !== p) ? '<span class="est-q-tag">' + x.q + '</span>' : '';
                 h += '<div class="est-hito" style="background:' + hc + ';font-family:DM Mono,monospace;font-size:8.5px;padding:3px 8px;display:flex;align-items:center;justify-content:space-between">';
                 h +=   '<span style="color:#fff;font-weight:500">' + escapeHtml(x.label) + '</span>' + qBadge;
-                if (isQ1 && val) {
-                  h += '<span style="font-size:9px;background:' + vc + ';color:#fff;padding:1px 5px;border-radius:6px;margin-left:6px;flex-shrink:0">' + sliderLbl(val) + '</span>';
-                }
+                h += '<span style="font-size:9px;background:' + vc + ';color:#fff;padding:1px 5px;border-radius:6px;margin-left:6px;flex-shrink:0">' + sliderLbl(val) + '</span>';
                 h += '</div>';
                 (x.subhitos || []).forEach(function (sh) {
                   h += '<div class="est-subhito" style="background:' + hc + '99;font-family:DM Mono,monospace;font-size:7.5px"><span class="est-sub-q">' + sh.q + '</span><span class="est-sub-label">' + escapeHtml(sh.label) + '</span></div>';
@@ -3127,6 +3201,68 @@
       });
     }
 
+    function copyText(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      return Promise.resolve();
+    }
+
+    // Genera un markdown con los hitos que tienen notas escritas
+    function buildCeoMarkdown() {
+      var me = window.planner.getMe();
+      var objs = (window.planner.getShared().objs) || [];
+      var notes = getCeoNotes();
+      var lines = [];
+      lines.push('# CEO Update · ' + me.name);
+      lines.push('_Notas privadas por hito · ' + new Date().toLocaleDateString('es-CL', { day:'numeric', month:'long', year:'numeric' }) + '_');
+      lines.push('');
+
+      var anyNote = false;
+
+      objs.forEach(function (foco) {
+        var focoTitle = focoTitleClean(foco.text || '');
+        var focoSection = [];
+        var subs = foco.objetivos || (foco.hitos ? [{ hitos: foco.hitos, text: '' }] : []);
+
+        subs.forEach(function (ob) {
+          var obSection = [];
+          (ob.hitos || []).forEach(function (hi) {
+            var noteText = (notes[hi.id] || '').trim();
+            if (!noteText) return;
+            anyNote = true;
+            var due = hi.due ? ' · ' + hi.due : '';
+            obSection.push('- **' + (hi.text || '') + '**' + due);
+            // Indentar la nota como blockquote para distinguirla del título del hito
+            noteText.split('\n').forEach(function (ln) {
+              obSection.push('  > ' + ln);
+            });
+            obSection.push('');
+          });
+          if (obSection.length) {
+            if (ob.text) focoSection.push('### ' + ob.text);
+            focoSection = focoSection.concat(obSection);
+          }
+        });
+
+        if (focoSection.length) {
+          lines.push('## ' + focoTitle);
+          lines = lines.concat(focoSection);
+        }
+      });
+
+      if (!anyNote) {
+        lines.push('_(no hay notas escritas todavía — escribí en algún hito del tab CEO y volvé a copiar)_');
+      }
+
+      return lines.join('\n');
+    }
+
     function render() {
       var root = document.getElementById('ceo-root');
       if (!root) return;
@@ -3136,7 +3272,16 @@
       var notes = getCeoNotes();
 
       var h = '<div class="ceo-banner">';
-      h += '🤐 <span><b>Notas privadas</b> · Solo las ves vos (' + escapeHtml(me.name) + '). Útil para observaciones internas, dudas, riesgos, lo que sea — sin que J/C lo vean.</span>';
+      h += '🤐 <span><b>Notas privadas</b> · Solo las ves tú (' + escapeHtml(me.name) + '). Útil para observaciones internas, dudas, riesgos, lo que sea — sin que J/C lo vean.</span>';
+      h += '</div>';
+
+      // Toolbar con botón de export
+      var notesCount = Object.keys(notes).filter(function (k) { return (notes[k] || '').trim(); }).length;
+      h += '<div style="display:flex;gap:8px;align-items:center;margin-bottom:18px;flex-wrap:wrap;">';
+      h += '<button id="ceoCopyBtn" style="background:var(--ink);color:var(--paper);border:none;border-radius:8px;padding:8px 14px;font-family:DM Mono,monospace;font-size:12px;cursor:pointer;"' +
+           (notesCount ? '' : ' disabled style="opacity:0.4;cursor:not-allowed;background:var(--ink);color:var(--paper);border:none;border-radius:8px;padding:8px 14px;font-family:DM Mono,monospace;font-size:12px;"') + '>📋 Copiar resumen</button>';
+      h += '<span id="ceoCopyFeedback" style="font-family:DM Mono,monospace;font-size:11px;color:#1a7a3e;"></span>';
+      h += '<span style="font-family:DM Mono,monospace;font-size:11px;color:var(--muted);margin-left:auto;">' + notesCount + ' hito' + (notesCount === 1 ? '' : 's') + ' con nota</span>';
       h += '</div>';
 
       if (!objs.length) {
@@ -3186,6 +3331,21 @@
 
       root.innerHTML = h;
 
+      // Binding: copiar resumen
+      var copyBtn = document.getElementById('ceoCopyBtn');
+      if (copyBtn && !copyBtn.disabled) {
+        copyBtn.addEventListener('click', function () {
+          var md = buildCeoMarkdown();
+          copyText(md).then(function () {
+            var fb = document.getElementById('ceoCopyFeedback');
+            if (fb) {
+              fb.textContent = '✓ Resumen copiado';
+              setTimeout(function () { if (fb.textContent === '✓ Resumen copiado') fb.textContent = ''; }, 2500);
+            }
+          });
+        });
+      }
+
       // Bindings: auto-save por textarea
       root.querySelectorAll('.ceo-textarea').forEach(function (ta) {
         var hid = ta.getAttribute('data-hito');
@@ -3216,6 +3376,341 @@
         console.error('[ceo] render error:', e);
         var root = document.getElementById('ceo-root');
         if (root) root.innerHTML = '<div class="ceo-empty">Error: ' + escapeHtml(e.message || e) + '</div>';
+      }
+    };
+  })();
+  </script>
+
+  <!-- =================================================================
+       MÓDULO CALENDARIO (solo Víctor) — year grid + categorías + detalle
+       Reusa EV definido en el módulo Semanal, pero como ese está cerrado
+       en su IIFE, lo replicamos aquí. Mantener sincronizado.
+       ================================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
+    var YEAR = 2026;
+    var TODAY = new Date();
+    var MONTHS = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+    var MONTHS_SHORT = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+    var DLBL = ['L','M','X','J','V','S','D'];
+
+    var CAT_COLORS = {
+      'vp':'#f97316','es':'#7c3aed','co':'#eab308','ru':'#10b981',
+      'vt':'#dc2626','di':'#06b6d4','oo':'#06b6d4','rt':'#2563eb',
+      'ms':'#7c3aed','bg':'#2563eb','na':'#dc2626','lg':'#06b6d4',
+      'cr':'#10b981','pe':'#7c3aed','de':'#f97316','cd':'#2563eb','qb':'#dc2626',
+      'fe':'#eab308'
+    };
+    // Estructura de grupos para sidebar de categorías
+    var COMP_SUBS = [
+      { id:'ms', label:'Mall Sport',   icon:'🧗' },
+      { id:'bg', label:'Baguales',     icon:'🧗' },
+      { id:'na', label:'Nacionales',   icon:'🏆' },
+      { id:'lg', label:'Liga Gravity', icon:'⚡' }
+    ];
+    var COMITE_SUBS = [
+      { id:'cr', label:'Cross Iniciativa',    icon:'🔀' },
+      { id:'pe', label:'Planif. Estratégica', icon:'🗺️' },
+      { id:'de', label:'Desa. Ejecutivo',     icon:'📈' },
+      { id:'cd', label:'Comité Desarrollo',   icon:'📋' },
+      { id:'qb', label:'QBR',                 icon:'📊' }
+    ];
+    var GROUPS = [
+      { label:'Personal', cats:[
+        { id:'vp', label:'Viajes',       icon:'🌎' },
+        { id:'es', label:'Competencias', icon:'🧗', subs: COMP_SUBS },
+        { id:'co', label:'Conciertos',   icon:'🎸' },
+        { id:'ru', label:'Carreras',     icon:'🏃' }
+      ]},
+      { label:'Trabajo', cats:[
+        { id:'vt', label:'Viajes',       icon:'✈️' },
+        { id:'di', label:'Directorio',   icon:'🏛️' },
+        { id:'oo', label:'One on Ones',  icon:'💼' },
+        { id:'rt', label:'Comités',      icon:'📋', subs: COMITE_SUBS }
+      ]}
+    ];
+
+    var EV = {
+      '2-26': [{cat:'oo', t:'One on one'}],
+      '3-3':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '3-6':  [{cat:'di', t:'Directorio'}],
+      '3-20': [{cat:'ms', t:'Mall Sport'}],
+      '3-26': [{cat:'pe', t:'Planif. Estratégica'}],
+      '3-29': [{cat:'ru', t:'Carrera 🏃'}],
+      '3-30': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '3-31': [{cat:'cd', t:'Comité de Desarrollo'}],
+      '4-2':  [{cat:'oo', t:'One on one'}],
+      '4-3':  [{cat:'fe', t:'Feriado'}],
+      '4-7':  [{cat:'qb', t:'QBR'}],
+      '4-10': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '4-24': [{cat:'ms', t:'Mall Sport'}],
+      '4-25': [{cat:'bg', t:'Baguales'}],
+      '4-26': [{cat:'ru', t:'Carrera 🏃'}],
+      '4-27': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '5-1':  [{cat:'fe', t:'Feriado'}],
+      '5-4':  [{cat:'oo', t:'One on one'}],
+      '5-5':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '5-8':  [{cat:'di', t:'Directorio'}],
+      '5-15': [{cat:'ms', t:'Mall Sport'}],
+      '5-16': [{cat:'bg', t:'Baguales'}],
+      '5-21': [{cat:'fe', t:'Feriado'}],
+      '5-22': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '5-25': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '6-1':  [{cat:'oo', t:'One on one'}],
+      '6-3':  [{cat:'cd', t:'Comité de Desarrollo'}],
+      '6-4':  [{cat:'pe', t:'Planif. Estratégica'}],
+      '6-5':  [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '6-12': [{cat:'ms', t:'Mall Sport'}],
+      '6-13': [{cat:'bg', t:'Baguales'}],
+      '6-19': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '6-22': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '6-26': [{cat:'di', t:'Directorio'}],
+      '6-29': [{cat:'fe', t:'Feriado'}],
+      '7-7':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '7-9':  [{cat:'oo', t:'One on one'}, {cat:'qb', t:'QBR'}],
+      '7-16': [{cat:'fe', t:'Feriado'}],
+      '7-27': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '8-2':  [{cat:'ru', t:'Carrera 🏃'}],
+      '8-3':  [{cat:'oo', t:'One on one'}],
+      '8-5':  [{cat:'cd', t:'Comité de Desarrollo'}],
+      '8-7':  [{cat:'ms', t:'Mall Sport'}],
+      '8-24': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '8-28': [{cat:'di', t:'Directorio'}, {cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '8-30': [{cat:'ru', t:'Carrera 🏃'}],
+      '9-1':  [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '9-2':  [{cat:'oo', t:'One on one'}],
+      '9-4':  [{cat:'ms', t:'Mall Sport'}],
+      '9-8':  [{cat:'pe', t:'Planif. Estratégica'}],
+      '9-28': [{cat:'de', t:'Desarrollo Ejecutivo'}],
+      '10-2': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '10-7': [{cat:'cd', t:'Comité de Desarrollo'}],
+      '10-9': [{cat:'ms', t:'Mall Sport'}],
+      '10-12':[{cat:'fe', t:'Feriado'}],
+      '10-15':[{cat:'qb', t:'QBR'}],
+      '10-30':[{cat:'di', t:'Directorio'}],
+      '11-3': [{cat:'cr', t:'Cross Iniciativa Desarrollo'}],
+      '11-6': [{cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '11-13':[{cat:'ms', t:'Mall Sport'}],
+      '11-23':[{cat:'oo', t:'One on one'}],
+      '11-30':[{cat:'de', t:'Desarrollo Ejecutivo'}, {cat:'vp', t:'Pesca 🎣'}],
+      '12-4': [{cat:'di', t:'Directorio'}, {cat:'lg', t:'Liga Gravity — Ronda ⚡'}],
+      '12-8': [{cat:'fe', t:'Feriado'}],
+      '12-9': [{cat:'cd', t:'Comité de Desarrollo'}],
+      '12-10':[{cat:'pe', t:'Planif. Estratégica'}],
+      '12-21':[{cat:'oo', t:'One on one'}]
+    };
+
+    var RANGES = [
+      { cat:'vt', m1:3,  d1:9,  m2:3,  d2:12, label:'Sigamos Caminando' },
+      { cat:'vt', m1:11, d1:11, m2:11, d2:19, label:'Marcha Blanca Aperturas' },
+      { cat:'vp', m1:6,  d1:15, m2:7,  d2:5,  label:'Vacaciones Niños' },
+      { cat:'vp', m1:9,  d1:11, m2:10, d2:4,  label:'Vacaciones' },
+      { cat:'na', m1:5,  d1:22, m2:5,  d2:24, label:'Campeonato Nacional' },
+      { cat:'na', m1:5,  d1:30, m2:5,  d2:30, label:'Regional El Llano' },
+      { cat:'na', m1:7,  d1:3,  m2:7,  d2:5,  label:'Nacional Boulder Juvenil' },
+      { cat:'na', m1:11, d1:27, m2:11, d2:29, label:'Nacional Infantil' }
+    ];
+
+    function getRangeInfo(mi, d) {
+      var m = mi + 1;
+      var cur = m * 100 + d;
+      for (var i = 0; i < RANGES.length; i++) {
+        var r = RANGES[i];
+        var start = r.m1 * 100 + r.d1;
+        var end   = r.m2 * 100 + r.d2;
+        if (cur >= start && cur <= end) {
+          return { cat: r.cat, isStart: cur === start, isEnd: cur === end };
+        }
+      }
+      return null;
+    }
+
+    // Estado local
+    var state = { selectedMonth: TODAY.getFullYear() === YEAR ? TODAY.getMonth() : 0, openCats: {} };
+
+    function buildMonthGrid(mi) {
+      var h = '<div class="cal-mc' + (state.selectedMonth === mi ? ' selected' : '') + '" data-cal-month="' + mi + '">';
+      h += '<div class="cal-mc-h"><span class="cal-mc-name">' + MONTHS[mi] + '</span><span class="cal-mc-num">' + String(mi + 1).padStart(2, '0') + '</span></div>';
+      h += '<div class="cal-cg">';
+      DLBL.forEach(function (d) { h += '<div class="cal-dlbl">' + d + '</div>'; });
+      var fd = new Date(YEAR, mi, 1).getDay();
+      var off = fd === 0 ? 6 : fd - 1;
+      for (var i = 0; i < off; i++) h += '<div></div>';
+      var dims = new Date(YEAR, mi + 1, 0).getDate();
+      for (var d = 1; d <= dims; d++) {
+        var dow = new Date(YEAR, mi, d).getDay();
+        var classes = 'cal-dc';
+        if (dow === 0 || dow === 6) classes += ' wk';
+        if (TODAY.getFullYear() === YEAR && TODAY.getMonth() === mi && TODAY.getDate() === d) classes += ' today';
+        var ri = getRangeInfo(mi, d);
+        if (ri) {
+          if (ri.isStart) classes += ' has-range-start';
+          else if (ri.isEnd) classes += ' has-range-end';
+          else classes += ' has-range-mid';
+        }
+        h += '<div class="' + classes + '">' + d;
+        var key = (mi + 1) + '-' + d;
+        if (EV[key]) {
+          h += '<div class="cal-dc-dots">';
+          EV[key].forEach(function (ev) {
+            h += '<div class="cal-dc-dot" style="background:' + (CAT_COLORS[ev.cat] || '#888') + '"></div>';
+          });
+          h += '</div>';
+        }
+        h += '</div>';
+      }
+      h += '</div></div>';
+      return h;
+    }
+
+    function getEventsByCat(catId) {
+      var rows = [];
+      Object.keys(EV).forEach(function (key) {
+        EV[key].forEach(function (ev) {
+          if (ev.cat !== catId) return;
+          var parts = key.split('-');
+          rows.push({ m: parseInt(parts[0], 10), d: parseInt(parts[1], 10), text: ev.t });
+        });
+      });
+      RANGES.filter(function (r) { return r.cat === catId; }).forEach(function (r) {
+        rows.push({ m: r.m1, d: r.d1, text: r.label, range: true });
+      });
+      rows.sort(function (a, b) { return a.m === b.m ? a.d - b.d : a.m - b.m; });
+      return rows;
+    }
+
+    function buildCatRows(catId) {
+      var rows = getEventsByCat(catId);
+      if (!rows.length) return '<div class="cal-row" style="color:var(--muted);font-style:italic;">Sin eventos</div>';
+      var h = '';
+      rows.forEach(function (r) {
+        h += '<div class="cal-row" data-cal-month="' + (r.m - 1) + '"><span class="cal-row-date">' + MONTHS_SHORT[r.m - 1] + ' ' + r.d + '</span><span class="cal-row-text">' + escapeHtml(r.text) + '</span></div>';
+      });
+      return h;
+    }
+
+    function buildSubCard(sub) {
+      var rows = getEventsByCat(sub.id);
+      var openCls = state.openCats['sub-' + sub.id] ? ' open' : '';
+      var h = '<div class="cal-sub-card' + openCls + '" data-cal-toggle="sub-' + sub.id + '">';
+      h += '<div class="cal-sub-head"><div class="cal-sub-bar" style="background:' + (CAT_COLORS[sub.id] || '#888') + '"></div><span class="cal-sub-title">' + sub.icon + ' ' + sub.label + '</span><span class="cal-sub-count">' + rows.length + '</span><span class="cal-sub-chevron">▾</span></div>';
+      h += '<div class="cal-sub-body">' + buildCatRows(sub.id) + '</div>';
+      h += '</div>';
+      return h;
+    }
+
+    function buildCatCard(cat) {
+      var openCls = state.openCats['cat-' + cat.id] ? ' open' : '';
+      var totalCount;
+      var body;
+      if (cat.subs) {
+        totalCount = cat.subs.reduce(function (a, s) { return a + getEventsByCat(s.id).length; }, 0);
+        body = cat.subs.map(buildSubCard).join('');
+      } else {
+        var rows = getEventsByCat(cat.id);
+        totalCount = rows.length;
+        body = buildCatRows(cat.id);
+      }
+      var h = '<div class="cal-cat-card' + openCls + '" data-cal-toggle="cat-' + cat.id + '">';
+      h += '<div class="cal-cat-head"><div class="cal-cat-bar" style="background:' + (CAT_COLORS[cat.id] || '#888') + '"></div><span class="cal-cat-title">' + cat.icon + ' ' + cat.label + '</span><span class="cal-cat-count">' + totalCount + '</span><span class="cal-cat-chevron">▾</span></div>';
+      h += '<div class="cal-cat-body">' + body + '</div>';
+      h += '</div>';
+      return h;
+    }
+
+    function buildDetail() {
+      var mi = state.selectedMonth;
+      var events = [];
+      Object.keys(EV).forEach(function (key) {
+        var parts = key.split('-');
+        if (parseInt(parts[0], 10) !== mi + 1) return;
+        var d = parseInt(parts[1], 10);
+        EV[key].forEach(function (ev) {
+          events.push({ d: d, cat: ev.cat, text: ev.t });
+        });
+      });
+      RANGES.forEach(function (r) {
+        if (r.m1 - 1 === mi || r.m2 - 1 === mi) {
+          events.push({ d: r.m1 - 1 === mi ? r.d1 : 1, cat: r.cat, text: r.label + ' (' + r.d1 + '/' + r.m1 + '–' + r.d2 + '/' + r.m2 + ')' });
+        }
+      });
+      events.sort(function (a, b) { return a.d - b.d; });
+
+      var h = '<div class="cal-detail">';
+      h += '<h3 class="cal-detail-h">' + MONTHS[mi] + ' ' + YEAR + '</h3>';
+      if (!events.length) {
+        h += '<div class="cal-empty">Sin eventos este mes.</div>';
+      } else {
+        h += '<div class="cal-detail-list">';
+        events.forEach(function (e) {
+          var col = CAT_COLORS[e.cat] || '#888';
+          h += '<div class="cal-detail-row"><span class="cal-detail-date">' + e.d + ' ' + MONTHS_SHORT[mi] + '</span><span class="cal-detail-text">' + escapeHtml(e.text) + '</span><span class="cal-detail-cat" style="background:' + col + '">' + e.cat + '</span></div>';
+        });
+        h += '</div>';
+      }
+      h += '</div>';
+      return h;
+    }
+
+    function render() {
+      var root = document.getElementById('cal-root');
+      if (!root) return;
+
+      var h = '<div class="cal-layout">';
+      // Grid
+      h += '<div>';
+      h += '<div class="cal-year-grid">';
+      for (var mi = 0; mi < 12; mi++) h += buildMonthGrid(mi);
+      h += '</div>';
+      h += buildDetail();
+      h += '</div>';
+      // Sidebar categorías
+      h += '<aside class="cal-cats">';
+      h += '<h3 class="cal-cats-h">Categorías</h3>';
+      GROUPS.forEach(function (grp) {
+        h += '<div class="cal-cat-group"><div class="cal-cat-group-label">' + grp.label + '</div>';
+        grp.cats.forEach(function (cat) { h += buildCatCard(cat); });
+        h += '</div>';
+      });
+      h += '</aside>';
+      h += '</div>';
+      root.innerHTML = h;
+
+      // Bindings
+      root.querySelectorAll('[data-cal-month]').forEach(function (el) {
+        el.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          state.selectedMonth = parseInt(el.getAttribute('data-cal-month'), 10);
+          render();
+        });
+      });
+      root.querySelectorAll('[data-cal-toggle]').forEach(function (el) {
+        var head = el.querySelector('.cal-sub-head, .cal-cat-head');
+        if (!head) return;
+        head.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          var key = el.getAttribute('data-cal-toggle');
+          state.openCats[key] = !state.openCats[key];
+          render();
+        });
+      });
+    }
+
+    window.renderCalendario = function () {
+      try {
+        render();
+      } catch (e) {
+        console.error('[calendario] render error:', e);
+        var root = document.getElementById('cal-root');
+        if (root) root.innerHTML = '<div class="cal-empty">Error: ' + escapeHtml(e.message || e) + '</div>';
       }
     };
   })();
