@@ -378,6 +378,74 @@
     .sem-cierre-btn.cancel.active { background: #c0392b; color: white; border-color: #c0392b; }
     .sem-cierre-comment { width: calc(100% - 30px); box-sizing: border-box; margin: 6px 0 0 30px; padding: 5px 8px; border: 1px dashed var(--line); border-radius: 4px; font-family: inherit; font-size: 11px; resize: vertical; min-height: 24px; background: #fff; color: var(--ink); }
     .sem-cierre-comment:focus { border-style: solid; border-color: var(--ink); outline: none; }
+
+    /* === Modo Output (Ronda 3A) === */
+    .sem-output-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+    .sem-output-status { display: inline-flex; gap: 6px; font-family: 'DM Mono', monospace; font-size: 11px; }
+    .sem-output-pill { padding: 3px 9px; border-radius: 14px; }
+    .sem-output-pill.ok { background: rgba(26,158,80,0.1); color: #1a7a3e; }
+    .sem-output-pill.no { background: rgba(192,57,43,0.08); color: #a83227; }
+    .sem-output-preview { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 24px; font-size: 13px; color: var(--ink); line-height: 1.5; }
+    .sem-output-h1 { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 18px; margin: 0 0 4px; }
+    .sem-output-sub { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-bottom: 18px; }
+    .sem-output-section { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px; margin: 22px 0 10px; padding-bottom: 6px; border-bottom: 2px solid #eef0f4; color: var(--ink); }
+    .sem-output-section:first-of-type { margin-top: 0; }
+    .sem-output-stats { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+    .sem-output-pct { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: var(--ink); }
+    .sem-output-legend { display: flex; flex-direction: column; gap: 3px; font-size: 11px; }
+    .sem-output-legend-row { display: flex; align-items: center; gap: 6px; }
+    .sem-output-legend-dot { width: 9px; height: 9px; border-radius: 2px; flex-shrink: 0; }
+    .sem-output-group { margin: 10px 0; }
+    .sem-output-group-hdr { font-size: 11px; font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .sem-output-item { padding: 5px 0; border-bottom: 1px solid #f0f2f6; display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+    .sem-output-item:last-child { border-bottom: none; }
+    .sem-output-item-txt { flex: 1; min-width: 200px; }
+    .sem-output-item-meta { font-size: 11px; color: var(--muted); }
+    .sem-output-item-comment { width: 100%; font-size: 11px; color: var(--muted); font-style: italic; padding-left: 14px; }
+    .sem-output-foco { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 600; color: var(--muted); margin: 14px 0 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+    .sem-output-hito { font-size: 11px; color: var(--muted); padding-left: 14px; margin: 4px 0 2px; }
+    .sem-output-owner-pill { font-family: 'DM Mono', monospace; font-size: 10px; padding: 1px 7px; border-radius: 10px; flex-shrink: 0; }
+
+    /* === Modo Historial (Ronda 3B) === */
+    .sem-history-list { display: flex; flex-direction: column; gap: 10px; }
+    .sem-hist-row { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; grid-template-columns: 200px 1fr auto; gap: 16px; align-items: center; }
+    @media (max-width: 760px) { .sem-hist-row { grid-template-columns: 1fr; gap: 8px; } }
+    .sem-hist-row.current { border-color: var(--ink); }
+    .sem-hist-row.future { opacity: 0.55; }
+    .sem-hist-wk-label { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 16px; color: var(--ink); }
+    .sem-hist-wk-dates { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .sem-hist-wk-badge { display: inline-block; font-family: 'DM Mono', monospace; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-top: 4px; }
+    .sem-hist-stats { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+    .sem-hist-stats b { color: var(--ink); font-weight: 600; }
+    .sem-hist-pct { font-family: 'Syne', sans-serif; font-weight: 700; font-size: 22px; color: var(--ink); min-width: 56px; }
+    .sem-hist-actions { display: flex; gap: 4px; flex-wrap: wrap; }
+    .sem-hist-jump { background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; color: var(--ink); }
+    .sem-hist-jump:hover { background: var(--paper); }
+    .sem-hist-toolbar { display: flex; gap: 8px; align-items: center; margin-bottom: 14px; flex-wrap: wrap; }
+
+    /* === Tab CEO (Ronda 3C) === */
+    .ceo { padding: 24px 32px; max-width: 900px; margin: 0 auto; }
+    .ceo-banner { background: rgba(123,92,191,0.08); color: #5a3aa3; border: 1px solid rgba(123,92,191,0.18); padding: 12px 16px; border-radius: 10px; font-family: 'DM Mono', monospace; font-size: 12px; margin-bottom: 24px; display: flex; gap: 8px; align-items: center; }
+    .ceo-foco { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; margin-bottom: 18px; overflow: hidden; }
+    .ceo-foco-hdr { padding: 14px 18px; border-bottom: 1px solid var(--line); display: flex; gap: 10px; align-items: center; }
+    .ceo-foco-tag { font-family: 'DM Mono', monospace; font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 12px; background: var(--ink); color: var(--paper); }
+    .ceo-foco-title { font-family: 'Syne', sans-serif; font-weight: 600; font-size: 15px; color: var(--ink); }
+    .ceo-foco-body { padding: 14px 18px; }
+    .ceo-obj { margin-bottom: 18px; }
+    .ceo-obj:last-child { margin-bottom: 0; }
+    .ceo-obj-label { font-size: 12px; color: var(--muted); margin-bottom: 8px; display: flex; gap: 6px; align-items: center; }
+    .ceo-obj-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .ceo-hito { padding: 10px 0; border-bottom: 1px dashed var(--line); }
+    .ceo-hito:last-child { border-bottom: none; padding-bottom: 0; }
+    .ceo-hito-hdr { display: flex; gap: 8px; align-items: baseline; margin-bottom: 6px; }
+    .ceo-hito-text { font-size: 13px; color: var(--ink); font-weight: 500; flex: 1; }
+    .ceo-hito-due { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--muted); padding: 1px 7px; background: rgba(0,0,0,0.04); border-radius: 8px; }
+    .ceo-hito-status { font-family: 'DM Mono', monospace; font-size: 10px; padding: 1px 7px; border-radius: 8px; color: var(--muted); background: rgba(0,0,0,0.04); }
+    .ceo-textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--line); border-radius: 6px; padding: 8px 10px; font-family: inherit; font-size: 12px; resize: vertical; min-height: 50px; background: #fff; color: var(--ink); }
+    .ceo-textarea:focus { border-color: #7c5cbf; outline: none; }
+    .ceo-savemark { font-family: 'DM Mono', monospace; font-size: 10px; color: #1a7a3e; margin-left: 6px; opacity: 0; transition: opacity 0.2s; }
+    .ceo-savemark.show { opacity: 1; }
+    .ceo-empty { text-align: center; padding: 60px 20px; color: var(--muted); font-family: 'DM Mono', monospace; font-size: 12px; }
   </style>
 </head>
 <body>
@@ -400,10 +468,11 @@
        ================================================================= -->
   <div id="app" class="app">
     <header class="topbar">
-      <div class="brand">Planner 2026 <small id="version">v2026-05-13.5 dev</small></div>
+      <div class="brand">Planner 2026 <small id="version">v2026-05-13.8 dev</small></div>
       <nav class="tabs">
         <button class="tab active" data-tab="estrategia">Estrategia</button>
         <button class="tab" data-tab="semanal">Semanal</button>
+        <button class="tab" data-tab="ceo" title="Notas privadas — solo las ves vos">🤐 CEO</button>
       </nav>
       <div class="me">
         <div id="meDot" class="me-dot">·</div>
@@ -420,6 +489,11 @@
     <!-- Tab: Semanal (ex-calendario2026.html) -->
     <section id="panel-semanal" class="panel">
       <div id="semanal-root" class="sem"></div>
+    </section>
+
+    <!-- Tab: CEO Update (notas privadas por hito) -->
+    <section id="panel-ceo" class="panel">
+      <div id="ceo-root" class="ceo"></div>
     </section>
   </div>
 
@@ -580,6 +654,7 @@
         // ejecutará renderEstrategia() y renderSemanal() desde aquí.
         if (typeof window.renderEstrategia === 'function') window.renderEstrategia();
         if (typeof window.renderSemanal === 'function')    window.renderSemanal();
+        if (typeof window.renderCEO === 'function')        window.renderCEO();
 
         _hydratedUserId = user.id;
 
@@ -616,6 +691,8 @@
         document.querySelectorAll('.panel').forEach(function (p) {
           p.classList.toggle('active', p.id === 'panel-' + tab);
         });
+        // Re-render del módulo correspondiente al activar el tab
+        if (tab === 'ceo' && typeof window.renderCEO === 'function') window.renderCEO();
       });
     });
 
@@ -1287,8 +1364,8 @@
     var MODES = [
       { id: 'plan',    label: '📋 Plan',     enabled: true  },
       { id: 'cierre',  label: '✓ Cierre',    enabled: true  },
-      { id: 'output',  label: '📄 Output',   enabled: false },
-      { id: 'history', label: '🗂 Historial', enabled: false }
+      { id: 'output',  label: '📄 Output',   enabled: true  },
+      { id: 'history', label: '🗂 Historial', enabled: true  }
     ];
 
     // ----- Estado local UI (no se persiste) ---------------------------
@@ -2212,6 +2289,448 @@
       return h;
     }
 
+    // ----- Output: helpers + render ----------------------------------
+    var STATE_INFO = {
+      'hecha':      { label: '✅ Hecha',      color: '#1a9e50' },
+      'mas-tiempo': { label: '⏳ Más tiempo', color: '#b08000' },
+      'cancelada':  { label: '❌ Cancelada',  color: '#c0392b' },
+      'pendiente':  { label: '· Pendiente',   color: '#8e97b0' }
+    };
+
+    function hitoLookup() {
+      // Devuelve un map { hitoId: { focoText, hitoText, focoIdx, oc } } para enriquecer items
+      var objs = (window.planner.getShared().objs) || [];
+      var map = {};
+      var idx = 0;
+      objs.forEach(function (foco) {
+        idx++;
+        var subs = foco.objetivos || (foco.hitos ? [{ hitos: foco.hitos, color: '#888', text: '' }] : []);
+        subs.forEach(function (ob) {
+          (ob.hitos || []).forEach(function (hi) {
+            map[hi.id] = { focoText: foco.text || '', hitoText: hi.text || '', focoIdx: idx, focoId: foco.id, focoTag: focoTagLabel(foco), focoTitle: focoTitleClean(foco.text) };
+          });
+        });
+      });
+      return map;
+    }
+
+    function buildOutputData(persona, viewWk) {
+      var prevK = prevWeekKey(viewWk);
+      var prevW = window.planner.getSharedWeek(prevK) || {};
+      var curW  = window.planner.getSharedWeek(viewWk) || {};
+      var hmap = hitoLookup();
+
+      function filterOwner(a) { return persona === 'all' || a.owner === persona; }
+      function enrich(a) {
+        var info = a.hitoId ? hmap[a.hitoId] : null;
+        return {
+          text: a.text || '', owner: a.owner || '', comment: a.comment || '',
+          cierreState: a.cierreState || '', carried: !!a.carried,
+          focoText: info ? info.focoText : '', hitoText: info ? info.hitoText : '',
+          focoTag: info ? info.focoTag : '', focoTitle: info ? info.focoTitle : '', focoId: info ? info.focoId : ''
+        };
+      }
+
+      // Cierre (semana anterior)
+      var cierreAcciones = (prevW.acciones || []).filter(filterOwner).map(enrich);
+      var cierreAdmin    = (prevW.admin    || []).filter(filterOwner).map(enrich);
+      var cierreCal      = (prevW.cal      || []).filter(filterOwner).map(enrich);
+      var cierreItems = cierreAcciones.concat(cierreAdmin, cierreCal);
+      var cierreCounts = { hecha:0, 'mas-tiempo':0, cancelada:0, pendiente:0 };
+      cierreItems.forEach(function (a) {
+        var k = a.cierreState || 'pendiente';
+        cierreCounts[k] = (cierreCounts[k] || 0) + 1;
+      });
+      var cierreTotal = cierreItems.length;
+      var cierrePct = cierreTotal ? Math.round(cierreCounts.hecha / cierreTotal * 100) : 0;
+
+      // Plan (semana actual)
+      var planAcciones = (curW.acciones || []).filter(filterOwner).map(enrich);
+      var planAdmin    = (curW.admin    || []).filter(filterOwner).map(enrich);
+      var planCal      = (curW.cal      || []).filter(filterOwner).map(enrich);
+
+      // Estados de guardado
+      var savedFlags = ['Víctor', 'Jaime', 'Colomba'].filter(function (n) { return prevW['cierreSaved_' + n]; });
+
+      return {
+        prevK: prevK, curK: viewWk,
+        prevSavedNames: savedFlags,
+        prevSavedAll: !!prevW.cierreSaved,
+        notesCierre: prevW.cierreNotes || '',
+        notesPlan: curW.notes || '',
+        cierre: {
+          acciones: cierreAcciones, admin: cierreAdmin, cal: cierreCal,
+          counts: cierreCounts, total: cierreTotal, pct: cierrePct
+        },
+        plan: {
+          acciones: planAcciones, admin: planAdmin, cal: planCal
+        }
+      };
+    }
+
+    function buildOutputMarkdown(persona, viewWk) {
+      var d = buildOutputData(persona, viewWk);
+      var personaLabel = persona === 'all' ? 'Full Team' : persona;
+      var lines = [];
+      lines.push('# Resumen Semanal · ' + personaLabel);
+      lines.push('Plan ' + weekKeyLabel(d.curK) + ' · Cierre ' + weekKeyLabel(d.prevK));
+      lines.push('');
+
+      // Section 1 — Cierre
+      lines.push('## 1 · Cierre ' + weekKeyLabel(d.prevK));
+      if (d.cierre.total) {
+        lines.push('**Cumplimiento: ' + d.cierre.pct + '% (' + d.cierre.counts.hecha + ' de ' + d.cierre.total + ')**');
+        lines.push('');
+        ['hecha','mas-tiempo','cancelada','pendiente'].forEach(function (st) {
+          var bucket = d.cierre.acciones.filter(function (a) { return (a.cierreState || 'pendiente') === st; });
+          if (!bucket.length) return;
+          lines.push('### ' + STATE_INFO[st].label + ' (' + bucket.length + ')');
+          bucket.forEach(function (a) {
+            var line = '- ' + a.text;
+            if (a.hitoText) line += ' · _' + a.hitoText + '_';
+            if (a.comment) line += ' — 💬 ' + a.comment;
+            lines.push(line);
+          });
+          lines.push('');
+        });
+        if (d.cierre.admin.length) {
+          lines.push('### 📋 Admin');
+          d.cierre.admin.forEach(function (a) {
+            var st = STATE_INFO[a.cierreState || 'pendiente'].label;
+            var line = '- ' + a.text + ' · ' + st;
+            if (a.comment) line += ' — 💬 ' + a.comment;
+            lines.push(line);
+          });
+          lines.push('');
+        }
+        if (d.cierre.cal.length) {
+          lines.push('### 📅 Calendario');
+          d.cierre.cal.forEach(function (a) {
+            var st = STATE_INFO[a.cierreState || 'pendiente'].label;
+            var line = '- ' + a.text + ' · ' + st;
+            if (a.comment) line += ' — 💬 ' + a.comment;
+            lines.push(line);
+          });
+          lines.push('');
+        }
+        if (d.notesCierre) {
+          lines.push('### Notas');
+          lines.push(d.notesCierre);
+          lines.push('');
+        }
+      } else {
+        lines.push('_(sin items para ' + personaLabel + ' en ' + weekKeyLabel(d.prevK) + ')_');
+        lines.push('');
+      }
+
+      // Section 2 — Plan
+      lines.push('## 2 · Plan ' + weekKeyLabel(d.curK));
+      if (d.plan.acciones.length) {
+        // Agrupar por foco
+        var byFoco = {};
+        d.plan.acciones.forEach(function (a) {
+          var k = a.focoId || '_orphan';
+          if (!byFoco[k]) byFoco[k] = { focoText: a.focoText || 'Sin foco', items: [] };
+          byFoco[k].items.push(a);
+        });
+        Object.keys(byFoco).forEach(function (k) {
+          var grp = byFoco[k];
+          lines.push('### 🎯 ' + grp.focoText);
+          // Sub-agrupar por hito
+          var byHito = {};
+          grp.items.forEach(function (a) {
+            var hk = a.hitoText || '_';
+            if (!byHito[hk]) byHito[hk] = [];
+            byHito[hk].push(a);
+          });
+          Object.keys(byHito).forEach(function (hk) {
+            if (hk !== '_') lines.push('  - 🏁 ' + hk);
+            byHito[hk].forEach(function (a) {
+              var prefix = hk === '_' ? '  - ' : '    - ';
+              var owner = a.owner ? ' [' + a.owner + ']' : '';
+              var carry = a.carried ? ' ↻' : '';
+              lines.push(prefix + a.text + owner + carry);
+            });
+          });
+          lines.push('');
+        });
+      } else {
+        lines.push('_(sin acciones planeadas)_');
+        lines.push('');
+      }
+      if (d.plan.admin.length) {
+        lines.push('### 📋 Admin');
+        d.plan.admin.forEach(function (a) {
+          var owner = a.owner ? ' [' + a.owner + ']' : '';
+          lines.push('- ' + a.text + owner);
+        });
+        lines.push('');
+      }
+      if (d.plan.cal.length) {
+        lines.push('### 📅 Calendario');
+        d.plan.cal.forEach(function (a) {
+          var owner = a.owner ? ' [' + a.owner + ']' : '';
+          lines.push('- ' + a.text + owner);
+        });
+        lines.push('');
+      }
+      if (d.notesPlan) {
+        lines.push('### Notas del plan');
+        lines.push(d.notesPlan);
+      }
+
+      return lines.join('\n');
+    }
+
+    function copyToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        return navigator.clipboard.writeText(text);
+      }
+      // Fallback
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed'; ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand('copy'); } catch (e) {}
+      document.body.removeChild(ta);
+      return Promise.resolve();
+    }
+
+    function renderOutputMode(persona) {
+      var viewWk = semSt.weekKey;
+      var d = buildOutputData(persona, viewWk);
+      var personaLabel = persona === 'all' ? 'Full Team' : persona;
+
+      var h = '<div class="sem-output-toolbar">';
+      h += '<button class="sem-btn-primary" data-sem-action="copy-output-md">📋 Copiar como texto</button>';
+      h += '<span id="semCopyFeedback" style="font-family:DM Mono,monospace;font-size:11px;color:#1a7a3e;"></span>';
+      h += '<span class="sem-output-status" style="margin-left:auto;">';
+      h += '<span class="sem-output-pill ' + (d.prevSavedAll ? 'ok' : (d.prevSavedNames.length ? 'ok' : 'no')) + '">' +
+           (d.prevSavedAll ? '✓' : (d.prevSavedNames.length ? '◔' : '✗')) + ' Cierre ' + escapeHtml(weekKeyLabel(d.prevK)) +
+           (d.prevSavedNames.length && !d.prevSavedAll ? ' (' + d.prevSavedNames.length + '/3)' : '') + '</span>';
+      h += '</span></div>';
+
+      h += '<div class="sem-output-preview" id="semOutputPreview">';
+      h += '<div class="sem-output-h1">Resumen Semanal · ' + escapeHtml(personaLabel) + '</div>';
+      h += '<div class="sem-output-sub">Plan ' + escapeHtml(weekKeyLabel(d.curK)) + ' · Cierre ' + escapeHtml(weekKeyLabel(d.prevK)) + '</div>';
+
+      // Section 1: Cierre
+      h += '<div class="sem-output-section">1 · Cierre ' + escapeHtml(weekKeyLabel(d.prevK)) + '</div>';
+      if (!d.cierre.total) {
+        h += '<p style="color:var(--muted);font-size:12px;">Sin items para ' + escapeHtml(personaLabel) + ' en esta semana.</p>';
+      } else {
+        h += '<div class="sem-output-stats">';
+        h += '<div class="sem-output-pct">' + d.cierre.pct + '%</div>';
+        h += '<div class="sem-output-legend">';
+        ['hecha','mas-tiempo','cancelada','pendiente'].forEach(function (st) {
+          if (!d.cierre.counts[st]) return;
+          h += '<div class="sem-output-legend-row"><div class="sem-output-legend-dot" style="background:' + STATE_INFO[st].color + '"></div><span>' + STATE_INFO[st].label + '</span><span style="color:var(--muted);">' + d.cierre.counts[st] + '</span></div>';
+        });
+        h += '</div></div>';
+
+        ['hecha','mas-tiempo','cancelada','pendiente'].forEach(function (st) {
+          var bucket = d.cierre.acciones.filter(function (a) { return (a.cierreState || 'pendiente') === st; });
+          if (!bucket.length) return;
+          h += '<div class="sem-output-group">';
+          h += '<div class="sem-output-group-hdr" style="color:' + STATE_INFO[st].color + '">' + STATE_INFO[st].label + ' (' + bucket.length + ')</div>';
+          bucket.forEach(function (a) {
+            h += '<div class="sem-output-item">';
+            h += '<span class="sem-output-item-txt">' + escapeHtml(a.text) + '</span>';
+            if (a.hitoText) h += '<span class="sem-output-item-meta">' + escapeHtml(a.hitoText) + '</span>';
+            if (a.comment) h += '<div class="sem-output-item-comment">↳ ' + escapeHtml(a.comment) + '</div>';
+            h += '</div>';
+          });
+          h += '</div>';
+        });
+
+        if (d.cierre.admin.length) {
+          h += '<div class="sem-output-group"><div class="sem-output-group-hdr" style="color:var(--muted);">📋 Admin</div>';
+          d.cierre.admin.forEach(function (a) {
+            var stI = STATE_INFO[a.cierreState || 'pendiente'];
+            h += '<div class="sem-output-item">';
+            h += '<span class="sem-output-item-txt">' + escapeHtml(a.text) + '</span>';
+            h += '<span class="sem-output-item-meta" style="color:' + stI.color + '">' + stI.label + '</span>';
+            if (a.comment) h += '<div class="sem-output-item-comment">↳ ' + escapeHtml(a.comment) + '</div>';
+            h += '</div>';
+          });
+          h += '</div>';
+        }
+
+        if (d.cierre.cal.length) {
+          h += '<div class="sem-output-group"><div class="sem-output-group-hdr" style="color:var(--muted);">📅 Calendario</div>';
+          d.cierre.cal.forEach(function (a) {
+            var stI = STATE_INFO[a.cierreState || 'pendiente'];
+            h += '<div class="sem-output-item">';
+            h += '<span class="sem-output-item-txt">' + escapeHtml(a.text) + '</span>';
+            h += '<span class="sem-output-item-meta" style="color:' + stI.color + '">' + stI.label + '</span>';
+            if (a.comment) h += '<div class="sem-output-item-comment">↳ ' + escapeHtml(a.comment) + '</div>';
+            h += '</div>';
+          });
+          h += '</div>';
+        }
+
+        if (d.notesCierre) {
+          h += '<div class="sem-output-group"><div class="sem-output-group-hdr" style="color:var(--muted);">📝 Notas del cierre</div>';
+          h += '<div style="font-size:12px;white-space:pre-wrap;color:var(--ink);">' + escapeHtml(d.notesCierre) + '</div>';
+          h += '</div>';
+        }
+      }
+
+      // Section 2: Plan
+      h += '<div class="sem-output-section">2 · Plan ' + escapeHtml(weekKeyLabel(d.curK)) + '</div>';
+      if (!d.plan.acciones.length && !d.plan.admin.length && !d.plan.cal.length) {
+        h += '<p style="color:var(--muted);font-size:12px;">Sin items planeados para ' + escapeHtml(personaLabel) + '.</p>';
+      } else {
+        if (d.plan.acciones.length) {
+          var byFoco = {};
+          d.plan.acciones.forEach(function (a) {
+            var k = a.focoId || '_orphan';
+            if (!byFoco[k]) byFoco[k] = { focoText: a.focoText || 'Sin foco', items: [] };
+            byFoco[k].items.push(a);
+          });
+          Object.keys(byFoco).forEach(function (k) {
+            var grp = byFoco[k];
+            h += '<div class="sem-output-foco">🎯 ' + escapeHtml(grp.focoText) + '</div>';
+            var byHito = {};
+            grp.items.forEach(function (a) {
+              var hk = a.hitoText || '_';
+              if (!byHito[hk]) byHito[hk] = [];
+              byHito[hk].push(a);
+            });
+            Object.keys(byHito).forEach(function (hk) {
+              if (hk !== '_') h += '<div class="sem-output-hito">🏁 ' + escapeHtml(hk) + '</div>';
+              byHito[hk].forEach(function (a) {
+                var oc = PERSONA_COLORS[a.owner] || '#888';
+                h += '<div class="sem-output-item" style="padding-left:' + (hk === '_' ? 14 : 28) + 'px;">';
+                if (a.carried) h += '<span style="flex-shrink:0;color:#b08000;">↻</span>';
+                h += '<span class="sem-output-item-txt">' + escapeHtml(a.text) + '</span>';
+                if (a.owner) h += '<span class="sem-output-owner-pill" style="background:' + oc + '22;color:' + oc + ';">' + escapeHtml(a.owner) + '</span>';
+                h += '</div>';
+              });
+            });
+          });
+        }
+
+        if (d.plan.admin.length) {
+          h += '<div class="sem-output-group"><div class="sem-output-group-hdr" style="color:var(--muted);">📋 Admin</div>';
+          d.plan.admin.forEach(function (a) {
+            var oc = PERSONA_COLORS[a.owner] || '#888';
+            h += '<div class="sem-output-item">';
+            h += '<span class="sem-output-item-txt">' + escapeHtml(a.text) + '</span>';
+            if (a.owner) h += '<span class="sem-output-owner-pill" style="background:' + oc + '22;color:' + oc + ';">' + escapeHtml(a.owner) + '</span>';
+            h += '</div>';
+          });
+          h += '</div>';
+        }
+
+        if (d.plan.cal.length) {
+          h += '<div class="sem-output-group"><div class="sem-output-group-hdr" style="color:var(--muted);">📅 Calendario</div>';
+          d.plan.cal.forEach(function (a) {
+            var oc = PERSONA_COLORS[a.owner] || '#888';
+            h += '<div class="sem-output-item">';
+            h += '<span class="sem-output-item-txt">' + escapeHtml(a.text) + '</span>';
+            if (a.owner) h += '<span class="sem-output-owner-pill" style="background:' + oc + '22;color:' + oc + ';">' + escapeHtml(a.owner) + '</span>';
+            h += '</div>';
+          });
+          h += '</div>';
+        }
+
+        if (d.notesPlan) {
+          h += '<div class="sem-output-group"><div class="sem-output-group-hdr" style="color:var(--muted);">📝 Notas del plan</div>';
+          h += '<div style="font-size:12px;white-space:pre-wrap;color:var(--ink);">' + escapeHtml(d.notesPlan) + '</div>';
+          h += '</div>';
+        }
+      }
+
+      h += '</div>'; // .sem-output-preview
+      return h;
+    }
+
+    // ----- Historial: lista cronológica de semanas -------------------
+    function buildHistoryRow(wk, w, persona, todayKey) {
+      function ownerOk(x) { return persona === 'all' || x.owner === persona; }
+      var accs = (w.acciones || []).filter(ownerOk);
+      var admin = (w.admin    || []).filter(ownerOk);
+      var cal   = (w.cal      || []).filter(ownerOk);
+      var all = accs.concat(admin, cal);
+      var counts = { hecha: 0, 'mas-tiempo': 0, cancelada: 0, pendiente: 0 };
+      all.forEach(function (a) {
+        var k = a.cierreState || 'pendiente';
+        counts[k] = (counts[k] || 0) + 1;
+      });
+      var total = all.length;
+      var pct = total ? Math.round(counts.hecha / total * 100) : 0;
+      var savedNames = ['Víctor', 'Jaime', 'Colomba'].filter(function (n) { return w['cierreSaved_' + n]; });
+      var saved = savedNames.length;
+
+      var p = parseKey(wk);
+      var t = parseKey(todayKey);
+      var isCurrent = (wk === todayKey);
+      var isFuture = p && t && (p.year > t.year || (p.year === t.year && p.week > t.week));
+
+      var badge = '';
+      if (saved === 3)      badge = '<span class="sem-hist-wk-badge" style="background:rgba(26,158,80,0.12);color:#1a7a3e;">✓ Cierre completo</span>';
+      else if (saved > 0)   badge = '<span class="sem-hist-wk-badge" style="background:rgba(176,128,0,0.12);color:#8a6500;">◔ ' + saved + '/3 cerrado</span>';
+      else if (total)       badge = '<span class="sem-hist-wk-badge" style="background:rgba(0,0,0,0.05);color:var(--muted);">sin cerrar</span>';
+      else                  badge = '<span class="sem-hist-wk-badge" style="background:rgba(0,0,0,0.04);color:var(--muted);font-style:italic;">vacía</span>';
+
+      var rowCls = 'sem-hist-row' + (isCurrent ? ' current' : '') + (isFuture ? ' future' : '');
+      var h = '<div class="' + rowCls + '">';
+      h += '<div>';
+      h += '<div class="sem-hist-wk-label">' + escapeHtml(weekKeyLabel(wk)) + (isCurrent ? ' · hoy' : '') + '</div>';
+      h += '<div class="sem-hist-wk-dates">' + escapeHtml(weekKeyToDates(wk)) + '</div>';
+      h += badge;
+      h += '</div>';
+      h += '<div class="sem-hist-stats">';
+      if (total) {
+        h += '<span class="sem-hist-pct">' + pct + '%</span>';
+        h += '<span><b>' + total + '</b> total</span>';
+        if (counts.hecha)       h += '<span style="color:#1a7a3e;">✓ <b>' + counts.hecha + '</b></span>';
+        if (counts['mas-tiempo']) h += '<span style="color:#8a6500;">⏳ <b>' + counts['mas-tiempo'] + '</b></span>';
+        if (counts.cancelada)   h += '<span style="color:#a83227;">✕ <b>' + counts.cancelada + '</b></span>';
+        if (counts.pendiente)   h += '<span style="color:var(--muted);">· <b>' + counts.pendiente + '</b></span>';
+      } else {
+        h += '<span style="color:var(--muted);font-style:italic;">— sin items —</span>';
+      }
+      h += '</div>';
+      h += '<div class="sem-hist-actions">';
+      h += '<button class="sem-hist-jump" data-sem-action="jump-week" data-wk="' + escapeHtml(wk) + '" data-tomode="plan">📋 Plan</button>';
+      h += '<button class="sem-hist-jump" data-sem-action="jump-week" data-wk="' + escapeHtml(wk) + '" data-tomode="cierre">✓ Cierre</button>';
+      h += '<button class="sem-hist-jump" data-sem-action="jump-week" data-wk="' + escapeHtml(wk) + '" data-tomode="output">📄 Output</button>';
+      h += '</div>';
+      h += '</div>';
+      return h;
+    }
+
+    function renderHistoryMode(persona) {
+      var sharedWeeks = (window.planner.getShared().weeks) || {};
+      var keys = Object.keys(sharedWeeks).filter(function (k) { return parseKey(k); });
+
+      var iso = getISOWeek(new Date());
+      var todayKey = weekToKey(iso.year, iso.week);
+
+      if (!keys.length) {
+        return '<div class="sem-empty"><div class="sem-empty-big">Sin historial</div><p>El historial se va a ir llenando a medida que se planeen y cierren semanas.</p></div>';
+      }
+
+      // Ordenar descendiente (más reciente primero)
+      keys.sort();
+      keys.reverse();
+
+      var personaLabel = persona === 'all' ? 'todos' : persona;
+      var h = '<div class="sem-hist-toolbar">';
+      h += '<span style="font-family:DM Mono,monospace;font-size:11px;color:var(--muted);"><b>' + keys.length + '</b> semanas registradas · filtro: ' + escapeHtml(personaLabel) + '</span>';
+      h += '</div>';
+
+      h += '<div class="sem-history-list">';
+      keys.forEach(function (wk) {
+        h += buildHistoryRow(wk, sharedWeeks[wk], persona, todayKey);
+      });
+      h += '</div>';
+      return h;
+    }
+
     // ----- Render principal -------------------------------------------
     function render() {
       var root = document.getElementById('semanal-root');
@@ -2314,6 +2833,10 @@
         h += renderNotasBlock(editable, 'cierre');
         h += '</aside>';
         h += '</div>';
+      } else if (semSt.mode === 'output') {
+        h += renderOutputMode(semSt.persona);
+      } else if (semSt.mode === 'history') {
+        h += renderHistoryMode(semSt.persona);
       } else {
         h += '<div class="sem-empty"><div class="sem-empty-big">Próximamente</div><p>Modo <code>' + semSt.mode + '</code> llega en la siguiente ronda.</p></div>';
       }
@@ -2419,6 +2942,21 @@
           } else if (action === 'cal-cierre-state') {
             setCalCierreState(parseInt(b.getAttribute('data-idx'), 10), b.getAttribute('data-state'));
             render();
+          } else if (action === 'jump-week') {
+            semSt.weekKey = b.getAttribute('data-wk');
+            semSt.mode = b.getAttribute('data-tomode');
+            semSt.adding = false; semSt.editing = null; semSt.cierreFeedback = null;
+            render();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else if (action === 'copy-output-md') {
+            var md = buildOutputMarkdown(semSt.persona, semSt.weekKey);
+            copyToClipboard(md).then(function () {
+              var fb = document.getElementById('semCopyFeedback');
+              if (fb) {
+                fb.textContent = '✓ Copiado al portapapeles';
+                setTimeout(function () { if (fb.textContent === '✓ Copiado al portapapeles') fb.textContent = ''; }, 2500);
+              }
+            });
           } else if (action === 'save-cierre') {
             var res = saveCierre();
             var fb = '✓ Cierre guardado.';
@@ -2545,6 +3083,141 @@
       }
     };
 
+  })();
+  </script>
+
+  <!-- =================================================================
+       MÓDULO CEO UPDATE — notas privadas por hito
+       Lee shared.objs para la estructura y planner_user.ceoNotes para
+       los textos de cada usuario. Auto-save debounced 600ms.
+       ================================================================= -->
+  <script>
+  (function () {
+    'use strict';
+
+    function escapeHtml(s) {
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+        return { '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c];
+      });
+    }
+
+    function focoHeaderColor(idx, foco) {
+      if (foco && foco.tag === 'personal') return '#6b7280';
+      var pal = ['#1B3A4B', '#2D5F3E', '#5C3D2E', '#3B2D5C', '#5C1A1A'];
+      return pal[(idx - 1) % pal.length];
+    }
+    function focoTagLabel(foco) {
+      if (foco && foco.tag === 'personal') return 'PERSONAL';
+      var m = ((foco && foco.text) || '').match(/^(\d{2}|4\+1)/);
+      return m ? m[0] : 'WORK';
+    }
+    function focoTitleClean(t) {
+      return (t || '').replace(/^(\d{2}|4\+1)\s*·\s*/, '');
+    }
+
+    function getCeoNotes() {
+      var u = window.planner.getMyUserState();
+      return (u && u.ceoNotes) || {};
+    }
+    function setCeoNote(hitoId, text) {
+      window.planner.mutateMyUser(function (u) {
+        if (!u.ceoNotes) u.ceoNotes = {};
+        if (text) u.ceoNotes[hitoId] = text;
+        else delete u.ceoNotes[hitoId];
+      });
+    }
+
+    function render() {
+      var root = document.getElementById('ceo-root');
+      if (!root) return;
+      var me = window.planner.getMe();
+      if (!me) return;
+      var objs = (window.planner.getShared().objs) || [];
+      var notes = getCeoNotes();
+
+      var h = '<div class="ceo-banner">';
+      h += '🤐 <span><b>Notas privadas</b> · Solo las ves vos (' + escapeHtml(me.name) + '). Útil para observaciones internas, dudas, riesgos, lo que sea — sin que J/C lo vean.</span>';
+      h += '</div>';
+
+      if (!objs.length) {
+        h += '<div class="ceo-empty">El estado compartido no tiene focos cargados.</div>';
+        root.innerHTML = h;
+        return;
+      }
+
+      var focoIdx = 0;
+      objs.forEach(function (foco) {
+        focoIdx++;
+        var focoTag  = focoTagLabel(foco);
+        var focoCol  = focoHeaderColor(focoIdx, foco);
+        var focoTitle = focoTitleClean(foco.text);
+
+        h += '<div class="ceo-foco">';
+        h += '<div class="ceo-foco-hdr">';
+        h += '<span class="ceo-foco-tag" style="background:' + focoCol + '">' + escapeHtml(focoTag) + '</span>';
+        h += '<span class="ceo-foco-title">' + escapeHtml(focoTitle) + '</span>';
+        h += '</div>';
+        h += '<div class="ceo-foco-body">';
+
+        var subs = foco.objetivos || (foco.hitos ? [{ hitos: foco.hitos, color: '#888', text: '' }] : []);
+        subs.forEach(function (ob) {
+          var oc = ob.color || '#888';
+          h += '<div class="ceo-obj">';
+          if (ob.text) {
+            h += '<div class="ceo-obj-label"><span class="ceo-obj-dot" style="background:' + oc + '"></span>' + escapeHtml(ob.text) + '</div>';
+          }
+          (ob.hitos || []).forEach(function (hi) {
+            var noteText = notes[hi.id] || '';
+            h += '<div class="ceo-hito">';
+            h += '<div class="ceo-hito-hdr">';
+            h += '<span class="ceo-hito-text">🏁 ' + escapeHtml(hi.text || '') + '</span>';
+            if (hi.due)    h += '<span class="ceo-hito-due">' + escapeHtml(hi.due) + '</span>';
+            if (hi.status) h += '<span class="ceo-hito-status">' + escapeHtml(hi.status) + '</span>';
+            h += '<span class="ceo-savemark" data-mark="' + escapeHtml(hi.id) + '">✓ guardado</span>';
+            h += '</div>';
+            h += '<textarea class="ceo-textarea" data-hito="' + escapeHtml(hi.id) + '" placeholder="Notas privadas sobre este hito (riesgos, dudas, observaciones, lo que necesites recordar)...">' + escapeHtml(noteText) + '</textarea>';
+            h += '</div>';
+          });
+          h += '</div>'; // ceo-obj
+        });
+
+        h += '</div></div>'; // body + foco
+      });
+
+      root.innerHTML = h;
+
+      // Bindings: auto-save por textarea
+      root.querySelectorAll('.ceo-textarea').forEach(function (ta) {
+        var hid = ta.getAttribute('data-hito');
+        var mark = root.querySelector('.ceo-savemark[data-mark="' + hid + '"]');
+        var t = null;
+        var commit = function () {
+          setCeoNote(hid, ta.value);
+          if (mark) {
+            mark.classList.add('show');
+            setTimeout(function () { mark.classList.remove('show'); }, 1500);
+          }
+        };
+        ta.addEventListener('input', function () {
+          if (t) clearTimeout(t);
+          t = setTimeout(commit, 700);
+        });
+        ta.addEventListener('blur', function () {
+          if (t) { clearTimeout(t); t = null; }
+          commit();
+        });
+      });
+    }
+
+    window.renderCEO = function () {
+      try {
+        render();
+      } catch (e) {
+        console.error('[ceo] render error:', e);
+        var root = document.getElementById('ceo-root');
+        if (root) root.innerHTML = '<div class="ceo-empty">Error: ' + escapeHtml(e.message || e) + '</div>';
+      }
+    };
   })();
   </script>
 
